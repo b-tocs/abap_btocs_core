@@ -21,6 +21,7 @@ interface ZIF_BTOCS_RWS_CLIENT
   methods SET_ENDPOINT_BY_URL
     importing
       !IV_URL type STRING
+      !IV_PROFILE type ZBTOCS_RWS_PROFILE optional
     returning
       value(RV_SUCCESS) type ABAP_BOOL .
   methods SET_ENDPOINT_PATH
@@ -43,12 +44,26 @@ interface ZIF_BTOCS_RWS_CLIENT
   methods IS_CLIENT_INITIALIZED
     returning
       value(RV_INITIALIZED) type ABAP_BOOL .
-  methods IS_CONNECTED
+  methods IS_CONFIG
     returning
-      value(RV_CONNECTED) type ABAP_BOOL .
+      value(RV_CONFIG) type ABAP_BOOL .
   methods CLOSE .
   methods CLEAR .
   methods NEW_REQUEST
     returning
       value(RO_REQUEST) type ref to ZIF_BTOCS_RWS_REQUEST .
+  methods SET_CONFIG
+    importing
+      !IS_CONFIG type ZBTOCS_CFG_S_RFC_REC .
+  methods GET_CONFIG
+    returning
+      value(RS_CONFIG) type ZBTOCS_CFG_S_RFC_REC .
+  methods GET_CONFIG_MANAGER
+    returning
+      value(RO_MGR) type ref to ZIF_BTOCS_UTIL_CFG_MGR .
+  methods SET_CONFIG_BY_PROFILE
+    importing
+      !IV_PROFILE type ZBTOCS_RWS_PROFILE
+    returning
+      value(RV_SUCCESS) type ABAP_BOOL .
 endinterface.

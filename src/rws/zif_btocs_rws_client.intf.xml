@@ -30,6 +30,18 @@
      <DESCRIPT>Reply Expected After:</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
+     <CMPNAME>GET_CONFIG</CMPNAME>
+     <SCONAME>RS_CONFIG</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>rfc configuration - record</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_CONFIG_MANAGER</CMPNAME>
+     <SCONAME>RO_MGR</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>B-Tocs Config Manager Interface</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
      <CMPNAME>NEW_REQUEST</CMPNAME>
      <SCONAME>RO_REQUEST</SCONAME>
      <LANGU>E</LANGU>
@@ -42,10 +54,28 @@
      <DESCRIPT>B-Tocs Response Interface</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
+     <CMPNAME>SET_CONFIG</CMPNAME>
+     <SCONAME>IS_CONFIG</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>rfc configuration - record</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_CONFIG_BY_PROFILE</CMPNAME>
+     <SCONAME>IV_PROFILE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Remote Web Service Profile</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
      <CMPNAME>SET_ENDPOINT_BY_RFC_DEST</CMPNAME>
      <SCONAME>IV_RFC</SCONAME>
      <LANGU>E</LANGU>
      <DESCRIPT>Logical destination (specified in function call)</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_ENDPOINT_BY_URL</CMPNAME>
+     <SCONAME>IV_PROFILE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Remote Web Service Profile</DESCRIPT>
     </SEOSUBCOTX>
    </DESCRIPTIONS_SUB>
   </asx:values>

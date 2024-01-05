@@ -8,6 +8,7 @@ REPORT zbtocs_gui_demo_rws_call.
 * ------- interface
 PARAMETERS: p_rfc TYPE rfcdest.
 PARAMETERS: p_url TYPE mwc_url LOWER CASE.
+PARAMETERS: p_prf TYPE zbtocs_rws_profile.
 SELECTION-SCREEN: ULINE.
 PARAMETERS: p_meth TYPE zbtocs_option_http_method DEFAULT 'GET'.
 PARAMETERS: p_cntt TYPE zbtocs_content_type LOWER CASE.
@@ -33,9 +34,15 @@ START-OF-SELECTION.
     lr_ws_client->set_endpoint_by_rfc_dest( p_rfc ).
     IF p_url IS NOT INITIAL.
       lr_ws_client->set_endpoint_path( CONV string( p_url ) ).
+      IF p_prf IS NOT INITIAL.
+        lr_ws_client->set_config_by_profile( p_prf ).
+      ENDIF.
     ENDIF.
   ELSE.
-    lr_ws_client->set_endpoint_by_url( CONV string( p_url ) ).
+    lr_ws_client->set_endpoint_by_url(
+      iv_url = CONV string( p_url )
+      iv_profile = p_prf
+    ).
   ENDIF.
 
 * ----------- prepare

@@ -46,6 +46,13 @@
     </item>
     <item>
      <ID>S</ID>
+     <KEY>P_PRF</KEY>
+     <ENTRY>.</ENTRY>
+     <LENGTH>9</LENGTH>
+     <SPLIT>D</SPLIT>
+    </item>
+    <item>
+     <ID>S</ID>
      <KEY>P_RFC</KEY>
      <ENTRY>.</ENTRY>
      <LENGTH>9</LENGTH>

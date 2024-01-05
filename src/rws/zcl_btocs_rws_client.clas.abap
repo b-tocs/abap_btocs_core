@@ -17,6 +17,8 @@ protected section.
   data MO_REQUEST type ref to ZIF_BTOCS_RWS_REQUEST .
   data MO_LAST_RESPONSE type ref to ZIF_BTOCS_RWS_RESPONSE .
   data MV_HTTP_VERSION type I value 1001 ##NO_TEXT.
+  data MO_CONFIG_MGR type ref to ZIF_BTOCS_UTIL_CFG_MGR .
+  data MS_RWS_CONFIG type ZBTOCS_CFG_S_RFC_REC .
 
   methods CLIENT_PREPARE_BEFORE_SEND
     returning
@@ -203,6 +205,18 @@ CLASS ZCL_BTOCS_RWS_CLIENT IMPLEMENTATION.
       RETURN.
     ENDIF.
 
+* -------- check config
+    IF zif_btocs_rws_client~is_config( ) EQ abap_false.
+      ms_rws_config = zif_btocs_rws_client~get_config_manager( )->read_rws_config_rfcdest(
+                                                                 iv_rfcdest      = iv_rfc                 " Remote Web Service Profile
+                                                                 iv_read_profile = abap_true
+         	                                                      ).
+      IF ms_rws_config IS NOT INITIAL.
+        get_logger( )->debug( |RFC destination { iv_rfc } is configured| ).
+      ENDIF.
+    ENDIF.
+
+
 * -------- finally success
     get_logger( )->debug( |client initialized by rfc { iv_rfc }| ).
     rv_success = abap_true.
@@ -258,6 +272,12 @@ CLASS ZCL_BTOCS_RWS_CLIENT IMPLEMENTATION.
       RETURN.
     ENDIF.
 
+* -------- check config
+    IF iv_profile IS NOT INITIAL.
+      zif_btocs_rws_client~set_config_by_profile( iv_profile ).
+    ENDIF.
+
+
 * -------- finally success
     get_logger( )->debug( |client initialized by rfc { iv_url }| ).
     rv_success = abap_true.
@@ -299,5 +319,42 @@ CLASS ZCL_BTOCS_RWS_CLIENT IMPLEMENTATION.
 
 * ------ call super
     super->zif_btocs_util_base~destroy( ).
+  ENDMETHOD.
+
+
+  method ZIF_BTOCS_RWS_CLIENT~GET_CONFIG.
+    rs_config = ms_rws_config.
+  endmethod.
+
+
+  METHOD zif_btocs_rws_client~get_config_manager.
+    IF mo_config_mgr IS INITIAL.
+      mo_config_mgr = zcl_btocs_factory=>create_config_manager( ).
+      mo_config_mgr->set_logger( get_logger( ) ).
+    ENDIF.
+    ro_mgr = mo_config_mgr.
+  ENDMETHOD.
+
+
+  METHOD zif_btocs_rws_client~is_config.
+    rv_config = COND #( WHEN ms_rws_config IS NOT INITIAL
+                        THEN abap_true
+                        ELSE abap_false ).
+  ENDMETHOD.
+
+
+  METHOD zif_btocs_rws_client~set_config.
+    ms_rws_config = is_config.
+  ENDMETHOD.
+
+
+  METHOD zif_btocs_rws_client~set_config_by_profile.
+
+    ms_rws_config = zif_btocs_rws_client~get_config_manager( )->read_rws_config_profile( iv_profile ).
+    IF ms_rws_config IS NOT INITIAL.
+      get_logger( )->debug( |Profile { iv_profile } is configured| ).
+      rv_success = abap_true.
+    ENDIF.
+
   ENDMETHOD.
 ENDCLASS.

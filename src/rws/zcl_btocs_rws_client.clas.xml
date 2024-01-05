@@ -18,6 +18,11 @@
      <DESCRIPT>HTTP Client Abstraction</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
+     <CMPNAME>MO_CONFIG_MGR</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>B-Tocs Config Manager Interface</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
      <CMPNAME>MO_LAST_RESPONSE</CMPNAME>
      <LANGU>E</LANGU>
      <DESCRIPT>B-Tocs Response Interface</DESCRIPT>
@@ -26,6 +31,11 @@
      <CMPNAME>MO_REQUEST</CMPNAME>
      <LANGU>E</LANGU>
      <DESCRIPT>B-Tocs Request Interface</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MS_RWS_CONFIG</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>rfc configuration - record</DESCRIPT>
     </SEOCOMPOTX>
    </DESCRIPTIONS>
   </asx:values>

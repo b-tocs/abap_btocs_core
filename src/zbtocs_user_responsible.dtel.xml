@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_DTEL" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <DD04V>
+    <ROLLNAME>ZBTOCS_USER_RESPONSIBLE</ROLLNAME>
+    <DDLANGUAGE>E</DDLANGUAGE>
+    <DOMNAME>UNAME</DOMNAME>
+    <HEADLEN>11</HEADLEN>
+    <SCRLEN1>05</SCRLEN1>
+    <SCRLEN2>11</SCRLEN2>
+    <SCRLEN3>11</SCRLEN3>
+    <DDTEXT>Responsible</DDTEXT>
+    <REPTEXT>Responsible</REPTEXT>
+    <SCRTEXT_S>Resp.</SCRTEXT_S>
+    <SCRTEXT_M>Responsible</SCRTEXT_M>
+    <SCRTEXT_L>Responsible</SCRTEXT_L>
+    <DTELMASTER>E</DTELMASTER>
+    <REFKIND>D</REFKIND>
+   </DD04V>
+  </asx:values>
+ </asx:abap>
+</abapGit>
