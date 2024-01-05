@@ -13,8 +13,8 @@
    <TPOOL>
     <item>
      <ID>R</ID>
-     <ENTRY>B-Tocs Demo - Call remote webservice</ENTRY>
-     <LENGTH>36</LENGTH>
+     <ENTRY>B-Tocs Demo - Call Remote Web Service</ENTRY>
+     <LENGTH>37</LENGTH>
     </item>
     <item>
      <ID>S</ID>
@@ -26,6 +26,13 @@
     <item>
      <ID>S</ID>
      <KEY>P_CONT</KEY>
+     <ENTRY>.</ENTRY>
+     <LENGTH>9</LENGTH>
+     <SPLIT>D</SPLIT>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>P_ENCOD</KEY>
      <ENTRY>.</ENTRY>
      <LENGTH>9</LENGTH>
      <SPLIT>D</SPLIT>

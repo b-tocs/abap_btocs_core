@@ -42,6 +42,14 @@ CLASS ZCL_BTOCS_RWS_REQUEST IMPLEMENTATION.
 
   METHOD zif_btocs_rws_request~set_client.
 
+* ------ set content type
+    IF mv_content_type IS INITIAL.
+      io_http_client->request->if_http_entity~set_content_type( 'application/json' ).
+    ELSE.
+      io_http_client->request->if_http_entity~set_content_type( mv_content_type ).
+    ENDIF.
+
+
 * ------ set header
     IF mt_header[] IS NOT INITIAL.
       CALL METHOD io_http_client->request->if_http_entity~set_header_fields
