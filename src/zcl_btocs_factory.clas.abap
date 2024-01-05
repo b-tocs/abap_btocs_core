@@ -4,9 +4,20 @@ class ZCL_BTOCS_FACTORY definition
 
 public section.
 
+  interfaces ZIF_BTOCS_C .
+
   class-methods CREATE_LOGGER
     returning
       value(RO_LOGGER) type ref to ZIF_BTOCS_UTIL_LOGGER .
+  class-methods CREATE_WEB_SERVICE_CLIENT
+    returning
+      value(RO_LOGGER) type ref to ZIF_BTOCS_RWS_CLIENT .
+  class-methods CREATE_WEB_SERVICE_REQUEST
+    returning
+      value(RO_LOGGER) type ref to ZIF_BTOCS_RWS_REQUEST .
+  class-methods CREATE_WEB_SERVICE_RESPONSE
+    returning
+      value(RO_LOGGER) type ref to ZIF_BTOCS_RWS_RESPONSE .
   class-methods CREATE_INSTANCE
     importing
       !IV_INTERFACE type DATA
@@ -43,5 +54,20 @@ CLASS ZCL_BTOCS_FACTORY IMPLEMENTATION.
 
   METHOD create_logger.
     ro_logger ?= create_instance( 'ZIF_BTOCS_UTIL_LOGGER' ).
+  ENDMETHOD.
+
+
+  METHOD create_web_service_client.
+    ro_logger ?= create_instance( 'ZIF_BTOCS_RWS_CLIENT' ).
+  ENDMETHOD.
+
+
+  METHOD create_web_service_request.
+    ro_logger ?= create_instance( 'ZIF_BTOCS_RWS_REQUEST' ).
+  ENDMETHOD.
+
+
+  METHOD create_web_service_response.
+    ro_logger ?= create_instance( 'ZIF_BTOCS_RWS_RESPONSE' ).
   ENDMETHOD.
 ENDCLASS.

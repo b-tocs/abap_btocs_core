@@ -6,6 +6,15 @@ public section.
 
   interfaces ZIF_BTOCS_UTIL_BASE .
 protected section.
+
+  aliases DESTROY
+    for ZIF_BTOCS_UTIL_BASE~DESTROY .
+  aliases GET_LOGGER
+    for ZIF_BTOCS_UTIL_BASE~GET_LOGGER .
+  aliases IS_LOGGER_EXTERNAL
+    for ZIF_BTOCS_UTIL_BASE~IS_LOGGER_EXTERNAL .
+  aliases SET_LOGGER
+    for ZIF_BTOCS_UTIL_BASE~SET_LOGGER .
 private section.
 
   data MO_LOGGER type ref to ZIF_BTOCS_UTIL_LOGGER .

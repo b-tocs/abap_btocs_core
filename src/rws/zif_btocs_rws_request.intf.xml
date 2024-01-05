@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_INTF" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOINTERF>
+    <CLSNAME>ZIF_BTOCS_RWS_REQUEST</CLSNAME>
+    <LANGU>E</LANGU>
+    <DESCRIPT>B-Tocs Request Interface</DESCRIPT>
+    <EXPOSURE>2</EXPOSURE>
+    <STATE>1</STATE>
+    <UNICODE>X</UNICODE>
+   </VSEOINTERF>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_DATA</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>set data</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_CLIENT</CMPNAME>
+     <SCONAME>IO_HTTP_CLIENT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>HTTP Client Abstraction</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_DATA_ENCODED</CMPNAME>
+     <SCONAME>IV_CODEPAGE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>UTF-8</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_HEADER_FIELDS</CMPNAME>
+     <SCONAME>IT_HEADER</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>HTTP Framework (iHTTP) Table Name/Value Pairs</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

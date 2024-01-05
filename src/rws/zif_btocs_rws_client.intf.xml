@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_INTF" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOINTERF>
+    <CLSNAME>ZIF_BTOCS_RWS_CLIENT</CLSNAME>
+    <LANGU>E</LANGU>
+    <DESCRIPT>B-Tocs Client Interface</DESCRIPT>
+    <EXPOSURE>2</EXPOSURE>
+    <STATE>1</STATE>
+    <UNICODE>X</UNICODE>
+   </VSEOINTERF>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_ENDPOINT_BY_RFC_DEST</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>set the endpoint by rfc</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_ENDPOINT_BY_URL</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>set the endpoint by url</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>EXECUTE</CMPNAME>
+     <SCONAME>RO_RESPONSE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Reply Expected After:</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>NEW_REQUEST</CMPNAME>
+     <SCONAME>RO_REQUEST</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>B-Tocs Request Interface</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>POST</CMPNAME>
+     <SCONAME>RO_RESPONSE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>B-Tocs Response Interface</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_ENDPOINT_BY_RFC_DEST</CMPNAME>
+     <SCONAME>IV_RFC</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Logical destination (specified in function call)</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>
