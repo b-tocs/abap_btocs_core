@@ -14,6 +14,42 @@
      <MSGNR>000</MSGNR>
      <TEXT>&amp;1 &amp;2 &amp;3 &amp;4</TEXT>
     </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZBTOCS</ARBGB>
+     <MSGNR>001</MSGNR>
+     <TEXT>ERROR: &amp;1&amp;2&amp;3&amp;4.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZBTOCS</ARBGB>
+     <MSGNR>002</MSGNR>
+     <TEXT>WARNING: &amp;1&amp;2&amp;3&amp;4.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZBTOCS</ARBGB>
+     <MSGNR>003</MSGNR>
+     <TEXT>INFO: &amp;1&amp;2&amp;3&amp;4.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZBTOCS</ARBGB>
+     <MSGNR>004</MSGNR>
+     <TEXT>DEBUG: &amp;1&amp;2&amp;3&amp;4.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZBTOCS</ARBGB>
+     <MSGNR>005</MSGNR>
+     <TEXT>ABORT: &amp;1&amp;2&amp;3&amp;4.</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZBTOCS</ARBGB>
+     <MSGNR>006</MSGNR>
+     <TEXT>EXCEPTION: &amp;1&amp;2&amp;3&amp;4.</TEXT>
+    </T100>
    </T100>
   </asx:values>
  </asx:abap>
