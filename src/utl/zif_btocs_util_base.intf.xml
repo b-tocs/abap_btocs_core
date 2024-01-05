@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_INTF" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOINTERF>
+    <CLSNAME>ZIF_BTOCS_UTIL_BASE</CLSNAME>
+    <LANGU>E</LANGU>
+    <DESCRIPT>B-Tocs Util Base Interface</DESCRIPT>
+    <EXPOSURE>2</EXPOSURE>
+    <STATE>1</STATE>
+    <UNICODE>X</UNICODE>
+   </VSEOINTERF>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>DESTROY</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>destroy instance and cleanup</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_LOGGER</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>get the logger</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>IS_LOGGER_EXTERNAL</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>check if logger come from external</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_LOGGER</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>set the logger</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_LOGGER</CMPNAME>
+     <SCONAME>RO_LOGGER</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>B-Tocs Logger Interface</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_LOGGER</CMPNAME>
+     <SCONAME>IO_LOGGER</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>B-Tocs Logger Interface</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>
