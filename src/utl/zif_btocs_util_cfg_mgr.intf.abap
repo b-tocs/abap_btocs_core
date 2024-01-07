@@ -23,5 +23,5 @@ interface ZIF_BTOCS_UTIL_CFG_MGR
       !IV_RFCDEST type RFCDEST
       !IV_READ_PROFILE type ABAP_BOOL default ABAP_TRUE
     returning
-      value(RS_CONFIG) type ZBTOCS_CFG_S_PRF_REC .
+      value(RS_CONFIG) type ZBTOCS_CFG_S_RFC_REC .
 endinterface.

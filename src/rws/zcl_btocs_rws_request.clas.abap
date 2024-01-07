@@ -14,6 +14,7 @@ protected section.
   data MV_CONTENT_CODEPAGE type ABAP_ENCODING .
   data MT_HEADER type TIHTTPNVP .
   data MT_FORM_FIELDS type TIHTTPNVP .
+  data MT_QUERY_PARAMS type TIHTTPNVP .
 private section.
 ENDCLASS.
 
@@ -154,5 +155,18 @@ CLASS ZCL_BTOCS_RWS_REQUEST IMPLEMENTATION.
     get_logger( )->error( |set encoded content failed| ).
 
 
+  ENDMETHOD.
+
+
+  METHOD zif_btocs_rws_request~add_query_param.
+    READ TABLE mt_query_params ASSIGNING FIELD-SYMBOL(<ls_param>)
+      WITH KEY name = iv_name.
+    IF sy-subrc NE 0.
+      APPEND INITIAL LINE TO mt_query_params ASSIGNING <ls_param>.
+    ENDIF.
+
+    <ls_param>-name   = iv_name.
+    <ls_param>-value  = iv_value.
+    rv_success        = abap_true.
   ENDMETHOD.
 ENDCLASS.

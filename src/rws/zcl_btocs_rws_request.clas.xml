@@ -22,6 +22,11 @@
      <LANGU>E</LANGU>
      <DESCRIPT>HTTP Framework (iHTTP) Table Name/Value Pairs</DESCRIPT>
     </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MT_QUERY_PARAMS</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>HTTP Framework (iHTTP) Table Name/Value Pairs</DESCRIPT>
+    </SEOCOMPOTX>
    </DESCRIPTIONS>
   </asx:values>
  </asx:abap>

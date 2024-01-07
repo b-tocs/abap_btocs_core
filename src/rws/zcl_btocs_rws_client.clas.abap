@@ -20,6 +20,9 @@ protected section.
   data MO_CONFIG_MGR type ref to ZIF_BTOCS_UTIL_CFG_MGR .
   data MS_RWS_CONFIG type ZBTOCS_CFG_S_RFC_REC .
 
+  methods CLIENT_PREPARE_AUTH
+    returning
+      value(RV_SUCCESS) type ABAP_BOOL .
   methods CLIENT_PREPARE_BEFORE_SEND
     returning
       value(RV_SUCCESS) type ABAP_BOOL .
@@ -36,9 +39,18 @@ CLASS ZCL_BTOCS_RWS_CLIENT IMPLEMENTATION.
 * ----- set standard params
     mo_client->request->set_version( mv_http_version ).
 
+* ----- check request
+    IF mo_request IS INITIAL.
+      zif_btocs_rws_client~new_request( ).
+      get_logger( )->debug( |empty request created| ).
+    ENDIF.
 
 * ----- set auth methods
-
+    IF ms_rws_config-auth_method IS NOT INITIAL.
+      IF client_prepare_auth( ) EQ abap_false.
+        get_logger( )->warning( |set authentification failed| ).
+      ENDIF.
+    ENDIF.
 
 * ----- fill content
     IF mo_request IS NOT INITIAL.
@@ -147,10 +159,6 @@ CLASS ZCL_BTOCS_RWS_CLIENT IMPLEMENTATION.
                              THEN abap_true
                              ELSE abap_false ).
   ENDMETHOD.
-
-
-  method ZIF_BTOCS_RWS_CLIENT~IS_CONNECTED.
-  endmethod.
 
 
   METHOD zif_btocs_rws_client~post.
@@ -355,6 +363,106 @@ CLASS ZCL_BTOCS_RWS_CLIENT IMPLEMENTATION.
       get_logger( )->debug( |Profile { iv_profile } is configured| ).
       rv_success = abap_true.
     ENDIF.
+
+  ENDMETHOD.
+
+
+  METHOD client_prepare_auth.
+
+* ----- local data
+    DATA lv_secret      TYPE string.
+    DATA lv_secret_bin  TYPE xstring.
+    DATA lv_is_sec_bin  TYPE abap_bool.
+    DATA lv_token       TYPE string.
+
+
+* ----- prepare manager
+    DATA(lo_sec_mgr) = zcl_btocs_factory=>create_secret_manager( ).
+    lo_sec_mgr->set_logger( get_logger( ) ).
+
+* ----- get secret
+    IF ms_rws_config-secret_method IS NOT INITIAL.
+      DATA(lo_sec_met) = lo_sec_mgr->create_secret_method(
+          iv_method   = ms_rws_config-secret_method
+          iv_param    = ms_rws_config-secret_param
+          ir_parent   = me
+          is_config   = ms_rws_config
+      ).
+      IF lo_sec_met IS INITIAL.
+        get_logger( )->error( |preparing secret failed. config error| ).
+        RETURN.
+      ELSE.
+        IF lo_sec_met->get_secret(
+                      IMPORTING
+                        ev_bin_secret = lv_secret_bin
+                        ev_secret     = lv_secret
+                        ev_is_binary  = lv_is_sec_bin
+         ) EQ abap_false.
+          get_logger( )->error( |secret not found| ).
+          RETURN.
+        ELSE.
+          get_logger( )->debug( |secret prepared| ).
+        ENDIF.
+      ENDIF.
+    ENDIF.
+
+* ----- get auth method
+    IF ms_rws_config-auth_method IS NOT INITIAL.
+      DATA(lo_auth_met) = lo_sec_mgr->create_auth_method(
+          iv_method   = ms_rws_config-auth_method
+          iv_param    = ms_rws_config-auth_param
+          ir_parent   = me
+          is_config   = ms_rws_config
+      ).
+      IF lo_auth_met IS INITIAL.
+        get_logger( )->error( |preparing authentification failed. config error| ).
+        RETURN.
+      ELSE.
+        IF lo_auth_met->prepare_auth(
+          EXPORTING
+            ir_client     = me
+            iv_secret     = lv_secret
+            iv_secret_bin = lv_secret_bin
+          IMPORTING
+            ev_token      = lv_token
+         ) EQ abap_false.
+          get_logger( )->error( |prepare authentification failed| ).
+          RETURN.
+        ELSE.
+          get_logger( )->debug( |authentification prepared| ).
+        ENDIF.
+      ENDIF.
+    ENDIF.
+
+
+* ----- token method
+    IF lv_token IS NOT INITIAL
+      AND ms_rws_config-token_method IS NOT INITIAL.
+      DATA(lo_token_met) = lo_sec_mgr->create_token_method(
+          iv_method   = ms_rws_config-token_method
+          iv_param    = ms_rws_config-token_param
+          ir_parent   = me
+          is_config   = ms_rws_config
+      ).
+      IF lo_token_met IS INITIAL.
+        get_logger( )->error( |preparing token failed. config error| ).
+        RETURN.
+      ELSE.
+        IF lo_token_met->set_token_to_request(
+            iv_token   = lv_token
+            ir_request = mo_request
+         ) EQ abap_false.
+          get_logger( )->error( |prepare token failed| ).
+          RETURN.
+        ELSE.
+          get_logger( )->debug( |token prepared| ).
+        ENDIF.
+      ENDIF.
+    ENDIF.
+
+
+* ----- finally success
+    rv_success = abap_true.
 
   ENDMETHOD.
 ENDCLASS.

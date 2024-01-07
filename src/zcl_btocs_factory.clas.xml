@@ -28,6 +28,11 @@
      <DESCRIPT>create a new instance of logger</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
+     <CMPNAME>CREATE_SECRET_MANAGER</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>create a new instance of config manager</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
      <CMPNAME>CREATE_WEB_SERVICE_CLIENT</CMPNAME>
      <LANGU>E</LANGU>
      <DESCRIPT>create a new instance of webservice client</DESCRIPT>

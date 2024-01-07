@@ -49,4 +49,10 @@ interface ZIF_BTOCS_RWS_REQUEST
       !IO_HTTP_CLIENT type ref to IF_HTTP_CLIENT
     returning
       value(RV_SUCCESS) type ABAP_BOOL .
+  methods ADD_QUERY_PARAM
+    importing
+      !IV_NAME type DATA
+      value(IV_VALUE) type DATA
+    returning
+      value(RV_SUCCESS) type ABAP_BOOL .
 endinterface.

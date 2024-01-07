@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_INTF" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOINTERF>
+    <CLSNAME>ZIF_BTOCS_SEC_MET</CLSNAME>
+    <LANGU>E</LANGU>
+    <DESCRIPT>B-Tocs Interface for Security Methods</DESCRIPT>
+    <EXPOSURE>2</EXPOSURE>
+    <STATE>1</STATE>
+    <UNICODE>X</UNICODE>
+   </VSEOINTERF>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_CONTEXT</CMPNAME>
+     <SCONAME>IR_PARENT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>B-Tocs Util Base Interface</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_CONTEXT</CMPNAME>
+     <SCONAME>IS_CONFIG</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>rfc configuration - record</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>
