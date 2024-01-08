@@ -39,4 +39,11 @@ interface ZIF_BTOCS_SEC_MGR
       !IS_CONFIG type ZBTOCS_CFG_S_RFC_REC optional
     returning
       value(RO_INSTANCE) type ref to ZIF_BTOCS_SEC_S .
+  methods GENERATE_JWT_TOKEN_TRUSTED
+    importing
+      !IV_USER type UNAME default SY-UNAME
+      !IV_SECRET type STRING
+      !IV_ROLES_PREFIX type ZBTOCS_ROLES_PREFIX optional
+    returning
+      value(RV_JWT) type STRING .
 endinterface.

@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_INTF" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOINTERF>
+    <CLSNAME>ZIF_BTOCS_VALUE</CLSNAME>
+    <LANGU>E</LANGU>
+    <DESCRIPT>B-Tocs Value Holder Interface</DESCRIPT>
+    <EXPOSURE>2</EXPOSURE>
+    <STATE>1</STATE>
+    <UNICODE>X</UNICODE>
+   </VSEOINTERF>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_DATA_REF</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>get value as data reference</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>IS_DATA</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>check if data reference</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>IS_OBJECT</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>check if object reference</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_DATA_REF</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>set value as data reference</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_OPTIONS</CMPNAME>
+     <SCONAME>IS_OPTION</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>value options</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

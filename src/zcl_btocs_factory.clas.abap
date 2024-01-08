@@ -15,6 +15,12 @@ public section.
   class-methods CREATE_SECRET_MANAGER
     returning
       value(RO_LOGGER) type ref to ZIF_BTOCS_SEC_MGR .
+  class-methods CREATE_USER_UTIL
+    returning
+      value(RO_LOGGER) type ref to ZIF_BTOCS_UTIL_USER .
+  class-methods CREATE_VALUE_MANAGER
+    returning
+      value(RO_LOGGER) type ref to ZIF_BTOCS_VALUE_MGR .
   class-methods CREATE_WEB_SERVICE_CLIENT
     returning
       value(RO_LOGGER) type ref to ZIF_BTOCS_RWS_CLIENT .
@@ -85,5 +91,15 @@ CLASS ZCL_BTOCS_FACTORY IMPLEMENTATION.
 
   METHOD CREATE_SECRET_MANAGER.
     ro_logger ?= create_instance( 'ZIF_BTOCS_SEC_MGR' ).
+  ENDMETHOD.
+
+
+  METHOD create_user_util.
+    ro_logger ?= create_instance( 'ZIF_BTOCS_UTIL_USER' ).
+  ENDMETHOD.
+
+
+  METHOD CREATE_VALUE_MANAGER.
+    ro_logger ?= create_instance( 'ZIF_BTOCS_VALUE_MGR' ).
   ENDMETHOD.
 ENDCLASS.

@@ -15,7 +15,8 @@ ENDCLASS.
 
 
 
-CLASS zcl_btocs_util_logger IMPLEMENTATION.
+CLASS ZCL_BTOCS_UTIL_LOGGER IMPLEMENTATION.
+
 
   METHOD zif_btocs_util_logger~add_msg.
 * fill in message table
@@ -23,6 +24,7 @@ CLASS zcl_btocs_util_logger IMPLEMENTATION.
       APPEND is_msg TO mt_msg.
     ENDIF.
   ENDMETHOD.
+
 
   METHOD zif_btocs_util_logger~add.
 * local data
@@ -77,9 +79,11 @@ CLASS zcl_btocs_util_logger IMPLEMENTATION.
     ro_self = me.
   ENDMETHOD.
 
+
   METHOD zif_btocs_util_logger~destroy.
     " redefine
   ENDMETHOD.
+
 
   METHOD zif_btocs_util_logger~error.
     zif_btocs_util_logger~add(
@@ -91,6 +95,7 @@ CLASS zcl_btocs_util_logger IMPLEMENTATION.
     ro_self = me.
   ENDMETHOD.
 
+
   METHOD zif_btocs_util_logger~exception.
     zif_btocs_util_logger~add(
          iv_type     = 'X'
@@ -101,6 +106,7 @@ CLASS zcl_btocs_util_logger IMPLEMENTATION.
     ro_self = me.
 
   ENDMETHOD.
+
 
   METHOD zif_btocs_util_logger~get_messages.
 * -------- get all msg
@@ -138,9 +144,11 @@ CLASS zcl_btocs_util_logger IMPLEMENTATION.
 
   ENDMETHOD.
 
+
   METHOD zif_btocs_util_logger~get_snapshot.
     rv_snapshot = lines( mt_msg ).
   ENDMETHOD.
+
 
   METHOD zif_btocs_util_logger~has_errors.
     LOOP AT mt_msg TRANSPORTING NO FIELDS
@@ -149,6 +157,7 @@ CLASS zcl_btocs_util_logger IMPLEMENTATION.
       RETURN.
     ENDLOOP.
   ENDMETHOD.
+
 
   METHOD zif_btocs_util_logger~info.
     zif_btocs_util_logger~add(
@@ -161,10 +170,12 @@ CLASS zcl_btocs_util_logger IMPLEMENTATION.
 
   ENDMETHOD.
 
+
   METHOD zif_btocs_util_logger~set_snapshot.
     mv_snapshot_id = lines( mt_msg ).
     rv_snapshot = mv_snapshot_id.
   ENDMETHOD.
+
 
   METHOD zif_btocs_util_logger~warning.
     zif_btocs_util_logger~add(
@@ -176,4 +187,10 @@ CLASS zcl_btocs_util_logger IMPLEMENTATION.
     ro_self = me.
   ENDMETHOD.
 
+
+  METHOD zif_btocs_util_logger~add_msgs.
+    IF it_msg[] IS NOT INITIAL.
+      APPEND LINES OF it_msg TO mt_msg.
+    ENDIF.
+  ENDMETHOD.
 ENDCLASS.

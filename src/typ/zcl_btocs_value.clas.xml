@@ -3,9 +3,9 @@
  <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
   <asx:values>
    <VSEOCLASS>
-    <CLSNAME>ZCL_BTOCS_SEC_MET</CLSNAME>
+    <CLSNAME>ZCL_BTOCS_VALUE</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>B-Tocs Implementation for Security Methods</DESCRIPT>
+    <DESCRIPT>B-Tocs Value Implemenation</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>
@@ -13,19 +13,19 @@
    </VSEOCLASS>
    <DESCRIPTIONS>
     <SEOCOMPOTX>
+     <CMPNAME>GET_FORMAT</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>get the format</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
      <CMPNAME>MO_MGR</CMPNAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>B-Tocs Interface for Security Manager</DESCRIPT>
+     <DESCRIPT>B-Tocs Value Manager Interface</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
-     <CMPNAME>MO_PARENT</CMPNAME>
+     <CMPNAME>MS_OPTIONS</CMPNAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>B-Tocs Util Base Interface</DESCRIPT>
-    </SEOCOMPOTX>
-    <SEOCOMPOTX>
-     <CMPNAME>MS_CONFIG</CMPNAME>
-     <LANGU>E</LANGU>
-     <DESCRIPT>rfc configuration - record</DESCRIPT>
+     <DESCRIPT>value options</DESCRIPT>
     </SEOCOMPOTX>
    </DESCRIPTIONS>
   </asx:values>

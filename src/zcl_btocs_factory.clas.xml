@@ -33,6 +33,16 @@
      <DESCRIPT>create a new instance of config manager</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
+     <CMPNAME>CREATE_USER_UTIL</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>create a new instance of user util</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CREATE_VALUE_MANAGER</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>create a new instance of value manager</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
      <CMPNAME>CREATE_WEB_SERVICE_CLIENT</CMPNAME>
      <LANGU>E</LANGU>
      <DESCRIPT>create a new instance of webservice client</DESCRIPT>
@@ -57,6 +67,18 @@
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>CREATE_LOGGER</CMPNAME>
+     <SCONAME>RO_LOGGER</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>B-Tocs Logger Interface</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CREATE_USER_UTIL</CMPNAME>
+     <SCONAME>RO_LOGGER</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>B-Tocs Logger Interface</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CREATE_VALUE_MANAGER</CMPNAME>
      <SCONAME>RO_LOGGER</SCONAME>
      <LANGU>E</LANGU>
      <DESCRIPT>B-Tocs Logger Interface</DESCRIPT>

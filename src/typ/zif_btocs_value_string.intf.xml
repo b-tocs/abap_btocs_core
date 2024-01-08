@@ -3,21 +3,13 @@
  <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
   <asx:values>
    <VSEOINTERF>
-    <CLSNAME>ZIF_BTOCS_UTIL_LOGGER</CLSNAME>
+    <CLSNAME>ZIF_BTOCS_VALUE_STRING</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>B-Tocs Logger Interface</DESCRIPT>
+    <DESCRIPT>B-Tocs Value type string</DESCRIPT>
     <EXPOSURE>2</EXPOSURE>
     <STATE>1</STATE>
     <UNICODE>X</UNICODE>
    </VSEOINTERF>
-   <DESCRIPTIONS_SUB>
-    <SEOSUBCOTX>
-     <CMPNAME>ADD_MSGS</CMPNAME>
-     <SCONAME>IT_MSG</SCONAME>
-     <LANGU>E</LANGU>
-     <DESCRIPT>Error Messages</DESCRIPT>
-    </SEOSUBCOTX>
-   </DESCRIPTIONS_SUB>
   </asx:values>
  </asx:abap>
 </abapGit>

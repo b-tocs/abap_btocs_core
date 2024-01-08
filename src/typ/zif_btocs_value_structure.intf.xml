@@ -3,19 +3,25 @@
  <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
   <asx:values>
    <VSEOINTERF>
-    <CLSNAME>ZIF_BTOCS_UTIL_LOGGER</CLSNAME>
+    <CLSNAME>ZIF_BTOCS_VALUE_STRUCTURE</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>B-Tocs Logger Interface</DESCRIPT>
+    <DESCRIPT>B-Tocs Value type structure</DESCRIPT>
     <EXPOSURE>2</EXPOSURE>
     <STATE>1</STATE>
     <UNICODE>X</UNICODE>
    </VSEOINTERF>
    <DESCRIPTIONS_SUB>
     <SEOSUBCOTX>
-     <CMPNAME>ADD_MSGS</CMPNAME>
-     <SCONAME>IT_MSG</SCONAME>
+     <CMPNAME>GET</CMPNAME>
+     <SCONAME>RO_VALUE</SCONAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Error Messages</DESCRIPT>
+     <DESCRIPT>B-Tocs Value Holder Interface</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET</CMPNAME>
+     <SCONAME>IO_VALUE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>B-Tocs Value Holder Interface</DESCRIPT>
     </SEOSUBCOTX>
    </DESCRIPTIONS_SUB>
   </asx:values>
