@@ -39,4 +39,22 @@ interface ZIF_BTOCS_VALUE_ARRAY
     for ZIF_BTOCS_VALUE~SET_OPTIONS .
   aliases SET_STRING
     for ZIF_BTOCS_VALUE~SET_STRING .
+
+  methods CLEAR .
+  methods COUNT
+    returning
+      value(RV_COUNT) type I .
+  methods ADD
+    importing
+      !IO_VALUE type ref to ZIF_BTOCS_VALUE
+      !IV_REF_ID type STRING optional
+    returning
+      value(RV_COUNT) type I .
+  methods GET
+    importing
+      !IV_INDEX type I
+    exporting
+      !EV_REF_ID type STRING
+    returning
+      value(RO_VALUE) type ref to ZIF_BTOCS_VALUE .
 endinterface.

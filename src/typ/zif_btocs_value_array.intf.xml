@@ -10,6 +10,20 @@
     <STATE>1</STATE>
     <UNICODE>X</UNICODE>
    </VSEOINTERF>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD</CMPNAME>
+     <SCONAME>IO_VALUE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>B-Tocs Value Holder Interface</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET</CMPNAME>
+     <SCONAME>RO_VALUE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>B-Tocs Value Holder Interface</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
   </asx:values>
  </asx:abap>
 </abapGit>

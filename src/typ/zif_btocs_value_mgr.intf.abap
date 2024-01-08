@@ -24,11 +24,26 @@ interface ZIF_BTOCS_VALUE_MGR
       !IS_OPTIONS type ZBTOCS_TYP_S_VALUE_OPTIONS optional
     returning
       value(RO_VALUE) type ref to ZIF_BTOCS_VALUE_STRUCTURE .
+  methods NEW_JSON_ARRAY
+    importing
+      !IS_OPTIONS type ZBTOCS_TYP_S_VALUE_OPTIONS optional
+    returning
+      value(RO_VALUE) type ref to ZIF_BTOCS_VALUE_ARRAY .
   methods NEW_STRING
     importing
       !IV_STRING type STRING optional
     returning
       value(RO_VALUE) type ref to ZIF_BTOCS_VALUE_STRING .
+  methods NEW_NUMBER
+    importing
+      !IV_NUMBER type DATA optional
+    returning
+      value(RO_VALUE) type ref to ZIF_BTOCS_VALUE_NUMBER .
+  methods NEW_BOOLEAN
+    importing
+      !IV_BOOLEAN type DATA optional
+    returning
+      value(RO_VALUE) type ref to ZIF_BTOCS_VALUE_BOOLEAN .
   methods GET_DEFAULT_JSON_OPTIONS
     returning
       value(RS_OPTION) type ZBTOCS_TYP_S_VALUE_OPTIONS .

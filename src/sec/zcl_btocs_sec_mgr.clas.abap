@@ -145,7 +145,7 @@ CLASS ZCL_BTOCS_SEC_MGR IMPLEMENTATION.
     IF lo_usr_util->get_user_detail(
       EXPORTING
         iv_username     = iv_user
-        iv_role_prefix  = conv string( iv_roles_prefix )
+        iv_role_prefix  = CONV string( iv_roles_prefix )
       IMPORTING
         et_roles        = lt_roles
         es_address      = ls_address
@@ -157,12 +157,13 @@ CLASS ZCL_BTOCS_SEC_MGR IMPLEMENTATION.
 * ------ fill payload
     DATA(lo_data_mgr) = zcl_btocs_factory=>create_value_manager( ).
     lo_data_mgr->set_logger( get_logger( ) ).
+    DATA(lv_sap_id) = zif_btocs_sec_mgr~get_system_id( ).
 
     DATA(lo_payload) = lo_data_mgr->new_json_object( ).
 
     lo_payload->set(
         iv_name      = zif_btocs_sec_mgr=>c_jwt-issuer
-        io_value     = lo_data_mgr->new_string( |SAP{ sy-sysid }{ sy-mandt }| )
+        io_value     = lo_data_mgr->new_string( lv_sap_id )
     ).
 
     lo_payload->set(
@@ -176,6 +177,31 @@ CLASS ZCL_BTOCS_SEC_MGR IMPLEMENTATION.
     ).
 
 
+* ------ fill roles
+    IF iv_roles_prefix IS NOT INITIAL.
+*   build array
+      DATA(lv_len_prefix) = strlen( iv_roles_prefix ).
+      DATA(lo_roles) = lo_data_mgr->new_json_array( ).
+
+      LOOP AT lt_roles ASSIGNING FIELD-SYMBOL(<ls_role>).
+        DATA(lv_role) = to_lower( <ls_role>-agr_name+lv_len_prefix ).
+        lo_roles->add(
+            io_value  = lo_data_mgr->new_string( lv_role )                 " B-Tocs Value Holder Interface
+            iv_ref_id = CONV string( <ls_role>-agr_name )
+        ).
+      ENDLOOP.
+
+*   set to payload
+      IF lo_roles->count( ) > 0.
+        lo_payload->set(
+            iv_name      = zif_btocs_sec_mgr=>c_jwt-roles
+            io_value     = lo_roles                 " B-Tocs Value Holder Interface
+        ).
+      ENDIF.
+    ENDIF.
+
+
+* --------- generate payload
     DATA(lv_payload) = lo_payload->render( ).
 
     rv_jwt = zif_btocs_sec_mgr~generate_jwt_token(
@@ -359,5 +385,35 @@ CLASS ZCL_BTOCS_SEC_MGR IMPLEMENTATION.
       ENDIF.
     ENDIF.
 
+  ENDMETHOD.
+
+
+  METHOD zif_btocs_sec_mgr~from_base64.
+    CALL FUNCTION 'SCMS_BASE64_DECODE_STR'
+      EXPORTING
+        input  = iv_b64
+*       UNESCAPE       = 'X'
+      IMPORTING
+        output = rv_string
+      EXCEPTIONS
+        failed = 1
+        OTHERS = 2.
+    IF sy-subrc <> 0.
+      get_logger( )->error( |unable to map from base64| ).
+      rv_string = iv_b64.
+    ENDIF.
+
+  ENDMETHOD.
+
+
+  METHOD zif_btocs_sec_mgr~get_system_id.
+
+    DATA: lv_lic_number(10) TYPE c.
+
+    CALL FUNCTION 'SLIC_GET_LICENCE_NUMBER'
+      IMPORTING
+        license_number = lv_lic_number.
+
+    rv_id = |SAP_{ lv_lic_number }_{ sy-sysid }{ sy-mandt }|.
   ENDMETHOD.
 ENDCLASS.

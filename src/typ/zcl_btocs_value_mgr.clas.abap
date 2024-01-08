@@ -62,4 +62,40 @@ CLASS ZCL_BTOCS_VALUE_MGR IMPLEMENTATION.
   method ZIF_BTOCS_VALUE_MGR~SET_OPTIONS.
     ms_option = is_option.
   endmethod.
+
+
+  method ZIF_BTOCS_VALUE_MGR~NEW_BOOLEAN.
+* ------ create object
+    ro_value ?= zcl_btocs_factory=>create_instance( 'ZIF_BTOCS_VALUE_BOOLEAN' ).
+    ro_value->set_logger( get_logger( ) ).
+    ro_value->set_manager( me ).
+    ro_value->set_string( iv_boolean ).
+  endmethod.
+
+
+  METHOD zif_btocs_value_mgr~new_json_array.
+* ------ prepare options
+    DATA(ls_options) = COND #( WHEN is_options IS NOT INITIAL
+                               THEN is_options
+                               ELSE ms_option ).
+    IF ls_options IS INITIAL
+      OR ls_options-render_format <> zif_btocs_value=>c_format-json.
+      ls_options = zif_btocs_value_mgr~get_default_json_options( ).
+    ENDIF.
+
+* ------ create object
+    ro_value ?= zcl_btocs_factory=>create_instance( 'ZIF_BTOCS_VALUE_ARRAY' ).
+    ro_value->set_logger( get_logger( ) ).
+    ro_value->set_manager( me ).
+    ro_value->set_options( ls_options ).
+  ENDMETHOD.
+
+
+  method ZIF_BTOCS_VALUE_MGR~NEW_NUMBER.
+* ------ create object
+    ro_value ?= zcl_btocs_factory=>create_instance( 'ZIF_BTOCS_VALUE_NUMBER' ).
+    ro_value->set_logger( get_logger( ) ).
+    ro_value->set_manager( me ).
+    ro_value->set_string( iv_number ).
+  endmethod.
 ENDCLASS.

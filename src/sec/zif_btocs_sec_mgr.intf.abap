@@ -16,10 +16,16 @@ interface ZIF_BTOCS_SEC_MGR
   constants C_CUSTOM_CLASS type STRING value 'CUST_CLASS' ##NO_TEXT.
   constants:
     BEGIN OF c_jwt,
-               issuer  TYPE string VALUE 'iss',
-               subject TYPE string VALUE 'sub',
-               name    TYPE string VALUE 'name',
-             END OF c_jwt .
+      issuer     TYPE string VALUE 'iss',     " comes from
+      subject    TYPE string VALUE 'sub',     " id of subject
+      name       TYPE string VALUE 'name',    " full name
+      audience   TYPE string VALUE 'aud',    " receipient
+      not_before TYPE string VALUE 'nbf',  " not before time
+      created_at TYPE string VALUE 'iat',  " created at time
+      uuid       TYPE string VALUE 'jti',        " unique id
+      expire_at  TYPE string VALUE 'exp',   " time after token is expired
+      roles      TYPE string VALUE 'roles', " roles
+    END OF c_jwt .
 
   methods CREATE_AUTH_METHOD
     importing
@@ -67,6 +73,11 @@ interface ZIF_BTOCS_SEC_MGR
       !IV_ENCODING type ABAP_ENCODING default '4110'
     returning
       value(RV_B64) type STRING .
+  methods FROM_BASE64
+    importing
+      !IV_B64 type STRING
+    returning
+      value(RV_STRING) type STRING .
   methods TO_UTF8
     importing
       !IV_STRING type STRING
@@ -84,4 +95,7 @@ interface ZIF_BTOCS_SEC_MGR
       !IV_DATA type STRING
     returning
       value(RV_SIGNATURE) type STRING .
+  methods GET_SYSTEM_ID
+    returning
+      value(RV_ID) type STRING .
 endinterface.
