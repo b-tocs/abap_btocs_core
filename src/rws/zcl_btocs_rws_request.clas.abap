@@ -53,9 +53,15 @@ CLASS ZCL_BTOCS_RWS_REQUEST IMPLEMENTATION.
 
 * ------ set header
     IF mt_header[] IS NOT INITIAL.
-      CALL METHOD io_http_client->request->if_http_entity~set_header_fields
-        EXPORTING
-          fields = mt_header.
+*      CALL METHOD io_http_client->request->if_http_entity~set_header_fields
+*        EXPORTING
+*          fields = mt_header.
+      LOOP AT mt_header ASSIGNING FIELD-SYMBOL(<ls_header>).
+        CALL METHOD io_http_client->request->if_http_entity~set_header_field
+          EXPORTING
+            name  = <ls_header>-name
+            value = <ls_header>-value.
+      ENDLOOP.
     ENDIF.
 
 

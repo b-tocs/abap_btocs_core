@@ -25,6 +25,11 @@
      <LENGTH>9</LENGTH>
      <SPLIT>D</SPLIT>
     </item>
+    <item>
+     <ID>R</ID>
+     <ENTRY>B-Tocs: generate JWT token test - trusted external</ENTRY>
+     <LENGTH>50</LENGTH>
+    </item>
    </TPOOL>
   </asx:values>
  </asx:abap>

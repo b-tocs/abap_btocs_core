@@ -14,6 +14,12 @@ interface ZIF_BTOCS_SEC_MGR
     for ZIF_BTOCS_UTIL_BASE~SET_LOGGER .
 
   constants C_CUSTOM_CLASS type STRING value 'CUST_CLASS' ##NO_TEXT.
+  constants:
+    BEGIN OF c_jwt,
+               issuer  TYPE string VALUE 'iss',
+               subject TYPE string VALUE 'sub',
+               name    TYPE string VALUE 'name',
+             END OF c_jwt .
 
   methods CREATE_AUTH_METHOD
     importing
@@ -46,4 +52,36 @@ interface ZIF_BTOCS_SEC_MGR
       !IV_ROLES_PREFIX type ZBTOCS_ROLES_PREFIX optional
     returning
       value(RV_JWT) type STRING .
+  methods GENERATE_JWT_TOKEN
+    importing
+      !IV_PAYLOAD type STRING optional
+      !IV_SECRET type STRING
+    returning
+      value(RV_JWT) type STRING .
+  methods GENERATE_JWT_TOKEN_HEADER
+    returning
+      value(RV_HEADER) type STRING .
+  methods TO_BASE64
+    importing
+      !IV_IN type STRING
+      !IV_ENCODING type ABAP_ENCODING default '4110'
+    returning
+      value(RV_B64) type STRING .
+  methods TO_UTF8
+    importing
+      !IV_STRING type STRING
+    returning
+      value(RV_UTF8) type STRING .
+  methods BASE64_CHECK_STRING
+    importing
+      !IV_IN type STRING
+    returning
+      value(RV_OUT) type STRING .
+  methods SIGN_HMAC
+    importing
+      !IV_ALG type STRING default 'SHA256'
+      !IV_SECRET type STRING
+      !IV_DATA type STRING
+    returning
+      value(RV_SIGNATURE) type STRING .
 endinterface.

@@ -16,9 +16,11 @@ INITIALIZATION.
 
 
 START-OF-SELECTION.
-  DATA(lv_jwt) = lr_sec_mgr->generate_jwt_token_trusted(
-      iv_secret = p_sec
-  ).
+
+  DATA(lv_jwt) = ||.
+  lv_jwt = lr_sec_mgr->generate_jwt_token_trusted(
+     iv_secret = p_sec
+ ).
 
   IF lv_jwt IS NOT INITIAL.
     cl_demo_output=>write(
@@ -31,8 +33,11 @@ START-OF-SELECTION.
 
 END-OF-SELECTION.
 * ------ output
-  cl_demo_output=>write_data(
-    value   = lr_logger->get_messages( )
-    name    = 'Protocol'
-  ).
+  DATA(lt_msg) = lr_logger->get_messages( ).
+  IF lt_msg[] IS NOT INITIAL.
+    cl_demo_output=>write_data(
+      value   = lt_msg
+      name    = 'Protocol'
+    ).
+  ENDIF.
   cl_demo_output=>display( ).
