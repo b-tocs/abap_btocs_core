@@ -176,13 +176,55 @@ CLASS ZCL_BTOCS_SEC_MGR IMPLEMENTATION.
         io_value     = lo_data_mgr->new_string( |{ ls_address-fullname }| )
     ).
 
+    IF ls_address-e_mail IS NOT INITIAL.
+      lo_payload->set(
+          iv_name      = zif_btocs_sec_mgr=>c_jwt-email
+          io_value     = lo_data_mgr->new_string( |{ ls_address-e_mail }| )
+      ).
+    ENDIF.
+
+    DATA(lv_unix_now) = zif_btocs_sec_mgr~get_unix_timestamp( ).
+    lo_payload->set(
+        iv_name      = zif_btocs_sec_mgr=>c_jwt-created_at
+        io_value     = lo_data_mgr->new_number( lv_unix_now )
+    ).
+
+    IF iv_expire_in_sec <> 0.
+      DATA(lv_unix_exp) = zif_btocs_sec_mgr~get_unix_timestamp( iv_delta_sec = iv_expire_in_sec ).
+      lo_payload->set(
+          iv_name      = zif_btocs_sec_mgr=>c_jwt-expire_at
+          io_value     = lo_data_mgr->new_number( lv_unix_exp )
+      ).
+    ENDIF.
+
+    IF iv_recipient IS NOT INITIAL.
+      lo_payload->set(
+          iv_name      = zif_btocs_sec_mgr=>c_jwt-audience
+          io_value     = lo_data_mgr->new_string( |{ iv_recipient }| )
+      ).
+    ENDIF.
 
 * ------ fill roles
     IF iv_roles_prefix IS NOT INITIAL.
-*   build array
-      DATA(lv_len_prefix) = strlen( iv_roles_prefix ).
+*   prepare
       DATA(lo_roles) = lo_data_mgr->new_json_array( ).
+      DATA(lv_len_prefix) = strlen( iv_roles_prefix ).
 
+*   check basic roles
+      IF iv_basic_roles IS NOT INITIAL.
+        SPLIT iv_basic_roles AT ',' INTO TABLE DATA(lt_basic_roles).
+        LOOP AT lt_basic_roles ASSIGNING FIELD-SYMBOL(<lv_basic_role>).
+          DATA(lv_index) = sy-tabix.
+          CONDENSE <lv_basic_role>.
+          TRANSLATE <lv_basic_role> TO LOWER CASE.
+          lo_roles->add(
+           io_value  = lo_data_mgr->new_string( <lv_basic_role> )                 " B-Tocs Value Holder Interface
+           iv_ref_id = |basic role index { lv_index }|
+       ).
+        ENDLOOP.
+      ENDIF.
+
+*   check roles from pfcg
       LOOP AT lt_roles ASSIGNING FIELD-SYMBOL(<ls_role>).
         DATA(lv_role) = to_lower( <ls_role>-agr_name+lv_len_prefix ).
         lo_roles->add(
@@ -203,6 +245,7 @@ CLASS ZCL_BTOCS_SEC_MGR IMPLEMENTATION.
 
 * --------- generate payload
     DATA(lv_payload) = lo_payload->render( ).
+    ev_payload = lv_payload.
 
     rv_jwt = zif_btocs_sec_mgr~generate_jwt_token(
                iv_payload = lv_payload
@@ -415,5 +458,41 @@ CLASS ZCL_BTOCS_SEC_MGR IMPLEMENTATION.
         license_number = lv_lic_number.
 
     rv_id = |SAP_{ lv_lic_number }_{ sy-sysid }{ sy-mandt }|.
+  ENDMETHOD.
+
+
+  METHOD zif_btocs_sec_mgr~get_unix_timestamp.
+
+* ----- prepare timestamp
+    DATA(lv_timestamp) = iv_timestamp.
+    IF lv_timestamp IS INITIAL.
+      GET TIME STAMP FIELD lv_timestamp.
+    ENDIF.
+
+* ----- delta?
+    IF iv_delta_sec <> 0.
+      lv_timestamp = cl_abap_tstmp=>add(
+                       tstmp = lv_timestamp                  " UTC Time Stamp
+                       secs  = iv_delta_sec                 " Time Interval in Seconds
+                     ).
+    ENDIF.
+
+
+* ----- convert
+    CONVERT TIME STAMP lv_timestamp
+      TIME ZONE 'UTC'
+      INTO DATE DATA(lv_date)
+      TIME DATA(lv_time).
+
+* ------ map
+    cl_pco_utility=>convert_abap_timestamp_to_java(
+        EXPORTING
+            iv_date = lv_date
+            iv_time = lv_time
+        IMPORTING
+            ev_timestamp = rv_unix
+    ).
+
+
   ENDMETHOD.
 ENDCLASS.

@@ -27,9 +27,12 @@ CLASS ZCL_BTOCS_SEC_A_JWT_TRUST IMPLEMENTATION.
 * ------- generate
     ev_token = zif_btocs_sec_a~get_manager( )->generate_jwt_token_trusted(
       EXPORTING
-        iv_user         = sy-uname         " User Name
-        iv_secret       = iv_secret
-        iv_roles_prefix = ms_config-roles_prefix
+        iv_user           = sy-uname         " User Name
+        iv_secret         = iv_secret
+        iv_roles_prefix   = ms_config-roles_prefix
+        iv_expire_in_sec  = ms_config-expire_in_sec
+        iv_basic_roles    = CONV string( ms_config-roles_basic )
+        iv_recipient      = CONV string( ms_config-recipient )
     ).
     IF ev_token IS INITIAL.
       get_logger( )->warning( |jwt token generation failed| ).

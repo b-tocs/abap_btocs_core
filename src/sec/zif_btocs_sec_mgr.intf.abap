@@ -19,6 +19,7 @@ interface ZIF_BTOCS_SEC_MGR
       issuer     TYPE string VALUE 'iss',     " comes from
       subject    TYPE string VALUE 'sub',     " id of subject
       name       TYPE string VALUE 'name',    " full name
+      email      TYPE string VALUE 'email',    " email
       audience   TYPE string VALUE 'aud',    " receipient
       not_before TYPE string VALUE 'nbf',  " not before time
       created_at TYPE string VALUE 'iat',  " created at time
@@ -56,6 +57,11 @@ interface ZIF_BTOCS_SEC_MGR
       !IV_USER type UNAME default SY-UNAME
       !IV_SECRET type STRING
       !IV_ROLES_PREFIX type ZBTOCS_ROLES_PREFIX optional
+      !IV_EXPIRE_IN_SEC type I optional
+      !IV_RECIPIENT type STRING optional
+      !IV_BASIC_ROLES type STRING optional
+    exporting
+      !EV_PAYLOAD type STRING
     returning
       value(RV_JWT) type STRING .
   methods GENERATE_JWT_TOKEN
@@ -98,4 +104,10 @@ interface ZIF_BTOCS_SEC_MGR
   methods GET_SYSTEM_ID
     returning
       value(RV_ID) type STRING .
+  methods GET_UNIX_TIMESTAMP
+    importing
+      !IV_TIMESTAMP type TIMESTAMP optional
+      !IV_DELTA_SEC type I optional
+    returning
+      value(RV_UNIX) type STRING .
 endinterface.
