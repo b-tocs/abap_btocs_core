@@ -357,13 +357,14 @@ CLASS ZCL_BTOCS_RWS_CLIENT IMPLEMENTATION.
 
 
   METHOD zif_btocs_rws_client~set_config_by_profile.
+    CLEAR ms_rws_config.
+    DATA(ls_prf_cfg) = zif_btocs_rws_client~get_config_manager( )->read_rws_config_profile( iv_profile ).
+    MOVE-CORRESPONDING ls_prf_cfg TO ms_rws_config.
 
-    ms_rws_config = zif_btocs_rws_client~get_config_manager( )->read_rws_config_profile( iv_profile ).
     IF ms_rws_config IS NOT INITIAL.
       get_logger( )->debug( |Profile { iv_profile } is configured| ).
       rv_success = abap_true.
     ENDIF.
-
   ENDMETHOD.
 
 

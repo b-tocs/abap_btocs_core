@@ -471,7 +471,7 @@ CLASS ZCL_BTOCS_SEC_MGR IMPLEMENTATION.
 
 * ----- delta?
     IF iv_delta_sec <> 0.
-      lv_timestamp = cl_abap_tstmp=>add(
+      lv_timestamp = cl_abap_tstmp=>add_to_short(
                        tstmp = lv_timestamp                  " UTC Time Stamp
                        secs  = iv_delta_sec                 " Time Interval in Seconds
                      ).
@@ -493,6 +493,12 @@ CLASS ZCL_BTOCS_SEC_MGR IMPLEMENTATION.
             ev_timestamp = rv_unix
     ).
 
+* ------- workaround 000
+    DATA(lv_len) = strlen( rv_unix ).
+    IF lv_len > 12 AND rv_unix CP '*000'.
+      DATA(lv_len_wa) = lv_len - 3.
+      rv_unix = rv_unix(lv_len_wa).
+    ENDIF.
 
   ENDMETHOD.
 ENDCLASS.
