@@ -34,11 +34,13 @@ interface ZIF_BTOCS_RWS_CLIENT
       !IV_CONTENT_TYPE type STRING optional
       !IV_CONTENT type STRING optional
       !IV_BINARY type XSTRING optional
+      !IO_RESPONSE type ref to ZIF_BTOCS_RWS_RESPONSE optional
     returning
       value(RO_RESPONSE) type ref to ZIF_BTOCS_RWS_RESPONSE .
   methods EXECUTE
     importing
       !IV_METHOD type DATA default 'POST'
+      !IO_RESPONSE type ref to ZIF_BTOCS_RWS_RESPONSE
     returning
       value(RO_RESPONSE) type ref to ZIF_BTOCS_RWS_RESPONSE .
   methods IS_CLIENT_INITIALIZED
@@ -66,4 +68,20 @@ interface ZIF_BTOCS_RWS_CLIENT
       !IV_PROFILE type ZBTOCS_RWS_PROFILE
     returning
       value(RV_SUCCESS) type ABAP_BOOL .
+  methods SET_API_KEY
+    importing
+      !IV_KEY type STRING .
+  methods GET_API_KEY
+    returning
+      value(RV_KEY) type STRING .
+  methods GET_SECRET
+    importing
+      !IV_METHOD type DATA
+      !IV_PARAM type DATA optional
+      !IS_CONFIG type DATA
+    exporting
+      !EV_BINARY type XSTRING
+      !EV_IS_BINARY type ABAP_BOOL
+    returning
+      value(RV_SECRET) type STRING .
 endinterface.

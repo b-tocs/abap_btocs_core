@@ -19,6 +19,7 @@ protected section.
   data MV_HTTP_VERSION type I value 1001 ##NO_TEXT.
   data MO_CONFIG_MGR type ref to ZIF_BTOCS_UTIL_CFG_MGR .
   data MS_RWS_CONFIG type ZBTOCS_CFG_S_RFC_REC .
+  data MV_API_KEY type STRING .
 
   methods CLIENT_PREPARE_AUTH
     returning
@@ -96,16 +97,28 @@ CLASS ZCL_BTOCS_RWS_CLIENT IMPLEMENTATION.
     END-OF-DEFINITION.
 
 * -------- prepare response
-    ro_response = zcl_btocs_factory=>create_web_service_response( ).
-    ro_response->set_logger( get_logger( ) ).
+    CLEAR mo_last_response.
+    IF io_response IS NOT INITIAL.
+      ro_response = io_response.
+      IF ro_response->is_logger_external( ) EQ abap_false.
+        ro_response->set_logger( get_logger( ) ).
+      ENDIF.
+      ro_response->set_reason( |unknwon error| ).
+      ro_response->set_status_code( 500 ).
+      get_logger( )->debug( |external response object was used| ).
+    ELSE.
+      ro_response = zcl_btocs_factory=>create_web_service_response( ).
+      ro_response->set_logger( get_logger( ) ).
+    ENDIF.
     mo_last_response = ro_response.
 
+
+* -------- check client and set client method
     IF mo_client IS INITIAL.
       ro_response->set_reason( |client is not initialized| ).
       RETURN.
     ENDIF.
 
-* -------- set client method
     mo_client->request->set_method( CONV string( iv_method ) ).
     IF client_prepare_before_send( ) EQ abap_false.
       ro_response->set_reason( |client preparation failed| ).
@@ -174,7 +187,10 @@ CLASS ZCL_BTOCS_RWS_CLIENT IMPLEMENTATION.
     ENDIF.
 
 * ------ call execute
-    ro_response =  zif_btocs_rws_client~execute( 'POST' ).
+    ro_response =  zif_btocs_rws_client~execute(
+      iv_method   = 'POST'
+      io_response = io_response
+    ).
 
   ENDMETHOD.
 
@@ -466,4 +482,92 @@ CLASS ZCL_BTOCS_RWS_CLIENT IMPLEMENTATION.
     rv_success = abap_true.
 
   ENDMETHOD.
+
+
+  METHOD zif_btocs_rws_client~get_api_key.
+
+* ----- prio 1 - get the manually set
+    IF mv_api_key IS NOT INITIAL.
+      rv_key = mv_api_key.
+      get_logger( )->debug( |manually set api key is used| ).
+      RETURN.
+    ENDIF.
+
+* ----- prio 2 - get the api key from current config
+    IF ms_rws_config-api_key IS NOT INITIAL.
+      rv_key = ms_rws_config-api_key.
+      get_logger( )->debug( |api key from config is used| ).
+      RETURN.
+    ENDIF.
+
+* ----- prio 3 - get it from secret
+    IF ms_rws_config-secret_method IS NOT INITIAL.
+      rv_key = zif_btocs_rws_client~get_secret(
+         iv_method = ms_rws_config-secret_method
+         iv_param  = ms_rws_config-secret_param
+         is_config = ms_rws_config
+      ).
+
+      IF rv_key IS NOT INITIAL.
+        get_logger( )->debug( |api key from secret config is used| ).
+      ENDIF.
+    ENDIF.
+
+* ------ final result
+    IF rv_key IS INITIAL.
+      get_logger( )->warning( |api key is not available| ).
+    ENDIF.
+
+  ENDMETHOD.
+
+
+  METHOD zif_btocs_rws_client~get_secret.
+
+* ---- check & prepare
+    IF iv_method IS INITIAL.
+      get_logger( )->error( |invalid secret method| ).
+      RETURN.
+    ENDIF.
+
+    DATA(ls_config) = ms_rws_config.
+    IF is_config IS NOT INITIAL.
+      MOVE-CORRESPONDING is_config TO ls_config.
+    ENDIF.
+
+* ----- prepare manager
+    DATA(lo_sec_mgr) = zcl_btocs_factory=>create_secret_manager( ).
+    lo_sec_mgr->set_logger( get_logger( ) ).
+
+
+* ----- get secret
+    DATA(lo_sec_met) = lo_sec_mgr->create_secret_method(
+        iv_method   = iv_method
+        iv_param    = iv_param
+        ir_parent   = me
+        is_config   = ls_config
+    ).
+    IF lo_sec_met IS INITIAL.
+      get_logger( )->error( |preparing secret failed. config error| ).
+      RETURN.
+    ELSE.
+      IF lo_sec_met->get_secret(
+                    IMPORTING
+                      ev_bin_secret = ev_binary
+                      ev_secret     = rv_secret
+                      ev_is_binary  = ev_is_binary
+       ) EQ abap_false.
+        get_logger( )->error( |secret not found| ).
+        RETURN.
+      ELSE.
+        get_logger( )->debug( |secret prepared| ).
+      ENDIF.
+    ENDIF.
+
+  ENDMETHOD.
+
+
+  method ZIF_BTOCS_RWS_CLIENT~SET_API_KEY.
+    mv_api_key = iv_key.
+    get_logger( )->debug( |api key set manually| ).
+  endmethod.
 ENDCLASS.

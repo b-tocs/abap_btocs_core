@@ -20,8 +20,8 @@ PARAMETERS: p_trace AS CHECKBOX TYPE zbtocs_flag_display_trace DEFAULT 'X'.
 
 INITIALIZATION.
 * --------- init client
-  DATA(lr_ws_client) = zcl_btocs_factory=>create_web_service_client( ).
-  DATA(lr_logger)    = lr_ws_client->get_logger( ).
+  DATA(lo_ws_client) = zcl_btocs_factory=>create_web_service_client( ).
+  DATA(lo_logger)    = lo_ws_client->get_logger( ).
 
 
 START-OF-SELECTION.
@@ -29,24 +29,24 @@ START-OF-SELECTION.
 
 * ---------- set endpoint
   IF p_rfc IS INITIAL AND p_url IS INITIAL.
-    lr_logger->error( |enter rfc or url| ).
+    lo_logger->error( |enter rfc or url| ).
   ELSEIF p_rfc IS NOT INITIAL.
-    lr_ws_client->set_endpoint_by_rfc_dest( p_rfc ).
+    lo_ws_client->set_endpoint_by_rfc_dest( p_rfc ).
     IF p_url IS NOT INITIAL.
-      lr_ws_client->set_endpoint_path( CONV string( p_url ) ).
+      lo_ws_client->set_endpoint_path( CONV string( p_url ) ).
       IF p_prf IS NOT INITIAL.
-        lr_ws_client->set_config_by_profile( p_prf ).
+        lo_ws_client->set_config_by_profile( p_prf ).
       ENDIF.
     ENDIF.
   ELSE.
-    lr_ws_client->set_endpoint_by_url(
+    lo_ws_client->set_endpoint_by_url(
       iv_url = CONV string( p_url )
       iv_profile = p_prf
     ).
   ENDIF.
 
 * ----------- prepare
-  IF lr_ws_client->is_client_initialized( ) EQ abap_true.
+  IF lo_ws_client->is_client_initialized( ) EQ abap_true.
 
 * ---------- user input?
     DATA(lv_content) = p_cont.
@@ -62,7 +62,7 @@ START-OF-SELECTION.
     ENDIF.
 
     IF lv_content IS NOT INITIAL.
-      DATA(lo_request) = lr_ws_client->new_request( ).
+      DATA(lo_request) = lo_ws_client->new_request( ).
       IF p_encod EQ abap_true.
         lo_request->set_data_encoded(
             iv_content_type = p_cntt
@@ -78,12 +78,12 @@ START-OF-SELECTION.
 
 
 * ----------- execute
-    DATA(lo_response) = lr_ws_client->execute( p_meth ).
+    DATA(lo_response) = lo_ws_client->execute( p_meth ).
     DATA(lv_response) = lo_response->get_content( ).
     DATA(lv_conttype) = lo_response->get_content_type( ).
 
     IF lv_response IS INITIAL.
-      lr_logger->error( |no response| ).
+      lo_logger->error( |no response| ).
     ELSE.
       cl_demo_output=>begin_section( title = |Response| ).
       cl_demo_output=>write_text( text = |Content-Type: { lv_conttype }| ).
@@ -95,8 +95,8 @@ START-OF-SELECTION.
 END-OF-SELECTION.
 
 * ------------ cleanup
-  DATA(lt_msg) = lr_logger->get_messages( ).
-  lr_ws_client->destroy( ).
+  DATA(lt_msg) = lo_logger->get_messages( ).
+  lo_ws_client->destroy( ).
 
 * ------------ display trace
   IF p_trace = abap_true

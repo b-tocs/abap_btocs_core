@@ -10,6 +10,59 @@
     <STATE>1</STATE>
     <UNICODE>X</UNICODE>
    </VSEOINTERF>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_CLIENT</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>get the main remote webservice client</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>IS_INITIALIZED</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>check if connector is configured</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>NEW_REQUEST</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>get a new request connected to current client</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>NEW_RESPONSE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>get a new response</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_ENDPOINT</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>set endpoint by rfc destination</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>EXECUTE</CMPNAME>
+     <SCONAME>IO_CLIENT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>B-Tocs Client Interface</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>EXECUTE</CMPNAME>
+     <SCONAME>IO_RESPONSE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>B-Tocs Response Interface</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>EXECUTE</CMPNAME>
+     <SCONAME>RO_RESPONSE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>B-Tocs Response Interface</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_CLIENT</CMPNAME>
+     <SCONAME>RO_CLIENT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>B-Tocs Client Interface</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
   </asx:values>
  </asx:abap>
 </abapGit>

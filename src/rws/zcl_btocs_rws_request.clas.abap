@@ -15,6 +15,7 @@ protected section.
   data MT_HEADER type TIHTTPNVP .
   data MT_FORM_FIELDS type TIHTTPNVP .
   data MT_QUERY_PARAMS type TIHTTPNVP .
+  data MV_FORM_FIELD_ENCODING type I .
 private section.
 ENDCLASS.
 
@@ -37,6 +38,7 @@ CLASS ZCL_BTOCS_RWS_REQUEST IMPLEMENTATION.
            mv_content_type,
            mv_binary,
            mt_form_fields,
+           mt_query_params,
            mt_header.
   ENDMETHOD.
 
@@ -67,16 +69,25 @@ CLASS ZCL_BTOCS_RWS_REQUEST IMPLEMENTATION.
 
 * ------ set content
     IF mv_binary IS NOT INITIAL.
+* -------- binary data
       CALL METHOD io_http_client->request->if_http_entity~set_data
         EXPORTING
           data = mv_binary.
       get_logger( )->debug( |binary content set to client| ).
     ELSEIF mv_content IS NOT INITIAL.
+* -------- text content
       CALL METHOD io_http_client->request->if_http_entity~set_cdata
         EXPORTING
           data = mv_content.
       get_logger( )->debug( |char data content set to client| ).
     ELSEIF mt_form_fields[] IS NOT INITIAL.
+* -------- form data
+      IF mv_form_field_encoding IS INITIAL.
+        get_logger( )->warning( |no form encoding found| ).
+      ELSE.
+        io_http_client->request->set_formfield_encoding( mv_form_field_encoding ).
+      ENDIF.
+
       CALL METHOD io_http_client->request->if_http_entity~set_form_fields
         EXPORTING
           fields = mt_form_fields
@@ -84,6 +95,7 @@ CLASS ZCL_BTOCS_RWS_REQUEST IMPLEMENTATION.
         .
       get_logger( )->debug( |form fields content set to client| ).
     ELSE.
+* -------- no content found
       get_logger( )->debug( |no content to set to client| ).
     ENDIF.
 
@@ -174,5 +186,93 @@ CLASS ZCL_BTOCS_RWS_REQUEST IMPLEMENTATION.
     <ls_param>-name   = iv_name.
     <ls_param>-value  = iv_value.
     rv_success        = abap_true.
+  ENDMETHOD.
+
+
+  METHOD zif_btocs_rws_request~add_form_field.
+    rv_success = zif_btocs_rws_request~set_form_field(
+                   iv_name      = iv_name
+                   iv_value     = iv_value
+                   iv_overwrite = abap_false
+                 ).
+  ENDMETHOD.
+
+
+  METHOD zif_btocs_rws_request~add_form_fields.
+
+    rv_success = abap_true.
+    LOOP AT it_fields ASSIGNING FIELD-SYMBOL(<ls_field>).
+      IF zif_btocs_rws_request~set_form_field(
+           iv_name      = <ls_field>-name
+           iv_value     = <ls_field>-value
+           iv_overwrite = abap_false
+         ) EQ abap_false.
+        rv_success = abap_false.
+        get_logger( )->error( |set value to form field { <ls_field>-name } failed| ).
+      ENDIF.
+    ENDLOOP.
+
+  ENDMETHOD.
+
+
+  method ZIF_BTOCS_RWS_REQUEST~GET_FORM_FIELDS.
+    rt_fields = mt_form_fields.
+  endmethod.
+
+
+  method ZIF_BTOCS_RWS_REQUEST~GET_HEADER_FIELDS.
+    rt_header = mt_header.
+  endmethod.
+
+
+  METHOD zif_btocs_rws_request~get_query_params.
+    rt_params = mt_query_params.
+  ENDMETHOD.
+
+
+  METHOD zif_btocs_rws_request~set_form_data_type.
+    IF iv_content_type IS NOT INITIAL.
+      mv_content_type = iv_content_type.
+    ENDIF.
+    IF iv_form_field_encoding IS NOT INITIAL.
+      mv_form_field_encoding = iv_form_field_encoding.
+    ENDIF.
+  ENDMETHOD.
+
+
+  method ZIF_BTOCS_RWS_REQUEST~SET_FORM_FIELD.
+    READ TABLE mt_form_fields ASSIGNING FIELD-SYMBOL(<ls_field>)
+      WITH KEY name = iv_name.
+    IF sy-subrc EQ 0.
+      IF iv_overwrite EQ abap_false.
+        RETURN.
+      ENDIF.
+      <ls_field>-value = iv_value.
+    ELSE.
+      APPEND INITIAL LINE TO mt_form_fields ASSIGNING <ls_field>.
+      <ls_field>-name  = iv_name.
+      <ls_field>-value = iv_value.
+    ENDIF.
+
+    rv_success = abap_true.
+  endmethod.
+
+
+  METHOD zif_btocs_rws_request~set_form_type.
+    IF iv_content_type IS NOT INITIAL.
+      mv_content_type = iv_content_type.
+    ENDIF.
+    IF iv_form_field_encoding IS NOT INITIAL.
+      mv_form_field_encoding = iv_form_field_encoding.
+    ENDIF.
+  ENDMETHOD.
+
+
+  METHOD zif_btocs_rws_request~set_form_type_urlencoded.
+    zif_btocs_rws_request~set_form_type(
+         iv_content_type        = 'application/x-www-form-urlencoded'
+         iv_form_field_encoding = if_http_entity=>co_formfield_encoding_encoded
+    ).
+
   ENDMETHOD.
 ENDCLASS.

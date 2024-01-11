@@ -11,6 +11,23 @@
     <FIXPT>X</FIXPT>
     <UNICODE>X</UNICODE>
    </VSEOCLASS>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>MO_CLIENT</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>B-Tocs Client Interface</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MV_PROFILE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Remote Web Service Profile</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MV_RFCDEST</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Logical destination (specified in function call)</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
   </asx:values>
  </asx:abap>
 </abapGit>

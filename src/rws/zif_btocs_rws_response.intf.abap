@@ -37,6 +37,9 @@ interface ZIF_BTOCS_RWS_RESPONSE
   methods SET_REASON
     importing
       !IV_REASON type DATA .
+  methods SET_STATUS_CODE
+    importing
+      !IV_STATUS_CODE type I default 500 .
   methods SET_FROM_CLIENT
     importing
       !IO_HTTP_CLIENT type ref to IF_HTTP_CLIENT

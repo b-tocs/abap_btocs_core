@@ -16,14 +16,14 @@ PARAMETERS: p_rol TYPE zbtocs_token_basic_roles.
 PARAMETERS: p_pfx TYPE zbtocs_roles_prefix.
 
 INITIALIZATION.
-  DATA(lr_sec_mgr)  = zcl_btocs_factory=>create_secret_manager( ).
-  DATA(lr_logger)   = lr_sec_mgr->get_logger( ).
+  DATA(lo_sec_mgr)  = zcl_btocs_factory=>create_secret_manager( ).
+  DATA(lo_logger)   = lo_sec_mgr->get_logger( ).
 
 
 START-OF-SELECTION.
 
 * ------- trusted info
-  DATA(lv_issuer) = lr_sec_mgr->get_system_id( ).
+  DATA(lv_issuer) = lo_sec_mgr->get_system_id( ).
   cl_demo_output=>write_data(
     value   = lv_issuer
     name    = 'Trusted Sender ID'                 " Name
@@ -34,7 +34,7 @@ START-OF-SELECTION.
   DATA(lv_jwt) = ||.
   data(lv_payload) = ||.
 
-  lv_jwt = lr_sec_mgr->generate_jwt_token_trusted(
+  lv_jwt = lo_sec_mgr->generate_jwt_token_trusted(
   EXPORTING
      iv_user          = p_usr
      iv_secret        = p_sec
@@ -60,12 +60,12 @@ START-OF-SELECTION.
       name    = 'JWT Token (check with https://jwt.io/)'
     ).
   ELSE.
-    lr_logger->error( |no token generated| ).
+    lo_logger->error( |no token generated| ).
   ENDIF.
 
 END-OF-SELECTION.
 * ------ output
-  DATA(lt_msg) = lr_logger->get_messages( ).
+  DATA(lt_msg) = lo_logger->get_messages( ).
   IF lt_msg[] IS NOT INITIAL.
     cl_demo_output=>write_data(
       value   = lt_msg

@@ -183,4 +183,9 @@ CLASS ZCL_BTOCS_RWS_RESPONSE IMPLEMENTATION.
       get_logger( )->error( |Reason: { mv_reason }| ).
     ENDIF.
   ENDMETHOD.
+
+
+  METHOD zif_btocs_rws_response~set_status_code.
+    mv_status_code = iv_status_code.
+  ENDMETHOD.
 ENDCLASS.
