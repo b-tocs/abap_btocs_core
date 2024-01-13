@@ -1,22 +1,28 @@
-class ZCL_BTOCS_RWS_REQUEST definition
-  public
-  inheriting from ZCL_BTOCS_UTIL_BASE
-  create public .
+CLASS zcl_btocs_rws_request DEFINITION
+  PUBLIC
+  INHERITING FROM zcl_btocs_util_base
+  CREATE PUBLIC .
 
-public section.
+  PUBLIC SECTION.
 
-  interfaces ZIF_BTOCS_RWS_REQUEST .
-protected section.
+    INTERFACES zif_btocs_rws_request .
+  PROTECTED SECTION.
 
-  data MV_CONTENT type STRING .
-  data MV_BINARY type XSTRING .
-  data MV_CONTENT_TYPE type STRING .
-  data MV_CONTENT_CODEPAGE type ABAP_ENCODING .
-  data MT_HEADER type TIHTTPNVP .
-  data MT_FORM_FIELDS type TIHTTPNVP .
-  data MT_QUERY_PARAMS type TIHTTPNVP .
-  data MV_FORM_FIELD_ENCODING type I .
-private section.
+    DATA mv_content TYPE string .
+    DATA mv_binary TYPE xstring .
+    DATA mv_content_type TYPE string .
+    DATA mv_content_codepage TYPE abap_encoding .
+    DATA mt_header TYPE tihttpnvp .
+    DATA mt_form_fields TYPE zbtocs_t_form_data .
+    DATA mt_query_params TYPE tihttpnvp .
+    DATA mv_form_field_encoding TYPE i .
+
+    METHODS set_form_data_to_client
+      IMPORTING
+        !io_http_client   TYPE REF TO if_http_client
+      RETURNING
+        VALUE(rv_success) TYPE abap_bool .
+  PRIVATE SECTION.
 ENDCLASS.
 
 
@@ -55,15 +61,15 @@ CLASS ZCL_BTOCS_RWS_REQUEST IMPLEMENTATION.
 
 * ------ set header
     IF mt_header[] IS NOT INITIAL.
-*      CALL METHOD io_http_client->request->if_http_entity~set_header_fields
-*        EXPORTING
-*          fields = mt_header.
-      LOOP AT mt_header ASSIGNING FIELD-SYMBOL(<ls_header>).
-        CALL METHOD io_http_client->request->if_http_entity~set_header_field
-          EXPORTING
-            name  = <ls_header>-name
-            value = <ls_header>-value.
-      ENDLOOP.
+      CALL METHOD io_http_client->request->if_http_entity~set_header_fields
+        EXPORTING
+          fields = mt_header.
+*      LOOP AT mt_header ASSIGNING FIELD-SYMBOL(<ls_header>).
+*        CALL METHOD io_http_client->request->if_http_entity~set_header_field
+*          EXPORTING
+*            name  = <ls_header>-name
+*            value = <ls_header>-value.
+*      ENDLOOP.
     ENDIF.
 
 
@@ -82,18 +88,11 @@ CLASS ZCL_BTOCS_RWS_REQUEST IMPLEMENTATION.
       get_logger( )->debug( |char data content set to client| ).
     ELSEIF mt_form_fields[] IS NOT INITIAL.
 * -------- form data
-      IF mv_form_field_encoding IS INITIAL.
-        get_logger( )->warning( |no form encoding found| ).
+      IF set_form_data_to_client( io_http_client ) EQ abap_false.
+        get_logger( )->warning( |set form fields data failed| ).
       ELSE.
-        io_http_client->request->set_formfield_encoding( mv_form_field_encoding ).
+        get_logger( )->debug( |form fields content set to client| ).
       ENDIF.
-
-      CALL METHOD io_http_client->request->if_http_entity~set_form_fields
-        EXPORTING
-          fields = mt_form_fields
-*         multivalue = 0
-        .
-      get_logger( )->debug( |form fields content set to client| ).
     ELSE.
 * -------- no content found
       get_logger( )->debug( |no content to set to client| ).
@@ -131,9 +130,9 @@ CLASS ZCL_BTOCS_RWS_REQUEST IMPLEMENTATION.
   ENDMETHOD.
 
 
-  method ZIF_BTOCS_RWS_REQUEST~SET_HEADER_FIELDS.
+  METHOD zif_btocs_rws_request~set_header_fields.
     mt_header = it_header.
-  endmethod.
+  ENDMETHOD.
 
 
   METHOD zif_btocs_rws_request~set_data_encoded.
@@ -215,14 +214,19 @@ CLASS ZCL_BTOCS_RWS_REQUEST IMPLEMENTATION.
   ENDMETHOD.
 
 
-  method ZIF_BTOCS_RWS_REQUEST~GET_FORM_FIELDS.
-    rt_fields = mt_form_fields.
-  endmethod.
+  METHOD zif_btocs_rws_request~get_form_fields.
+    LOOP AT mt_form_fields
+      ASSIGNING FIELD-SYMBOL(<ls_form>)
+      WHERE binary IS INITIAL.
+      APPEND INITIAL LINE TO rt_fields ASSIGNING FIELD-SYMBOL(<ls_field>).
+      MOVE-CORRESPONDING <ls_form> TO <ls_field>.
+    ENDLOOP.
+  ENDMETHOD.
 
 
-  method ZIF_BTOCS_RWS_REQUEST~GET_HEADER_FIELDS.
+  METHOD zif_btocs_rws_request~get_header_fields.
     rt_header = mt_header.
-  endmethod.
+  ENDMETHOD.
 
 
   METHOD zif_btocs_rws_request~get_query_params.
@@ -230,49 +234,130 @@ CLASS ZCL_BTOCS_RWS_REQUEST IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD zif_btocs_rws_request~set_form_data_type.
-    IF iv_content_type IS NOT INITIAL.
-      mv_content_type = iv_content_type.
-    ENDIF.
-    IF iv_form_field_encoding IS NOT INITIAL.
-      mv_form_field_encoding = iv_form_field_encoding.
-    ENDIF.
-  ENDMETHOD.
-
-
-  method ZIF_BTOCS_RWS_REQUEST~SET_FORM_FIELD.
+  METHOD zif_btocs_rws_request~set_form_field.
+*   check existing
     READ TABLE mt_form_fields ASSIGNING FIELD-SYMBOL(<ls_field>)
       WITH KEY name = iv_name.
     IF sy-subrc EQ 0.
       IF iv_overwrite EQ abap_false.
         RETURN.
       ENDIF.
-      <ls_field>-value = iv_value.
     ELSE.
+*   new data
       APPEND INITIAL LINE TO mt_form_fields ASSIGNING <ls_field>.
       <ls_field>-name  = iv_name.
       <ls_field>-value = iv_value.
     ENDIF.
 
+*     change or set values
+    <ls_field>-value  = iv_value.
+    IF iv_binary IS NOT INITIAL.
+      <ls_field>-binary         = iv_binary.
+      <ls_field>-content_type   = iv_content_type.
+      <ls_field>-filename       = iv_filename.
+    ENDIF.
+
     rv_success = abap_true.
-  endmethod.
+  ENDMETHOD.
 
 
   METHOD zif_btocs_rws_request~set_form_type.
     IF iv_content_type IS NOT INITIAL.
       mv_content_type = iv_content_type.
     ENDIF.
-    IF iv_form_field_encoding IS NOT INITIAL.
-      mv_form_field_encoding = iv_form_field_encoding.
-    ENDIF.
+    mv_form_field_encoding = iv_form_field_encoding.
   ENDMETHOD.
 
 
   METHOD zif_btocs_rws_request~set_form_type_urlencoded.
     zif_btocs_rws_request~set_form_type(
          iv_content_type        = 'application/x-www-form-urlencoded'
-         iv_form_field_encoding = if_http_entity=>co_formfield_encoding_encoded
+         iv_form_field_encoding = zif_btocs_rws_request=>c_form_encoding-urlencoded
     ).
+  ENDMETHOD.
 
+
+  METHOD set_form_data_to_client.
+
+* ------ check
+    IF mt_form_fields[] IS INITIAL.
+      get_logger( )->warning( |no form data found| ).
+      RETURN.
+    ENDIF.
+    DATA(lt_form_fields) = zif_btocs_rws_request~get_form_fields( ).
+
+* ------- set data
+    CASE mv_form_field_encoding.
+      WHEN zif_btocs_rws_request=>c_form_encoding-urlencoded.
+        io_http_client->request->set_formfield_encoding( zif_btocs_rws_request=>c_form_encoding-urlencoded ).
+        io_http_client->request->if_http_entity~set_form_fields( fields = lt_form_fields ).
+
+      WHEN zif_btocs_rws_request=>c_form_encoding-multipart_formdata.
+        io_http_client->request->set_formfield_encoding( zif_btocs_rws_request=>c_form_encoding-raw ).
+        IF mv_content_type IS INITIAL.
+          io_http_client->request->set_content_type( 'multipart/form-data' ).
+        ENDIF.
+
+        LOOP AT mt_form_fields ASSIGNING FIELD-SYMBOL(<ls_field>).
+
+          DATA(lo_part) = io_http_client->request->if_http_entity~add_multipart( ).
+          DATA(lv_filename)     = |file.bin|.
+          DATA(lv_content_type) = |application/octet-stream|.
+          DATA(lv_content_disp) = |form-data; name="{ <ls_field>-name }"|.
+
+          IF <ls_field>-binary IS INITIAL.
+            lo_part->set_cdata( <ls_field>-value ).
+          ELSE.
+            lo_part->set_data( <ls_field>-binary ).
+            IF <ls_field>-content_type IS NOT INITIAL.
+              lv_content_type = <ls_field>-content_type.
+            ENDIF.
+            IF <ls_field>-filename IS NOT INITIAL.
+              lv_filename = <ls_field>-filename.
+            ENDIF.
+            lv_content_disp = |form-data; name="{ <ls_field>-name }"; filename="{ lv_filename }";|.
+            lo_part->set_content_type( lv_content_type ).
+          ENDIF.
+
+          lo_part->set_header_field(
+            name  = |Content-Disposition|
+            value = lv_content_disp
+          ).
+        ENDLOOP.
+
+      WHEN OTHERS.
+        io_http_client->request->if_http_entity~set_form_fields( fields = lt_form_fields ).
+        get_logger( )->warning( |no form encoding found| ).
+    ENDCASE.
+
+
+*   result
+    get_logger( )->debug( |form data set to client| ).
+    rv_success = abap_true.
+
+  ENDMETHOD.
+
+
+  METHOD zif_btocs_rws_request~add_form_field_file.
+    rv_success = zif_btocs_rws_request~set_form_field(
+                   iv_name          = iv_name
+                   iv_binary        = iv_binary
+                   iv_filename      = iv_filename
+                   iv_content_type  = iv_content_type
+                   iv_overwrite     = abap_false
+                 ).
+  ENDMETHOD.
+
+
+  METHOD zif_btocs_rws_request~get_form_fields_with_bin.
+    rt_fields = mt_form_fields.
+  ENDMETHOD.
+
+
+  METHOD zif_btocs_rws_request~set_form_type_multipart.
+    zif_btocs_rws_request~set_form_type(
+         iv_content_type        = 'multipart/form-data'
+         iv_form_field_encoding = zif_btocs_rws_request=>c_form_encoding-multipart_formdata
+    ).
   ENDMETHOD.
 ENDCLASS.

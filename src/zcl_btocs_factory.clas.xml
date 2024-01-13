@@ -18,6 +18,16 @@
      <DESCRIPT>create a new instance of config manager</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
+     <CMPNAME>CREATE_CONVERT_UTIL</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>create an instance of convert utils</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CREATE_GUI_UTIL</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>create an instance of sapgui utils</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
      <CMPNAME>CREATE_INSTANCE</CMPNAME>
      <LANGU>E</LANGU>
      <DESCRIPT>create a new instance of given type</DESCRIPT>
@@ -64,6 +74,18 @@
      <SCONAME>RO_LOGGER</SCONAME>
      <LANGU>E</LANGU>
      <DESCRIPT>B-Tocs Logger Interface</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CREATE_CONVERT_UTIL</CMPNAME>
+     <SCONAME>RR_INSTANCE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>B-Tocs SAPGUI Utils</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CREATE_GUI_UTIL</CMPNAME>
+     <SCONAME>RR_INSTANCE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>B-Tocs SAPGUI Utils</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>CREATE_LOGGER</CMPNAME>

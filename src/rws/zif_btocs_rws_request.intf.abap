@@ -13,6 +13,14 @@ interface ZIF_BTOCS_RWS_REQUEST
   aliases SET_LOGGER
     for ZIF_BTOCS_UTIL_BASE~SET_LOGGER .
 
+  constants:
+    BEGIN OF c_form_encoding,
+      none               TYPE i VALUE 0,                 " not set
+      raw                TYPE i VALUE 1,                 " SAP form_encoding_raw
+      urlencoded         TYPE i VALUE 2,           " SAP form_encoding_encoded
+      multipart_formdata TYPE i VALUE 100, " added for multipart/form-data
+    END OF c_form_encoding .
+
   methods SET_CLIENT
     importing
       !IO_HTTP_CLIENT type ref to IF_HTTP_CLIENT
@@ -67,11 +75,22 @@ interface ZIF_BTOCS_RWS_REQUEST
       !IV_VALUE type DATA
     returning
       value(RV_SUCCESS) type ABAP_BOOL .
+  methods ADD_FORM_FIELD_FILE
+    importing
+      !IV_NAME type DATA
+      !IV_BINARY type XSTRING
+      !IV_FILENAME type STRING optional
+      !IV_CONTENT_TYPE type STRING optional
+    returning
+      value(RV_SUCCESS) type ABAP_BOOL .
   methods SET_FORM_FIELD
     importing
       !IV_NAME type DATA
-      !IV_VALUE type DATA
+      !IV_VALUE type DATA optional
       !IV_OVERWRITE type ABAP_BOOL default ABAP_FALSE
+      !IV_BINARY type XSTRING optional
+      !IV_CONTENT_TYPE type STRING optional
+      !IV_FILENAME type STRING optional
     returning
       value(RV_SUCCESS) type ABAP_BOOL .
   methods ADD_FORM_FIELDS
@@ -84,9 +103,13 @@ interface ZIF_BTOCS_RWS_REQUEST
   methods GET_FORM_FIELDS
     returning
       value(RT_FIELDS) type TIHTTPNVP .
+  methods GET_FORM_FIELDS_WITH_BIN
+    returning
+      value(RT_FIELDS) type ZBTOCS_T_FORM_DATA .
   methods SET_FORM_TYPE
     importing
       !IV_CONTENT_TYPE type STRING default 'application/x-www-form-urlencoded'
       !IV_FORM_FIELD_ENCODING type I default IF_HTTP_ENTITY=>CO_FORMFIELD_ENCODING_ENCODED .
   methods SET_FORM_TYPE_URLENCODED .
+  methods SET_FORM_TYPE_MULTIPART .
 endinterface.

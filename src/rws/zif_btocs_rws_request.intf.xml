@@ -17,6 +17,11 @@
      <DESCRIPT>set data</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
+     <CMPNAME>SET_FORM_TYPE_MULTIPART</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>&quot;multipart/form-data&quot;</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
      <CMPNAME>SET_FORM_TYPE_URLENCODED</CMPNAME>
      <LANGU>E</LANGU>
      <DESCRIPT> &apos;application/x-www-form-urlencoded&apos;</DESCRIPT>
@@ -28,6 +33,12 @@
      <SCONAME>IT_FIELDS</SCONAME>
      <LANGU>E</LANGU>
      <DESCRIPT>HTTP Framework (iHTTP) Table Name/Value Pairs</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_FORM_FIELDS</CMPNAME>
+     <SCONAME>RT_FIELDS</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>table of complex form data</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
      <CMPNAME>SET_CLIENT</CMPNAME>

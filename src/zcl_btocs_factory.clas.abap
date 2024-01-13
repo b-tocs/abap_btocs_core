@@ -6,6 +6,12 @@ public section.
 
   interfaces ZIF_BTOCS_C .
 
+  class-methods CREATE_CONVERT_UTIL
+    returning
+      value(RR_INSTANCE) type ref to ZIF_BTOCS_UTIL_CONVERT .
+  class-methods CREATE_GUI_UTIL
+    returning
+      value(RR_INSTANCE) type ref to ZIF_BTOCS_GUI_UTILS .
   class-methods CREATE_LOGGER
     returning
       value(RO_LOGGER) type ref to ZIF_BTOCS_UTIL_LOGGER .
@@ -101,5 +107,15 @@ CLASS ZCL_BTOCS_FACTORY IMPLEMENTATION.
 
   METHOD CREATE_VALUE_MANAGER.
     ro_logger ?= create_instance( 'ZIF_BTOCS_VALUE_MGR' ).
+  ENDMETHOD.
+
+
+  METHOD CREATE_CONVERT_UTIL.
+    rr_instance ?= create_instance( 'ZIF_BTOCS_UTIL_CONVERT' ).
+  ENDMETHOD.
+
+
+  METHOD CREATE_GUI_UTIL.
+    rr_instance ?= create_instance( 'ZIF_BTOCS_GUI_UTILS' ).
   ENDMETHOD.
 ENDCLASS.

@@ -15,7 +15,7 @@
     <SEOCOMPOTX>
      <CMPNAME>MT_FORM_FIELDS</CMPNAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>HTTP Framework (iHTTP) Table Name/Value Pairs</DESCRIPT>
+     <DESCRIPT>table of complex form data</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CMPNAME>MT_HEADER</CMPNAME>
@@ -28,6 +28,14 @@
      <DESCRIPT>HTTP Framework (iHTTP) Table Name/Value Pairs</DESCRIPT>
     </SEOCOMPOTX>
    </DESCRIPTIONS>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_FORM_DATA_TO_CLIENT</CMPNAME>
+     <SCONAME>IO_HTTP_CLIENT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>HTTP Client Abstraction</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
   </asx:values>
  </asx:abap>
 </abapGit>
