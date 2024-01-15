@@ -40,7 +40,7 @@ interface ZIF_BTOCS_RWS_CLIENT
   methods EXECUTE
     importing
       !IV_METHOD type DATA default 'POST'
-      !IO_RESPONSE type ref to ZIF_BTOCS_RWS_RESPONSE
+      !IO_RESPONSE type ref to ZIF_BTOCS_RWS_RESPONSE optional
     returning
       value(RO_RESPONSE) type ref to ZIF_BTOCS_RWS_RESPONSE .
   methods IS_CLIENT_INITIALIZED

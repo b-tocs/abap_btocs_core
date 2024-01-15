@@ -106,4 +106,20 @@ interface ZIF_BTOCS_GUI_UTILS
       !IV_FILENAME type STRING
     returning
       value(RV_MIMETYPE) type STRING .
+  methods GET_INPUT_WITH_CLIPBOARD
+    importing
+      !IV_CURRENT type DATA
+      !IV_CLIPBOARD type ABAP_BOOL default ABAP_TRUE
+      !IV_LONGTEXT type ABAP_BOOL default ABAP_TRUE
+    returning
+      value(RV_INPUT) type STRING .
+  methods GET_UPLOAD
+    importing
+      !IV_FILENAME type DATA
+    exporting
+      !EV_FILENAME type STRING
+      !EV_CONTENT_TYPE type STRING
+      value(EV_BINARY) type XSTRING
+    returning
+      value(RV_SUCCESS) type ABAP_BOOL .
 endinterface.

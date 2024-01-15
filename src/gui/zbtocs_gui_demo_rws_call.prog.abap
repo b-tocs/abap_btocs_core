@@ -14,14 +14,21 @@ PARAMETERS: p_meth TYPE zbtocs_option_http_method DEFAULT 'GET'.
 PARAMETERS: p_cntt TYPE zbtocs_content_type LOWER CASE.
 PARAMETERS: p_cont TYPE zbtocs_content LOWER CASE.
 SELECTION-SCREEN: ULINE.
+PARAMETERS: pclipbd AS CHECKBOX TYPE zbtocs_flag_clipboard_input DEFAULT 'X'.
 PARAMETERS: p_encod AS CHECKBOX TYPE zbtocs_flag_encode_data DEFAULT 'X'.
 PARAMETERS: p_trace AS CHECKBOX TYPE zbtocs_flag_display_trace DEFAULT 'X'.
 
 
+
 INITIALIZATION.
+* --------- report util
+  DATA(lo_gui_utils) = zcl_btocs_factory=>create_gui_util( ).
+  DATA(lo_logger)    = lo_gui_utils->get_logger( ).
+
+
 * --------- init client
   DATA(lo_ws_client) = zcl_btocs_factory=>create_web_service_client( ).
-  DATA(lo_logger)    = lo_ws_client->get_logger( ).
+  lo_ws_client->set_logger( lo_logger ).
 
 
 START-OF-SELECTION.
@@ -49,7 +56,12 @@ START-OF-SELECTION.
   IF lo_ws_client->is_client_initialized( ) EQ abap_true.
 
 * ---------- user input?
-    DATA(lv_content) = p_cont.
+    DATA(lv_content) = lo_gui_utils->get_input_with_clipboard(
+        iv_current   = p_cont
+        iv_clipboard = abap_true
+        iv_longtext  = abap_true
+    ).
+
     IF p_cntt IS NOT INITIAL
       AND lv_content IS INITIAL.
       cl_demo_input=>add_field(
@@ -78,7 +90,7 @@ START-OF-SELECTION.
 
 
 * ----------- execute
-    DATA(lo_response) = lo_ws_client->execute( p_meth ).
+    DATA(lo_response) = lo_ws_client->execute( iv_method = p_meth ).
     DATA(lv_response) = lo_response->get_content( ).
     DATA(lv_conttype) = lo_response->get_content_type( ).
 

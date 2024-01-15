@@ -483,4 +483,39 @@ CLASS ZCL_BTOCS_GUI_UTILS IMPLEMENTATION.
         ev_extension = ev_extension
     ).
   ENDMETHOD.
+
+
+  METHOD zif_btocs_gui_utils~get_input_with_clipboard.
+    rv_input = iv_current.
+    IF rv_input IS INITIAL.
+      IF iv_clipboard EQ abap_true.
+        rv_input = zif_btocs_gui_utils~clipboard_import_string( ).
+      ENDIF.
+
+      IF iv_longtext EQ abap_true AND rv_input IS INITIAL.
+        " TODO
+      ENDIF.
+    ENDIF.
+  ENDMETHOD.
+
+
+  METHOD zif_btocs_gui_utils~get_upload.
+
+    ev_binary = zif_btocs_gui_utils~gui_upload_bin(
+      EXPORTING
+        iv_filename  = iv_filename
+      IMPORTING
+        ev_filename  = ev_filename
+    ).
+
+    IF ev_binary IS INITIAL.
+      get_logger( )->error( |upload from gui client failed: { iv_filename }| ).
+      RETURN.
+    ENDIF.
+
+*   mimetype
+    ev_content_type = zif_btocs_gui_utils~get_mimetype_from_filename( ev_filename ).
+    rv_success = abap_true.
+
+  ENDMETHOD.
 ENDCLASS.
