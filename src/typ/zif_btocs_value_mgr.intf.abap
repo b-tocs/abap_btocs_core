@@ -44,6 +44,9 @@ interface ZIF_BTOCS_VALUE_MGR
       !IV_BOOLEAN type DATA optional
     returning
       value(RO_VALUE) type ref to ZIF_BTOCS_VALUE_BOOLEAN .
+  methods NEW_NULL
+    returning
+      value(RO_VALUE) type ref to ZIF_BTOCS_VALUE_BOOLEAN .
   methods GET_DEFAULT_JSON_OPTIONS
     returning
       value(RS_OPTION) type ZBTOCS_TYP_S_VALUE_OPTIONS .

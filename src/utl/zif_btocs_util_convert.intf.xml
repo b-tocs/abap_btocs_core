@@ -10,6 +10,14 @@
     <STATE>1</STATE>
     <UNICODE>X</UNICODE>
    </VSEOINTERF>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_FILENAME_MIMETYPE</CMPNAME>
+     <SCONAME>IV_FILENAME</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Internal header control</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
   </asx:values>
  </asx:abap>
 </abapGit>

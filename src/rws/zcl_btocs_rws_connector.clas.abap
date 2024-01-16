@@ -93,7 +93,7 @@ CLASS ZCL_BTOCS_RWS_CONNECTOR IMPLEMENTATION.
       get_logger( )->error( |unable to create new request - client is not initialized| ).
     ELSE.
       ro_request = mo_client->new_request( ).
-      get_logger( )->error( |new request for connector created from current client| ).
+      get_logger( )->debug( |new request for connector created from current client| ).
     ENDIF.
   ENDMETHOD.
 
@@ -143,4 +143,43 @@ CLASS ZCL_BTOCS_RWS_CONNECTOR IMPLEMENTATION.
     ENDIF.
 
   ENDMETHOD.
+
+
+  METHOD zif_btocs_rws_connector~execute_get.
+
+
+* -------- prepare response
+    DATA(lo_response) = COND #( WHEN io_response IS NOT INITIAL
+                                THEN io_response
+                                ELSE zif_btocs_rws_connector~new_response( ) ).
+
+* -------- prepare client
+    DATA(lo_client) = zcl_btocs_factory=>create_web_service_client( ).
+    lo_client->set_logger( get_logger( ) ).
+    IF lo_client->set_endpoint_by_url(
+         iv_url     = iv_url
+         iv_profile = iv_profile                 " Remote Web Service Profile
+       ) EQ abap_false.
+      get_logger( )->error( |init connector client for url { iv_url } failed| ).
+      RETURN.
+    ENDIF.
+
+
+* --------- get request
+    DATA(lo_request) = zcl_btocs_factory=>create_web_service_request( ).
+    lo_request->set_logger( get_logger( ) ).
+
+
+* -------- execute
+    ro_response = lo_client->execute(
+     iv_method   = 'GET'
+     io_response = lo_response
+    ).
+
+  ENDMETHOD.
+
+
+  method ZIF_BTOCS_RWS_CONNECTOR~NEW_GET_REQUEST.
+
+  endmethod.
 ENDCLASS.

@@ -64,4 +64,9 @@ interface ZIF_BTOCS_VALUE_STRUCTURE
     returning
       value(RV_EXISTS) type ABAP_BOOL .
   methods CLEAR .
+  methods GET_STRING
+    importing
+      !IV_NAME type DATA
+    returning
+      value(RV_STRING) type STRING .
 endinterface.

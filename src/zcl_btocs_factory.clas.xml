@@ -33,6 +33,11 @@
      <DESCRIPT>create a new instance of given type</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
+     <CMPNAME>CREATE_JSON_UTIL</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>create a new instance of json util</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
      <CMPNAME>CREATE_LOGGER</CMPNAME>
      <LANGU>E</LANGU>
      <DESCRIPT>create a new instance of logger</DESCRIPT>

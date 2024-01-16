@@ -246,4 +246,101 @@ CLASS ZCL_BTOCS_UTIL_CONVERT IMPLEMENTATION.
       IMPORTING
         output = rv_base64.
   ENDMETHOD.
+
+
+  METHOD zif_btocs_util_convert~get_filename_dots_count.
+    IF iv_filename CS '.'.
+      SPLIT iv_filename AT '.'
+        INTO TABLE DATA(lt_parts).
+      rv_count = lines( lt_parts ) - 1.
+    ENDIF.
+  ENDMETHOD.
+
+
+  method ZIF_BTOCS_UTIL_CONVERT~GET_FILENAME_MIMETYPE.
+    DATA lv_mimetype TYPE skwf_mime.
+    rv_mimetype = iv_default.
+
+    IF iv_filename IS NOT INITIAL.
+      CALL FUNCTION 'SKWF_MIMETYPE_OF_FILE_GET'
+        EXPORTING
+          filename = CONV skwf_filnm( iv_filename )
+*         X_USE_LOCAL_REGISTRY       =
+        IMPORTING
+          mimetype = lv_mimetype.
+
+      IF lv_mimetype IS NOT INITIAL.
+        rv_mimetype = lv_mimetype.
+      ENDIF.
+    ENDIF.
+  endmethod.
+
+
+  METHOD zif_btocs_util_convert~get_filename_parts.
+
+    rv_success = abap_true.
+
+* ------ split path
+    TRY.
+        cl_bcs_utilities=>split_path(
+          EXPORTING
+            iv_path = CONV string( iv_full )
+          IMPORTING
+            ev_path = ev_path
+            ev_name = ev_filename
+        ).
+
+        IF ev_filename IS INITIAL
+          AND ev_path CS '.'.
+          ev_filename = ev_path.
+          CLEAR ev_path.
+        ENDIF.
+
+      CATCH cx_bcs INTO DATA(lx_bcs). " BCS: General Exceptions
+        DATA(lv_error) = lx_bcs->get_text( ).
+        get_logger( )->error( |error while split path { iv_full } - { lv_error }| ).
+        ev_filename = iv_full. " workaround for full = filename
+        rv_success = abap_false.
+    ENDTRY.
+
+
+* --------- split filename
+    cl_bcs_utilities=>split_name(
+      EXPORTING
+        iv_name      = ev_filename
+*    iv_delimiter = gc_dot
+      IMPORTING
+        ev_name      = ev_name
+        ev_extension = ev_extension
+    ).
+
+  ENDMETHOD.
+
+
+  METHOD zif_btocs_util_convert~get_filename_separator.
+    IF iv_filepath CS '\'.
+      rv_separator = '\'.
+    ELSEIF iv_filepath = '/'.
+      rv_separator = '/'.
+    ELSE.
+      rv_separator = iv_default.
+    ENDIF.
+  ENDMETHOD.
+
+
+  METHOD zif_btocs_util_convert~get_filename_without_prefix.
+    rv_filename = iv_full.
+
+    IF iv_full IS NOT INITIAL.
+      DATA(lv_sep) = zif_btocs_util_convert~get_filename_separator( iv_filepath = iv_full ).
+      IF lv_sep IS NOT INITIAL.
+        SPLIT iv_full AT lv_sep
+          INTO TABLE DATA(lt_parts).
+        DATA(lv_lin) = lines( lt_parts ).
+        READ TABLE lt_parts INDEX lv_lin
+          ASSIGNING FIELD-SYMBOL(<lv_filename>).
+        rv_filename = <lv_filename>.
+      ENDIF.
+    ENDIF.
+  ENDMETHOD.
 ENDCLASS.

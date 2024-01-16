@@ -42,4 +42,11 @@ interface ZIF_BTOCS_RWS_CONNECTOR
       !IV_METHOD type DATA default 'POST'
     returning
       value(RO_RESPONSE) type ref to ZIF_BTOCS_RWS_RESPONSE .
+  methods EXECUTE_GET
+    importing
+      !IV_URL type STRING optional
+      !IO_RESPONSE type ref to ZIF_BTOCS_RWS_RESPONSE optional
+      !IV_PROFILE type ZBTOCS_RWS_PROFILE optional
+    returning
+      value(RO_RESPONSE) type ref to ZIF_BTOCS_RWS_RESPONSE .
 endinterface.

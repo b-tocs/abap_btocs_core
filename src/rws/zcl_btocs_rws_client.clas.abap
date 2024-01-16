@@ -103,8 +103,11 @@ CLASS ZCL_BTOCS_RWS_CLIENT IMPLEMENTATION.
       IF ro_response->is_logger_external( ) EQ abap_false.
         ro_response->set_logger( get_logger( ) ).
       ENDIF.
-      ro_response->set_reason( |unknwon error| ).
       ro_response->set_status_code( 500 ).
+      ro_response->set_reason(
+        iv_reason       = |unknown error|
+        iv_no_formward  = abap_true
+      ).
       get_logger( )->debug( |external response object was used| ).
     ELSE.
       ro_response = zcl_btocs_factory=>create_web_service_response( ).

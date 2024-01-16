@@ -36,7 +36,8 @@ interface ZIF_BTOCS_RWS_RESPONSE
       value(RV_BINARY) type XSTRING .
   methods SET_REASON
     importing
-      !IV_REASON type DATA .
+      !IV_REASON type DATA
+      !IV_NO_FORMWARD type ABAP_BOOL default ABAP_FALSE .
   methods SET_STATUS_CODE
     importing
       !IV_STATUS_CODE type I default 500 .
@@ -57,6 +58,8 @@ interface ZIF_BTOCS_RWS_RESPONSE
     returning
       value(RV_BINARY) type ABAP_BOOL .
   methods IS_JSON_RESPONSE
+    importing
+      !IV_PREPARE type ABAP_BOOL default ABAP_TRUE
     returning
       value(RV_JSON) type ABAP_BOOL .
   methods IS_JSON_OBJECT
@@ -68,4 +71,14 @@ interface ZIF_BTOCS_RWS_RESPONSE
   methods IS_HEADER_FIELDS
     returning
       value(RV_HEADER_FIELDS) type ABAP_BOOL .
+  methods GET_VALUES_FROM_PARSED_JSON
+    returning
+      value(RO_VALUE) type ref to ZIF_BTOCS_VALUE .
+  methods GET_BINARY_AS_FILE
+    importing
+      !IV_FILENAME type STRING
+      !IV_SHORT_FILENAME type ABAP_BOOL default ABAP_TRUE
+      !IV_DETECT_MIMETYPE type ABAP_BOOL default ABAP_TRUE
+    returning
+      value(RS_FILE) type ZBTOCS_S_FILE_DATA .
 endinterface.

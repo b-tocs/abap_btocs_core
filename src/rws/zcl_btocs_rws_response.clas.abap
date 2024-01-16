@@ -100,8 +100,30 @@ CLASS ZCL_BTOCS_RWS_RESPONSE IMPLEMENTATION.
 
 
   METHOD zif_btocs_rws_response~is_json_response.
+
+* -------- quick check
+    IF mv_content IS INITIAL
+      OR NOT mv_content CA '{['
+      OR NOT mv_content CA '}]'.
+      RETURN.
+    ENDIF.
+
+* --------
     DATA(lv_content) = mv_content.
-    CONDENSE lv_content.
+    IF iv_prepare EQ abap_true.
+      CONDENSE lv_content.
+      "   clear ending chars
+      DATA(lv_off_end) = strlen( lv_content ) - 1.
+      WHILE lv_off_end > 2.
+        IF NOT lv_content+lv_off_end(1) CA ']}'.
+          lv_content = lv_content(lv_off_end).
+          SUBTRACT 1 FROM lv_off_end.
+        ELSE.
+          EXIT. " from while
+        ENDIF.
+      ENDWHILE.
+    ENDIF.
+
     DATA(lv_len) = strlen( lv_content ).
     DATA(lv_last) = lv_len - 1.
 
@@ -109,6 +131,9 @@ CLASS ZCL_BTOCS_RWS_RESPONSE IMPLEMENTATION.
       AND lv_content(1) CA '{['
       AND lv_content+lv_last(1) CA '}]'.
       rv_json = abap_true.
+      IF iv_prepare EQ abap_true.
+        mv_content = lv_content.
+      ENDIF.
     ENDIF.
   ENDMETHOD.
 
@@ -180,12 +205,73 @@ CLASS ZCL_BTOCS_RWS_RESPONSE IMPLEMENTATION.
   METHOD zif_btocs_rws_response~set_reason.
     IF iv_reason IS NOT INITIAL.
       mv_reason = iv_reason.
-      get_logger( )->error( |Reason: { mv_reason }| ).
+      IF iv_no_formward EQ abap_false.
+        get_logger( )->error( |Reason: { mv_reason }| ).
+      ENDIF.
     ENDIF.
   ENDMETHOD.
 
 
   METHOD zif_btocs_rws_response~set_status_code.
     mv_status_code = iv_status_code.
+  ENDMETHOD.
+
+
+  METHOD zif_btocs_rws_response~get_binary_as_file.
+
+* ------ check
+    IF  zif_btocs_rws_response~is_binary( ) EQ abap_false.
+      get_logger( )->error( |no binary content| ).
+      RETURN.
+    ENDIF.
+
+* ----- prepare result
+    rs_file-binary   = zif_btocs_rws_response~get_binary( ).
+
+    rs_file-filename = COND #( WHEN iv_filename IS NOT INITIAL
+                               THEN iv_filename
+                               ELSE |file.bin| ).
+
+    rs_file-mimetype = zif_btocs_rws_response~get_content_type( ).
+    IF rs_file-mimetype IS INITIAL.
+      rs_file-mimetype = 'appliction/octet-stream'.
+    ENDIF.
+
+
+* ----- post preparations
+    DATA(lo_util) = zcl_btocs_factory=>create_convert_util( ).
+
+    IF iv_short_filename = abap_true.
+      rs_file-filename = lo_util->get_filename_without_prefix( iv_full = rs_file-filename ).
+    ENDIF.
+
+    IF iv_detect_mimetype EQ abap_true.
+      DATA(lv_mimetype) = lo_util->get_filename_mimetype( rs_file-filename ).
+      IF lv_mimetype IS NOT INITIAL.
+        rs_file-mimetype = lv_mimetype.
+        get_logger( )->debug( |mimetype '{ lv_mimetype }' determined| ).
+      ENDIF.
+    ENDIF.
+
+
+  ENDMETHOD.
+
+
+  METHOD zif_btocs_rws_response~get_values_from_parsed_json.
+* ------- check
+    IF zif_btocs_rws_response~is_json_response( ) EQ abap_false.
+      get_logger( )->error( |invalid json content| ).
+      RETURN.
+    ENDIF.
+
+* ------- transform
+    DATA(lo_json_util) = zcl_btocs_factory=>create_json_util( ).
+    lo_json_util->set_logger( get_logger( ) ).
+    DATA(lo_parser)    = lo_json_util->new_parser( ).
+    DATA(lo_json)      = lo_parser->parse( mv_content ).
+
+* ------- set return
+    ro_value ?= lo_json.
+
   ENDMETHOD.
 ENDCLASS.

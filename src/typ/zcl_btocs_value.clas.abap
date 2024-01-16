@@ -6,6 +6,7 @@ class ZCL_BTOCS_VALUE definition
 public section.
 
   interfaces ZIF_BTOCS_VALUE .
+  interfaces ZIF_BTOCS_JSON .
 protected section.
 
   data MO_MGR type ref to ZIF_BTOCS_VALUE_MGR .
@@ -188,5 +189,60 @@ CLASS ZCL_BTOCS_VALUE IMPLEMENTATION.
     CLEAR mo_object.
     CREATE DATA mr_data TYPE string.
     mr_data->* = iv_string.
+  ENDMETHOD.
+
+
+  method ZIF_BTOCS_JSON~GET_DATA.
+    lr_data = mr_data.
+  endmethod.
+
+
+  METHOD zif_btocs_json~get_data_type.
+    rv_type = zif_btocs_json~data_type.
+  ENDMETHOD.
+
+
+  METHOD zif_btocs_json~is_null.
+    IF mr_data IS INITIAL
+      AND mo_object IS INITIAL.
+      rv_null = abap_true.
+    ENDIF.
+  ENDMETHOD.
+
+
+  METHOD zif_btocs_json~to_string.
+    rv_string = zif_btocs_value~render(
+*                  iv_name     =
+*                  iv_format   =
+*                  iv_level    =
+                  iv_enclosed = abap_true
+                ).
+  ENDMETHOD.
+
+
+  METHOD zif_btocs_value~get_array_value.
+    TRY.
+        ro_array ?= me.
+      CATCH cx_root INTO DATA(lxc_exc).
+        DATA(lv_error) = lxc_exc->get_text( ).
+        get_logger( )->error( |error while determine array value: { lv_error }| ).
+    ENDTRY.
+  ENDMETHOD.
+
+
+  METHOD zif_btocs_value~get_string.
+    IF mr_data IS NOT INITIAL.
+      rv_string = CONV string( mr_data->* ).
+    ENDIF.
+  ENDMETHOD.
+
+
+  METHOD zif_btocs_value~get_structure_value.
+    TRY.
+        ro_structure ?= me.
+      CATCH cx_root INTO DATA(lxc_exc).
+        DATA(lv_error) = lxc_exc->get_text( ).
+        get_logger( )->error( |error while determine structure value: { lv_error }| ).
+    ENDTRY.
   ENDMETHOD.
 ENDCLASS.

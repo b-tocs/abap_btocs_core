@@ -416,7 +416,8 @@ CLASS ZCL_BTOCS_GUI_UTILS IMPLEMENTATION.
 
 
 * ---------- spit filename
-    ZIF_BTOCS_GUI_UTILS~split_filename(
+    DATA(lo_conv_util) = zcl_btocs_factory=>create_convert_util( ).
+    lo_conv_util->get_filename_parts(
       EXPORTING
         iv_full      = CONV string( iv_filename )
       IMPORTING
@@ -453,38 +454,6 @@ CLASS ZCL_BTOCS_GUI_UTILS IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD zif_btocs_gui_utils~split_filename.
-    TRY.
-        cl_bcs_utilities=>split_path(
-          EXPORTING
-            iv_path = CONV string( iv_full )
-          IMPORTING
-            ev_path = ev_path
-            ev_name = ev_filename
-        ).
-
-        IF ev_filename IS INITIAL
-          AND ev_path CS '.'.
-          ev_filename = ev_path.
-          CLEAR ev_path.
-        ENDIF.
-
-      CATCH cx_bcs. " BCS: General Exceptions
-        ev_filename = iv_full. " workaround for full = filename
-    ENDTRY.
-
-
-    cl_bcs_utilities=>split_name(
-      EXPORTING
-        iv_name      = ev_filename
-*    iv_delimiter = gc_dot
-      IMPORTING
-        ev_name      = ev_name
-        ev_extension = ev_extension
-    ).
-  ENDMETHOD.
-
-
   METHOD zif_btocs_gui_utils~get_input_with_clipboard.
     rv_input = iv_current.
     IF rv_input IS INITIAL.
@@ -514,8 +483,151 @@ CLASS ZCL_BTOCS_GUI_UTILS IMPLEMENTATION.
     ENDIF.
 
 *   mimetype
-    ev_content_type = zif_btocs_gui_utils~get_mimetype_from_filename( ev_filename ).
+    DATA(lo_conv_util) = zcl_btocs_factory=>create_convert_util( ).
+    ev_content_type = lo_conv_util->get_filename_mimetype( ev_filename ).
+
     rv_success = abap_true.
+
+  ENDMETHOD.
+
+
+  METHOD zif_btocs_gui_utils~gui_execute_file_locally.
+
+* ----------------- checks
+    IF is_file_data-filename IS INITIAL
+      OR is_file_data-binary IS INITIAL.
+      get_logger( )->error( |invalid file data to execute on client| ).
+      RETURN.
+    ENDIF.
+    DATA(ls_file_data) = is_file_data.
+
+* ================= get directory
+* ---------
+    DATA(lv_dir) = ||.
+    DATA(lv_sep) = '\'.
+    cl_gui_frontend_services=>get_file_separator(
+      CHANGING
+        file_separator       = lv_sep
+      EXCEPTIONS
+        not_supported_by_gui = 1
+        error_no_gui         = 2
+        cntl_error           = 3
+        OTHERS               = 4
+    ).
+    IF sy-subrc <> 0.
+      get_logger( )->warning( |no file separator determined. errors can be occur| ).
+    ENDIF.
+
+* --------- get temp dir
+    cl_gui_frontend_services=>get_temp_directory(
+      CHANGING
+        temp_dir             = lv_dir                 " Temporary Directory
+      EXCEPTIONS
+        cntl_error           = 1                " Control error
+        error_no_gui         = 2                " No GUI available
+        not_supported_by_gui = 3                " GUI does not support this
+        OTHERS               = 4
+    ).
+    cl_gui_cfw=>flush( ).
+
+* -------- get workdir
+    IF sy-subrc <> 0
+      OR lv_dir IS INITIAL
+      OR iv_workdir EQ abap_true.
+
+      cl_gui_frontend_services=>get_sapgui_workdir(
+        CHANGING
+          sapworkdir            = lv_dir
+        EXCEPTIONS
+          get_sapworkdir_failed = 1                " Registry Error
+          cntl_error            = 2                " Control error
+          error_no_gui          = 3                " No GUI available
+          not_supported_by_gui  = 4                " GUI does not support this
+          OTHERS                = 5
+      ).
+    ENDIF.
+
+    IF lv_dir IS INITIAL.
+      get_logger( )->warning( |no directory determined. errors can be occur| ).
+    ENDIF.
+
+* ================ download and execute
+*   prepare filename
+    DATA(lo_conv_util) = zcl_btocs_factory=>create_convert_util( ).
+    DATA(lv_filename) = lo_conv_util->get_filename_without_prefix( ls_file_data-filename ).
+
+    DATA(lv_filepath) = ||.
+    IF iv_with_timestamp EQ abap_true.
+      lv_filepath = |{ lv_dir }{ lv_sep }{ sy-datum }_{ sy-uzeit }_{ lv_filename }|.
+    ELSE.
+      lv_filepath = |{ lv_dir }{ lv_sep }{ lv_filename }|.
+    ENDIF.
+    get_logger( )->debug( |local filename prepared: { lv_filepath }| ).
+
+*   download
+    IF zif_btocs_gui_utils~gui_download_bin(
+          iv_filename = lv_filepath
+          iv_file     = ls_file_data-binary
+      ) EQ abap_false.
+      get_logger( )->error( |download file to gui client failed ({ lv_filepath })| ).
+    ELSE.
+* -------- open file
+      get_logger( )->debug( |filed downloaded  to { lv_filepath }| ).
+      ev_filename = lv_filepath.
+      DATA(lv_synchron) = COND #( WHEN iv_wait_and_delete EQ abap_true
+                                  THEN abap_true
+                                  ELSE abap_false ).
+      rv_success = abap_true.
+      cl_gui_frontend_services=>execute(
+        EXPORTING
+          document               = lv_filepath                  " Path+Name to Document
+          maximized              = CONV string( iv_maximized )                 " Show Window Maximized
+          synchronous            = CONV string( lv_synchron )                " When 'X': Runs the Application in Synchronous Mode
+          operation              = 'OPEN'           " Reserved: Verb for ShellExecute
+        EXCEPTIONS
+          cntl_error             = 1                " Control error
+          error_no_gui           = 2                " No GUI available
+          bad_parameter          = 3                " Incorrect parameter combination
+          file_not_found         = 4                " File not found
+          path_not_found         = 5                " Path not found
+          file_extension_unknown = 6                " Could not find application for specified extension
+          error_execute_failed   = 7                " Could not execute application or document
+          synchronous_failed     = 8                " Cannot Call Application Synchronously
+          not_supported_by_gui   = 9                " GUI does not support this
+          OTHERS                 = 10
+      ).
+      IF sy-subrc <> 0.
+        get_logger( )->error( |error while open local file { lv_filepath }| ).
+        rv_success = abap_false.
+      ENDIF.
+
+
+* --------- cleanup
+      IF iv_wait_and_delete EQ abap_true.
+        DATA lv_rc TYPE i.
+        cl_gui_frontend_services=>file_delete(
+          EXPORTING
+            filename             = lv_filepath                " Name of the file to be deleted
+          CHANGING
+            rc                   = lv_rc                  " Return Code
+          EXCEPTIONS
+            file_delete_failed   = 1                " Could not delete file
+            cntl_error           = 2                " Control error
+            error_no_gui         = 3                " Error: No GUI
+            file_not_found       = 4                " File not found
+            access_denied        = 5                " Access denied
+            unknown_error        = 6                " Unknown error
+            not_supported_by_gui = 7                " GUI does not support this
+            wrong_parameter      = 8                " Wrong parameter
+            OTHERS               = 9
+        ).
+        IF sy-subrc = 0 AND lv_rc = 0.
+          get_logger( )->debug( |temp file deleted:  { lv_filepath }| ).
+        ELSE.
+          get_logger( )->warning( |temp file not deleted:  { lv_filepath }| ).
+        ENDIF.
+      ENDIF.
+    ENDIF.
 
   ENDMETHOD.
 ENDCLASS.

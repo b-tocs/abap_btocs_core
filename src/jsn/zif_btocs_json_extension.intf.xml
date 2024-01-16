@@ -3,21 +3,13 @@
  <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
   <asx:values>
    <VSEOINTERF>
-    <CLSNAME>ZIF_BTOCS_GUI_UTILS</CLSNAME>
+    <CLSNAME>ZIF_BTOCS_JSON_EXTENSION</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>B-Tocs SAPGUI Utils</DESCRIPT>
+    <DESCRIPT>B-Tocs JSON Extension</DESCRIPT>
     <EXPOSURE>2</EXPOSURE>
     <STATE>1</STATE>
     <UNICODE>X</UNICODE>
    </VSEOINTERF>
-   <DESCRIPTIONS_SUB>
-    <SEOSUBCOTX>
-     <CMPNAME>GUI_EXECUTE_FILE_LOCALLY</CMPNAME>
-     <SCONAME>IS_FILE_DATA</SCONAME>
-     <LANGU>E</LANGU>
-     <DESCRIPT>data of an file</DESCRIPT>
-    </SEOSUBCOTX>
-   </DESCRIPTIONS_SUB>
   </asx:values>
  </asx:abap>
 </abapGit>

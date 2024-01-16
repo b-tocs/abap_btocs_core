@@ -53,7 +53,9 @@ CLASS ZCL_BTOCS_RWS_REQUEST IMPLEMENTATION.
 
 * ------ set content type
     IF mv_content_type IS INITIAL.
-      io_http_client->request->if_http_entity~set_content_type( 'application/json' ).
+      IF mv_content IS NOT INITIAL.
+        io_http_client->request->if_http_entity~set_content_type( 'application/json' ).
+      ENDIF.
     ELSE.
       io_http_client->request->if_http_entity~set_content_type( mv_content_type ).
     ENDIF.

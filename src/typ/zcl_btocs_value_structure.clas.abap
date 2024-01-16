@@ -98,4 +98,14 @@ CLASS ZCL_BTOCS_VALUE_STRUCTURE IMPLEMENTATION.
         get_logger( )->error( |unknown render format for structure| ).
     ENDCASE.
   ENDMETHOD.
+
+
+  METHOD zif_btocs_value_structure~get_string.
+    IF zif_btocs_value_structure~has_name( iv_name ) EQ abap_false.
+      RETURN.
+    ELSE.
+      DATA(lo_value) = zif_btocs_value_structure~get( iv_name ).
+      rv_string = lo_value->get_string( ).
+    ENDIF.
+  ENDMETHOD.
 ENDCLASS.

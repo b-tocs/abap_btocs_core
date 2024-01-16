@@ -84,4 +84,37 @@ interface ZIF_BTOCS_UTIL_CONVERT
       !IV_XSTRING type XSTRING
     returning
       value(RV_BASE64) type STRING .
+* ========== filename and path utils
+  methods GET_FILENAME_WITHOUT_PREFIX
+    importing
+      !IV_FULL type STRING
+    returning
+      value(RV_FILENAME) type STRING .
+  methods GET_FILENAME_SEPARATOR
+    importing
+      !IV_FILEPATH type STRING
+      !IV_DEFAULT type STRING default '/'
+    returning
+      value(RV_SEPARATOR) type STRING .
+  methods GET_FILENAME_MIMETYPE
+    importing
+      !IV_FILENAME type STRING
+      !IV_DEFAULT type STRING optional
+    returning
+      value(RV_MIMETYPE) type STRING .
+  methods GET_FILENAME_PARTS
+    importing
+      !IV_FULL type DATA
+    exporting
+      !EV_PATH type STRING
+      !EV_FILENAME type STRING
+      !EV_EXTENSION type STRING
+      !EV_NAME type STRING
+    returning
+      value(RV_SUCCESS) type ABAP_BOOL .
+  methods GET_FILENAME_DOTS_COUNT
+    importing
+      !IV_FILENAME type STRING
+    returning
+      value(RV_COUNT) type I .
 endinterface.

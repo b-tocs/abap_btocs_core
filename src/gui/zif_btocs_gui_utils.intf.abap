@@ -49,14 +49,6 @@ interface ZIF_BTOCS_GUI_UTILS
       !IV_FILE type STRING
     returning
       value(RV_SUCCESS) type ABAP_BOOL .
-  methods SPLIT_FILENAME
-    importing
-      !IV_FULL type DATA
-    exporting
-      !EV_PATH type STRING
-      !EV_FILENAME type STRING
-      !EV_EXTENSION type STRING
-      !EV_NAME type STRING .
 * ============== clipboard
   methods CLIPBOARD_IMPORT_STRING
     importing
@@ -101,11 +93,6 @@ interface ZIF_BTOCS_GUI_UTILS
       !IV_DYNFLD type DATA
     returning
       value(RV_SUCCESS) type ABAP_BOOL .
-  methods GET_MIMETYPE_FROM_FILENAME
-    importing
-      !IV_FILENAME type STRING
-    returning
-      value(RV_MIMETYPE) type STRING .
   methods GET_INPUT_WITH_CLIPBOARD
     importing
       !IV_CURRENT type DATA
@@ -120,6 +107,17 @@ interface ZIF_BTOCS_GUI_UTILS
       !EV_FILENAME type STRING
       !EV_CONTENT_TYPE type STRING
       value(EV_BINARY) type XSTRING
+    returning
+      value(RV_SUCCESS) type ABAP_BOOL .
+  methods GUI_EXECUTE_FILE_LOCALLY
+    importing
+      !IS_FILE_DATA type ZBTOCS_S_FILE_DATA
+      !IV_WAIT_AND_DELETE type ABAP_BOOL default ABAP_TRUE
+      !IV_WORKDIR type ABAP_BOOL default ABAP_FALSE
+      !IV_MAXIMIZED type ABAP_BOOL default ABAP_FALSE
+      !IV_WITH_TIMESTAMP type ABAP_BOOL default ABAP_TRUE
+    exporting
+      !EV_FILENAME type STRING
     returning
       value(RV_SUCCESS) type ABAP_BOOL .
 endinterface.

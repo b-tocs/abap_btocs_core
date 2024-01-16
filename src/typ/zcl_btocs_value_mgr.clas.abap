@@ -98,4 +98,12 @@ CLASS ZCL_BTOCS_VALUE_MGR IMPLEMENTATION.
     ro_value->set_manager( me ).
     ro_value->set_string( iv_number ).
   endmethod.
+
+
+  METHOD zif_btocs_value_mgr~new_null.
+* ------ create object
+    ro_value ?= zcl_btocs_factory=>create_instance( 'ZIF_BTOCS_VALUE' ).
+    ro_value->set_logger( get_logger( ) ).
+    ro_value->set_manager( me ).
+  ENDMETHOD.
 ENDCLASS.

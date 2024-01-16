@@ -65,4 +65,13 @@ interface ZIF_BTOCS_VALUE
       !IV_ENCLOSED type ABAP_BOOL default ABAP_TRUE
     returning
       value(RV_STRING) type STRING .
+  methods GET_ARRAY_VALUE
+    returning
+      value(RO_ARRAY) type ref to ZIF_BTOCS_VALUE_ARRAY .
+  methods GET_STRUCTURE_VALUE
+    returning
+      value(RO_STRUCTURE) type ref to ZIF_BTOCS_VALUE_STRUCTURE .
+  methods GET_STRING
+    returning
+      value(RV_STRING) type STRING .
 endinterface.
