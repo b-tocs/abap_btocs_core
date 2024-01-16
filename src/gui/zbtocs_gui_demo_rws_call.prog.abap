@@ -7,16 +7,17 @@ REPORT zbtocs_gui_demo_rws_call.
 
 * ------- interface
 PARAMETERS: p_rfc TYPE rfcdest.
-PARAMETERS: p_url TYPE mwc_url LOWER CASE.
+PARAMETERS: p_url TYPE zbtocs_url LOWER CASE.
 PARAMETERS: p_prf TYPE zbtocs_rws_profile.
 SELECTION-SCREEN: ULINE.
 PARAMETERS: p_meth TYPE zbtocs_option_http_method DEFAULT 'GET'.
 PARAMETERS: p_cntt TYPE zbtocs_content_type LOWER CASE.
 PARAMETERS: p_cont TYPE zbtocs_content LOWER CASE.
 SELECTION-SCREEN: ULINE.
-PARAMETERS: pclipbd AS CHECKBOX TYPE zbtocs_flag_clipboard_input DEFAULT 'X'.
-PARAMETERS: p_encod AS CHECKBOX TYPE zbtocs_flag_encode_data DEFAULT 'X'.
-PARAMETERS: p_trace AS CHECKBOX TYPE zbtocs_flag_display_trace DEFAULT 'X'.
+PARAMETERS: p_clipb AS CHECKBOX TYPE zbtocs_flag_clipboard_input  DEFAULT 'X'.
+PARAMETERS: p_encod AS CHECKBOX TYPE zbtocs_flag_encode_data      DEFAULT 'X'.
+PARAMETERS: p_proto AS CHECKBOX TYPE zbtocs_flag_display_trace    DEFAULT 'X'.
+PARAMETERS: p_trace AS CHECKBOX TYPE zbtocs_flag_display_trace    DEFAULT 'X'.
 
 
 
@@ -58,7 +59,7 @@ START-OF-SELECTION.
 * ---------- user input?
     DATA(lv_content) = lo_gui_utils->get_input_with_clipboard(
         iv_current   = p_cont
-        iv_clipboard = abap_true
+        iv_clipboard = p_clipb
         iv_longtext  = abap_true
     ).
 
@@ -107,11 +108,15 @@ START-OF-SELECTION.
 END-OF-SELECTION.
 
 * ------------ cleanup
-  DATA(lt_msg) = lo_logger->get_messages( ).
+  DATA(lt_msg) = lo_logger->get_messages(
+    iv_no_trace = COND #( WHEN p_trace EQ abap_true
+                          THEN abap_false
+                          ELSE abap_true )
+  ).
   lo_ws_client->destroy( ).
 
 * ------------ display trace
-  IF p_trace = abap_true
+  IF p_proto = abap_true
     AND lt_msg[] IS NOT INITIAL.
     cl_demo_output=>begin_section( title = |Trace| ).
     cl_demo_output=>write_data(
