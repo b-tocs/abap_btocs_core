@@ -214,18 +214,7 @@ CLASS ZCL_BTOCS_RWS_CLIENT IMPLEMENTATION.
       IMPORTING
         client                     = mo_client                " HTTP Client Abstraction
       EXCEPTIONS
-        argument_not_found         = 1                " Connection parameter (destination) not available
-        destination_not_found      = 2                " Destination was not found
-        destination_no_authority   = 3                " No Authorization to Use HTTP Destination
-        plugin_not_active          = 4                " HTTP/HTTPS communication not available
-        internal_error             = 5                " Internal error (e.g. name too long)
-        oa2c_set_token_error       = 6                " General error when setting the OAuth token
-        oa2c_missing_authorization = 7
-        oa2c_invalid_config        = 8
-        oa2c_invalid_parameters    = 9
-        oa2c_invalid_scope         = 10
-        oa2c_invalid_grant         = 11
-        OTHERS                     = 12
+        OTHERS                     = 99
     ).
     IF sy-subrc <> 0.
       get_logger( )->error( |error while initializing client for rfc { iv_rfc }| ).
@@ -280,18 +269,6 @@ CLASS ZCL_BTOCS_RWS_CLIENT IMPLEMENTATION.
       IMPORTING
         client                     = mo_client                  " HTTP Client Abstraction
       EXCEPTIONS
-*        argument_not_found         = 1                " Communication parameter (host or service) not available
-*        plugin_not_active          = 2                " HTTP/HTTPS communication not available
-*        internal_error             = 3                " Internal error (e.g. name too long)
-*        pse_not_found              = 4                " PSE not found
-*        pse_not_distrib            = 5                " PSE not distributed
-*        pse_errors                 = 6                " General PSE error
-*        oa2c_set_token_error       = 7                " General error when setting OAuth token
-*        oa2c_missing_authorization = 8
-*        oa2c_invalid_config        = 9
-*        oa2c_invalid_parameters    = 10
-*        oa2c_invalid_scope         = 11
-*        oa2c_invalid_grant         = 12
         OTHERS                     = 13
     ).
     IF sy-subrc <> 0.
