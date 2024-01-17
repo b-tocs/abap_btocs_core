@@ -1,10 +1,10 @@
 # B-Tocs ABAP SDK
+![Bride To Other Cool Stuff](res/btocs_logo_800x340_transparent.gif)
 
 ## Summary 
 
 Welcome to the B-Tocs ABAP SDK. With this ABAP extension your SAP ABAP Server can connect to other cool stuff.
 
-![Bride To Other Cool Stuff](res/btocs_logo_800x340_transparent.gif)
 
 This ABAP package is an free to use ABAP at your own risk.  You can install it via [abapGit](https://www.abapgit.org).
 See the [Youtube Channel](https://youtube.com/channel/UCk4K1ZKPW4sdngJPcYeHJCA) for videos regarding this ABAP addon and the available Plugins.
@@ -14,14 +14,21 @@ See the [Youtube Channel](https://youtube.com/channel/UCk4K1ZKPW4sdngJPcYeHJCA) 
 ```mermaid
 flowchart LR
     subgraph sap["SAP ABAP System"]
-    
+        sap_bf["SAP Business Functions"]
         subgraph sdk["B-Tocs SDK"]
             plugin1
             plugin2
             plugin3
             plugin4
             plugin5
+            sdkcore
+            sdkcore-->plugin1
+            sdkcore-->plugin2
+            sdkcore-->plugin3
+            sdkcore-->plugin4
+            sdkcore-->plugin5
         end
+        sap_bf-->sdkcore
     end
 
     subgraph cloud-native-world["Cloud Native World"]
