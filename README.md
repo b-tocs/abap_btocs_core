@@ -1,12 +1,12 @@
 # B-Tocs ABAP SDK
-![Bride To Other Cool Stuff](res/btocs_logo_800x340_transparent.gif)
+![Bride To Other Cool Stuff](res/btocs_logo.gif)
 
 ## Summary 
 
 Welcome to the B-Tocs ABAP SDK. With this ABAP extension your SAP ABAP Server can connect to other cool stuff.
 
+This ABAP package is a free to use at your own risk.  You can install it via [abapGit](https://www.abapgit.org).
 
-This ABAP package is an free to use ABAP at your own risk.  You can install it via [abapGit](https://www.abapgit.org).
 See the [Youtube Channel](https://youtube.com/channel/UCk4K1ZKPW4sdngJPcYeHJCA) for videos regarding this ABAP addon and the available Plugins.
 
 ## Architecture
@@ -66,11 +66,8 @@ flowchart LR
 SAP ABAP from 7.40 until current S/4 HANA on premise releases (e.g. 7.5x)
 
 ## Known Issues
-
-- 
-
+- SSL - SAP Basis issue depending on remote certificates in older systems
 
 
-
-
+---
 last modified: 17.01.2024
