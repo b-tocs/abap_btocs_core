@@ -1,21 +1,21 @@
-interface ZIF_BTOCS_JSON
-  public .
+INTERFACE zif_btocs_json
+  PUBLIC .
 
 
-  data DATA_TYPE type ZBTOCS_JSON_TYPE .
+  DATA data_type TYPE zbtocs_json_type .
 
-  methods GET_DATA_TYPE
-    returning
-      value(RV_TYPE) type /CEX/JMP_JSON_DATA_TYPE .
-  methods TO_STRING
-    importing
-      !IV_ENCLOSING type ABAP_BOOL default ABAP_TRUE
-    returning
-      value(RV_STRING) type STRING .
-  methods IS_NULL
-    returning
-      value(RV_NULL) type ABAP_BOOL .
-  methods GET_DATA
-    returning
-      value(LR_DATA) type ref to DATA .
-endinterface.
+  METHODS get_data_type
+    RETURNING
+      VALUE(rv_type) TYPE zbtocs_json_type .
+  METHODS to_string
+    IMPORTING
+      !iv_enclosing    TYPE abap_bool DEFAULT abap_true
+    RETURNING
+      VALUE(rv_string) TYPE string .
+  METHODS is_null
+    RETURNING
+      VALUE(rv_null) TYPE abap_bool .
+  METHODS get_data
+    RETURNING
+      VALUE(lr_data) TYPE REF TO data .
+ENDINTERFACE.
