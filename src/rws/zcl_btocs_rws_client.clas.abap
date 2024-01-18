@@ -550,4 +550,12 @@ CLASS ZCL_BTOCS_RWS_CLIENT IMPLEMENTATION.
     mv_api_key = iv_key.
     get_logger( )->debug( |api key set manually| ).
   endmethod.
+
+
+  METHOD zif_btocs_rws_client~execute_get.
+    ro_response = zif_btocs_rws_client~execute(
+        iv_method   = 'GET'
+        io_response = io_response
+    ).
+  ENDMETHOD.
 ENDCLASS.
