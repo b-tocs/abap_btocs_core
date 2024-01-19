@@ -6,22 +6,23 @@ CLASS zcl_btocs_rws_request DEFINITION
   PUBLIC SECTION.
 
     INTERFACES zif_btocs_rws_request .
-  PROTECTED SECTION.
+protected section.
 
-    DATA mv_content TYPE string .
-    DATA mv_binary TYPE xstring .
-    DATA mv_content_type TYPE string .
-    DATA mv_content_codepage TYPE abap_encoding .
-    DATA mt_header TYPE tihttpnvp .
-    DATA mt_form_fields TYPE zbtocs_t_form_data .
-    DATA mt_query_params TYPE tihttpnvp .
-    DATA mv_form_field_encoding TYPE i .
+  data MV_CONTENT type STRING .
+  data MV_BINARY type XSTRING .
+  data MV_CONTENT_TYPE type STRING .
+  data MV_CONTENT_CODEPAGE type ABAP_ENCODING .
+  data MT_HEADER type TIHTTPNVP .
+  data MT_FORM_FIELDS type ZBTOCS_T_FORM_DATA .
+  data MT_QUERY_PARAMS type TIHTTPNVP .
+  data MV_FORM_FIELD_ENCODING type I .
+  data MO_VALUE_MGR type ref to ZIF_BTOCS_VALUE_MGR .
 
-    METHODS set_form_data_to_client
-      IMPORTING
-        !io_http_client   TYPE REF TO if_http_client
-      RETURNING
-        VALUE(rv_success) TYPE abap_bool .
+  methods SET_FORM_DATA_TO_CLIENT
+    importing
+      !IO_HTTP_CLIENT type ref to IF_HTTP_CLIENT
+    returning
+      value(RV_SUCCESS) type ABAP_BOOL .
   PRIVATE SECTION.
 ENDCLASS.
 
@@ -362,4 +363,27 @@ CLASS ZCL_BTOCS_RWS_REQUEST IMPLEMENTATION.
          iv_form_field_encoding = zif_btocs_rws_request=>c_form_encoding-multipart_formdata
     ).
   ENDMETHOD.
+
+
+  METHOD zif_btocs_rws_request~get_value_manager.
+    IF mo_value_mgr IS INITIAL.
+      mo_value_mgr = zcl_btocs_factory=>create_value_manager( ).
+      mo_value_mgr->set_logger( get_logger( ) ).
+    ENDIF.
+    ro_mgr = mo_value_mgr.
+  ENDMETHOD.
+
+
+  METHOD zif_btocs_rws_request~new_json_array.
+    ro_value = zif_btocs_rws_request~get_value_manager( )->new_json_array(
+        is_options = is_options
+    ).
+  ENDMETHOD.
+
+
+  method ZIF_BTOCS_RWS_REQUEST~NEW_JSON_OBJECT.
+    ro_value = ZIF_BTOCS_RWS_REQUEST~get_value_manager( )->new_json_object(
+        is_options = is_options
+    ).
+  endmethod.
 ENDCLASS.

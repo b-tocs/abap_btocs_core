@@ -1,6 +1,8 @@
 interface ZIF_BTOCS_C
   public .
 
+  constants C_DEFAULT_SEP_LINE type STRING value CL_ABAP_CHAR_UTILITIES=>CR_LF ##NO_TEXT.
+
 
   constants VERSION type STRING value 'V20240118' ##NO_TEXT.
   constants RELEASE type STRING value '0.3.0' ##NO_TEXT.

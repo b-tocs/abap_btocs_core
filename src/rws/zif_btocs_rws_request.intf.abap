@@ -1,19 +1,19 @@
-interface ZIF_BTOCS_RWS_REQUEST
-  public .
+INTERFACE zif_btocs_rws_request
+  PUBLIC .
 
 
-  interfaces ZIF_BTOCS_UTIL_BASE .
+  INTERFACES zif_btocs_util_base .
 
-  aliases DESTROY
-    for ZIF_BTOCS_UTIL_BASE~DESTROY .
-  aliases GET_LOGGER
-    for ZIF_BTOCS_UTIL_BASE~GET_LOGGER .
-  aliases IS_LOGGER_EXTERNAL
-    for ZIF_BTOCS_UTIL_BASE~IS_LOGGER_EXTERNAL .
-  aliases SET_LOGGER
-    for ZIF_BTOCS_UTIL_BASE~SET_LOGGER .
+  ALIASES destroy
+    FOR zif_btocs_util_base~destroy .
+  ALIASES get_logger
+    FOR zif_btocs_util_base~get_logger .
+  ALIASES is_logger_external
+    FOR zif_btocs_util_base~is_logger_external .
+  ALIASES set_logger
+    FOR zif_btocs_util_base~set_logger .
 
-  constants:
+  CONSTANTS:
     BEGIN OF c_form_encoding,
       none               TYPE i VALUE 0,                 " not set
       raw                TYPE i VALUE 1,                 " SAP form_encoding_raw
@@ -21,95 +21,110 @@ interface ZIF_BTOCS_RWS_REQUEST
       multipart_formdata TYPE i VALUE 100, " added for multipart/form-data
     END OF c_form_encoding .
 
-  methods SET_CLIENT
-    importing
-      !IO_HTTP_CLIENT type ref to IF_HTTP_CLIENT
-    returning
-      value(RV_SUCCESS) type ABAP_BOOL .
-  methods SET_DATA
-    importing
-      !IV_CONTENT_TYPE type STRING optional
-      !IV_CONTENT type STRING optional
-      !IV_BINARY type XSTRING optional
-    returning
-      value(RV_SUCCESS) type ABAP_BOOL .
-  methods SET_DATA_ENCODED
-    importing
-      !IV_CONTENT_TYPE type STRING default 'application/json'
-      !IV_CONTENT type STRING
-      !IV_CODEPAGE type ABAP_ENCODING default '4110'
-    returning
-      value(RV_SUCCESS) type ABAP_BOOL .
-  methods CLEAR .
-  methods SET_HEADER_FIELDS
-    importing
-      !IT_HEADER type TIHTTPNVP .
-  methods ADD_HEADER_FIELD
-    importing
-      !IV_NAME type DATA
-      !IV_VALUE type DATA
-    returning
-      value(RV_SUCCESS) type ABAP_BOOL .
-  methods SET_HEADER_FIELD
-    importing
-      !IV_NAME type DATA
-      !IV_VALUE type DATA
-      !IV_OVERWRITE type ABAP_BOOL default ABAP_FALSE
-    returning
-      value(RV_SUCCESS) type ABAP_BOOL .
-  methods GET_HEADER_FIELDS
-    returning
-      value(RT_HEADER) type TIHTTPNVP .
-  methods ADD_QUERY_PARAM
-    importing
-      !IV_NAME type DATA
-      value(IV_VALUE) type DATA
-    returning
-      value(RV_SUCCESS) type ABAP_BOOL .
-  methods GET_QUERY_PARAMS
-    returning
-      value(RT_PARAMS) type TIHTTPNVP .
-  methods ADD_FORM_FIELD
-    importing
-      !IV_NAME type DATA
-      !IV_VALUE type DATA
-    returning
-      value(RV_SUCCESS) type ABAP_BOOL .
-  methods ADD_FORM_FIELD_FILE
-    importing
-      !IV_NAME type DATA
-      !IV_BINARY type XSTRING
-      !IV_FILENAME type STRING optional
-      !IV_CONTENT_TYPE type STRING optional
-    returning
-      value(RV_SUCCESS) type ABAP_BOOL .
-  methods SET_FORM_FIELD
-    importing
-      !IV_NAME type DATA
-      !IV_VALUE type DATA optional
-      !IV_OVERWRITE type ABAP_BOOL default ABAP_FALSE
-      !IV_BINARY type XSTRING optional
-      !IV_CONTENT_TYPE type STRING optional
-      !IV_FILENAME type STRING optional
-    returning
-      value(RV_SUCCESS) type ABAP_BOOL .
-  methods ADD_FORM_FIELDS
-    importing
-      !IT_FIELDS type TIHTTPNVP
-      !IV_CONTENT_TYPE type STRING default 'application/x-www-form-urlencoded'
-      !IV_FORM_FIELD_ENCODING type I default IF_HTTP_ENTITY=>CO_FORMFIELD_ENCODING_ENCODED
-    returning
-      value(RV_SUCCESS) type ABAP_BOOL .
-  methods GET_FORM_FIELDS
-    returning
-      value(RT_FIELDS) type TIHTTPNVP .
-  methods GET_FORM_FIELDS_WITH_BIN
-    returning
-      value(RT_FIELDS) type ZBTOCS_T_FORM_DATA .
-  methods SET_FORM_TYPE
-    importing
-      !IV_CONTENT_TYPE type STRING default 'application/x-www-form-urlencoded'
-      !IV_FORM_FIELD_ENCODING type I default IF_HTTP_ENTITY=>CO_FORMFIELD_ENCODING_ENCODED .
-  methods SET_FORM_TYPE_URLENCODED .
-  methods SET_FORM_TYPE_MULTIPART .
-endinterface.
+  METHODS set_client
+    IMPORTING
+      !io_http_client   TYPE REF TO if_http_client
+    RETURNING
+      VALUE(rv_success) TYPE abap_bool .
+  METHODS set_data
+    IMPORTING
+      !iv_content_type  TYPE string OPTIONAL
+      !iv_content       TYPE string OPTIONAL
+      !iv_binary        TYPE xstring OPTIONAL
+    RETURNING
+      VALUE(rv_success) TYPE abap_bool .
+  METHODS set_data_encoded
+    IMPORTING
+      !iv_content_type  TYPE string DEFAULT 'application/json'
+      !iv_content       TYPE string
+      !iv_codepage      TYPE abap_encoding DEFAULT '4110'
+    RETURNING
+      VALUE(rv_success) TYPE abap_bool .
+  METHODS clear .
+  METHODS set_header_fields
+    IMPORTING
+      !it_header TYPE tihttpnvp .
+  METHODS add_header_field
+    IMPORTING
+      !iv_name          TYPE data
+      !iv_value         TYPE data
+    RETURNING
+      VALUE(rv_success) TYPE abap_bool .
+  METHODS set_header_field
+    IMPORTING
+      !iv_name          TYPE data
+      !iv_value         TYPE data
+      !iv_overwrite     TYPE abap_bool DEFAULT abap_false
+    RETURNING
+      VALUE(rv_success) TYPE abap_bool .
+  METHODS get_header_fields
+    RETURNING
+      VALUE(rt_header) TYPE tihttpnvp .
+  METHODS add_query_param
+    IMPORTING
+      !iv_name          TYPE data
+      VALUE(iv_value)   TYPE data
+    RETURNING
+      VALUE(rv_success) TYPE abap_bool .
+  METHODS get_query_params
+    RETURNING
+      VALUE(rt_params) TYPE tihttpnvp .
+  METHODS add_form_field
+    IMPORTING
+      !iv_name          TYPE data
+      !iv_value         TYPE data
+    RETURNING
+      VALUE(rv_success) TYPE abap_bool .
+  METHODS add_form_field_file
+    IMPORTING
+      !iv_name          TYPE data
+      !iv_binary        TYPE xstring
+      !iv_filename      TYPE string OPTIONAL
+      !iv_content_type  TYPE string OPTIONAL
+    RETURNING
+      VALUE(rv_success) TYPE abap_bool .
+  METHODS set_form_field
+    IMPORTING
+      !iv_name          TYPE data
+      !iv_value         TYPE data OPTIONAL
+      !iv_overwrite     TYPE abap_bool DEFAULT abap_false
+      !iv_binary        TYPE xstring OPTIONAL
+      !iv_content_type  TYPE string OPTIONAL
+      !iv_filename      TYPE string OPTIONAL
+    RETURNING
+      VALUE(rv_success) TYPE abap_bool .
+  METHODS add_form_fields
+    IMPORTING
+      !it_fields              TYPE tihttpnvp
+      !iv_content_type        TYPE string DEFAULT 'application/x-www-form-urlencoded'
+      !iv_form_field_encoding TYPE i DEFAULT if_http_entity=>co_formfield_encoding_encoded
+    RETURNING
+      VALUE(rv_success)       TYPE abap_bool .
+  METHODS get_form_fields
+    RETURNING
+      VALUE(rt_fields) TYPE tihttpnvp .
+  METHODS get_form_fields_with_bin
+    RETURNING
+      VALUE(rt_fields) TYPE zbtocs_t_form_data .
+  METHODS set_form_type
+    IMPORTING
+      !iv_content_type        TYPE string DEFAULT 'application/x-www-form-urlencoded'
+      !iv_form_field_encoding TYPE i DEFAULT if_http_entity=>co_formfield_encoding_encoded .
+  METHODS set_form_type_urlencoded .
+  METHODS set_form_type_multipart .
+  METHODS get_value_manager
+    RETURNING
+      VALUE(ro_mgr) TYPE REF TO zif_btocs_value_mgr .
+
+  METHODS new_json_object
+    IMPORTING
+      !is_options     TYPE zbtocs_typ_s_value_options OPTIONAL
+    RETURNING
+      VALUE(ro_value) TYPE REF TO zif_btocs_value_structure .
+  METHODS new_json_array
+    IMPORTING
+      !is_options     TYPE zbtocs_typ_s_value_options OPTIONAL
+    RETURNING
+      VALUE(ro_value) TYPE REF TO zif_btocs_value_array .
+
+ENDINTERFACE.
