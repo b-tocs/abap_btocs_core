@@ -9,6 +9,26 @@ This ABAP package is a free to use at your own risk.  You can install it via [ab
 
 See the [Youtube Channel](https://youtube.com/channel/UCk4K1ZKPW4sdngJPcYeHJCA) for videos regarding this ABAP addon and the available Plugins.
 
+## Features
+
+```mermaid
+mindmap
+  root((ABAP SDK))
+    Utils
+      Logger
+      User Context
+      JSON Support
+      Conversions
+      Config Manager      
+    Remote Web Services
+        WebService Client
+        WebService Connector
+    Security
+        Secrets
+        Authentification Methods
+        JWT Tokens
+```
+
 ## Architecture
 
 ```mermaid
@@ -58,16 +78,26 @@ flowchart LR
 ```
 
 ## Known plugins
-- [LibreTranslate](https://github.com/b-tocs/abap_btocs_libtrl) - Translation
+- [LibreTranslate](https://github.com/b-tocs/abap_btocs_libtrl)
 
 
-## Prerequisites
+## Prerequisites and Installation 
 
-SAP ABAP from 7.40 until current S/4 HANA on premise releases (e.g. 7.5x)
+- SAP ABAP from 7.40 until current S/4 HANA on premise releases (e.g. 7.5x)
+- Package name:
+    - ZBTOCS_CORE - if your system will be upgraded in the future 
+    - otherwise $ZBTOCS_CORE or $BTOCS_CORE without transport requests
+
+
+## Demos
+
+| SAP object                    | Description                           |
+| ----------------------------- | ------------------------------------- |
+| PROG ZBTOCS_GUI_DEMO_RWS_CALL | B-Tocs Demo - Call Remote Web Service |
+
+
 
 ## Known Issues
 - SSL - SAP Basis issue depending on remote certificates in older systems
 
 
----
-last modified: 17.01.2024
