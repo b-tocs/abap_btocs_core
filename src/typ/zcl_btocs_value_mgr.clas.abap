@@ -69,7 +69,7 @@ CLASS ZCL_BTOCS_VALUE_MGR IMPLEMENTATION.
     ro_value ?= zcl_btocs_factory=>create_instance( 'ZIF_BTOCS_VALUE_BOOLEAN' ).
     ro_value->set_logger( get_logger( ) ).
     ro_value->set_manager( me ).
-    ro_value->set_string( iv_boolean ).
+    ro_value->set_string( conv string( iv_boolean ) ).
   endmethod.
 
 
