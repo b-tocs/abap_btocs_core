@@ -17,6 +17,7 @@ protected section.
   data MT_QUERY_PARAMS type TIHTTPNVP .
   data MV_FORM_FIELD_ENCODING type I .
   data MO_VALUE_MGR type ref to ZIF_BTOCS_VALUE_MGR .
+  data MO_JSON_VALUE type ref to ZIF_BTOCS_VALUE .
 
   methods SET_FORM_DATA_TO_CLIENT
     importing
@@ -89,6 +90,21 @@ CLASS ZCL_BTOCS_RWS_REQUEST IMPLEMENTATION.
         EXPORTING
           data = mv_content.
       get_logger( )->debug( |char data content set to client| ).
+* -------- JSON content
+    ELSEIF mo_json_value IS NOT INITIAL.
+*     render json
+      DATA(lv_json) = mo_json_value->render( ).
+      DATA(lv_json_len) = strlen( lv_json ).
+      IF lv_json_len = 0.
+        get_logger( )->error( |no json content available| ).
+        RETURN.
+      ENDIF.
+*     set data
+      CALL METHOD io_http_client->request->if_http_entity~set_cdata
+        EXPORTING
+          data = lv_json.
+
+      get_logger( )->debug( |set json payload - len { lv_json_len }| ).
     ELSEIF mt_form_fields[] IS NOT INITIAL.
 * -------- form data
       IF set_form_data_to_client( io_http_client ) EQ abap_false.
@@ -378,6 +394,7 @@ CLASS ZCL_BTOCS_RWS_REQUEST IMPLEMENTATION.
     ro_value = zif_btocs_rws_request~get_value_manager( )->new_json_array(
         is_options = is_options
     ).
+    mo_json_value = ro_value.
   ENDMETHOD.
 
 
@@ -385,5 +402,6 @@ CLASS ZCL_BTOCS_RWS_REQUEST IMPLEMENTATION.
     ro_value = ZIF_BTOCS_RWS_REQUEST~get_value_manager( )->new_json_object(
         is_options = is_options
     ).
+    mo_json_value = ro_value.
   endmethod.
 ENDCLASS.
