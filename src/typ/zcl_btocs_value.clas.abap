@@ -72,8 +72,9 @@ CLASS ZCL_BTOCS_VALUE IMPLEMENTATION.
 
 
 * ----- render
+    ASSIGN mr_data->* to FIELD-SYMBOL(<lv_data>).
     IF mr_data IS NOT INITIAL.
-      rv_string = CONV string( mr_data->* ).
+      rv_string = CONV string( <lv_data> ).
     ENDIF.
     IF iv_enclosed = abap_true.
       rv_string = |{ lv_prefix }{ rv_string }{ lv_postfix }|.
@@ -188,7 +189,8 @@ CLASS ZCL_BTOCS_VALUE IMPLEMENTATION.
   METHOD zif_btocs_value~set_string.
     CLEAR mo_object.
     CREATE DATA mr_data TYPE string.
-    mr_data->* = iv_string.
+    ASSIGN mr_data->* TO FIELD-SYMBOL(<lv_data>).
+    <lv_data> = iv_string.
   ENDMETHOD.
 
 
@@ -232,7 +234,8 @@ CLASS ZCL_BTOCS_VALUE IMPLEMENTATION.
 
   METHOD zif_btocs_value~get_string.
     IF mr_data IS NOT INITIAL.
-      rv_string = CONV string( mr_data->* ).
+      ASSIGN mr_data->* to FIELD-SYMBOL(<lv_data>).
+      rv_string = CONV string( <lv_data> ).
     ENDIF.
   ENDMETHOD.
 

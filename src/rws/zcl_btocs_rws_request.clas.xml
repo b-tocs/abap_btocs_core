@@ -13,6 +13,16 @@
    </VSEOCLASS>
    <DESCRIPTIONS>
     <SEOCOMPOTX>
+     <CMPNAME>MO_JSON_VALUE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>B-Tocs Value Holder Interface</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MO_VALUE_MGR</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>B-Tocs Value Manager Interface</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
      <CMPNAME>MT_FORM_FIELDS</CMPNAME>
      <LANGU>E</LANGU>
      <DESCRIPT>table of complex form data</DESCRIPT>

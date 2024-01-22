@@ -249,12 +249,14 @@ CLASS ZCL_BTOCS_JSON_PARSER IMPLEMENTATION.
           IF ev_found EQ abap_true.
             IF lv_integer EQ 'B'.  " workaround BIGINT
               ASSIGN ls_data-data->* TO <bigint>.
+              ls_data-json ?= lo_json->new_number( <bigint> ).
             ELSEIF lv_integer EQ abap_true.
               ASSIGN ls_data-data->* TO <integer>.
+              ls_data-json ?= lo_json->new_number( <integer> ).
             ELSE.
               ASSIGN ls_data-data->* TO <double>.
+              ls_data-json ?= lo_json->new_number( <double> ).
             ENDIF.
-            ls_data-json ?= lo_json->new_number( ls_data-data ).
           ENDIF.
         ENDIF.
     ENDCASE.
