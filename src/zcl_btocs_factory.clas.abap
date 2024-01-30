@@ -1,54 +1,54 @@
-class ZCL_BTOCS_FACTORY definition
-  public
-  create public .
+CLASS zcl_btocs_factory DEFINITION
+  PUBLIC
+  CREATE PUBLIC .
 
-public section.
+  PUBLIC SECTION.
 
-  interfaces ZIF_BTOCS_C .
+    INTERFACES zif_btocs_c .
 
-  class-methods CREATE_CONVERT_UTIL
-    returning
-      value(RR_INSTANCE) type ref to ZIF_BTOCS_UTIL_CONVERT .
-  class-methods CREATE_GUI_UTIL
-    returning
-      value(RR_INSTANCE) type ref to ZIF_BTOCS_GUI_UTILS .
-  class-methods CREATE_LOGGER
-    returning
-      value(RO_LOGGER) type ref to ZIF_BTOCS_UTIL_LOGGER .
-  class-methods CREATE_CONFIG_MANAGER
-    returning
-      value(RO_LOGGER) type ref to ZIF_BTOCS_UTIL_CFG_MGR .
-  class-methods CREATE_JSON_UTIL
-    returning
-      value(RO_LOGGER) type ref to ZIF_BTOCS_UTIL_JSON .
-  class-methods CREATE_SECRET_MANAGER
-    returning
-      value(RO_LOGGER) type ref to ZIF_BTOCS_SEC_MGR .
-  class-methods CREATE_TEXT_UTIL
-    returning
-      value(RO_LOGGER) type ref to ZIF_BTOCS_UTIL_TEXT .
-  class-methods CREATE_USER_UTIL
-    returning
-      value(RO_LOGGER) type ref to ZIF_BTOCS_UTIL_USER .
-  class-methods CREATE_VALUE_MANAGER
-    returning
-      value(RO_LOGGER) type ref to ZIF_BTOCS_VALUE_MGR .
-  class-methods CREATE_WEB_SERVICE_CLIENT
-    returning
-      value(RO_LOGGER) type ref to ZIF_BTOCS_RWS_CLIENT .
-  class-methods CREATE_WEB_SERVICE_REQUEST
-    returning
-      value(RO_LOGGER) type ref to ZIF_BTOCS_RWS_REQUEST .
-  class-methods CREATE_WEB_SERVICE_RESPONSE
-    returning
-      value(RO_LOGGER) type ref to ZIF_BTOCS_RWS_RESPONSE .
-  class-methods CREATE_INSTANCE
-    importing
-      !IV_INTERFACE type DATA
-    returning
-      value(RO_INSTANCE) type ref to OBJECT .
-protected section.
-private section.
+    CLASS-METHODS create_convert_util
+      RETURNING
+        VALUE(rr_instance) TYPE REF TO zif_btocs_util_convert .
+    CLASS-METHODS create_gui_util
+      RETURNING
+        VALUE(rr_instance) TYPE REF TO zif_btocs_gui_utils .
+    CLASS-METHODS create_logger
+      RETURNING
+        VALUE(ro_instance) TYPE REF TO zif_btocs_util_logger .
+    CLASS-METHODS create_config_manager
+      RETURNING
+        VALUE(ro_instance) TYPE REF TO zif_btocs_util_cfg_mgr .
+    CLASS-METHODS create_json_util
+      RETURNING
+        VALUE(ro_instance) TYPE REF TO zif_btocs_util_json .
+    CLASS-METHODS create_secret_manager
+      RETURNING
+        VALUE(ro_instance) TYPE REF TO zif_btocs_sec_mgr .
+    CLASS-METHODS create_text_util
+      RETURNING
+        VALUE(ro_instance) TYPE REF TO zif_btocs_util_text .
+    CLASS-METHODS create_user_util
+      RETURNING
+        VALUE(ro_instance) TYPE REF TO zif_btocs_util_user .
+    CLASS-METHODS create_value_manager
+      RETURNING
+        VALUE(ro_instance) TYPE REF TO zif_btocs_value_mgr .
+    CLASS-METHODS create_web_service_client
+      RETURNING
+        VALUE(ro_instance) TYPE REF TO zif_btocs_rws_client .
+    CLASS-METHODS create_web_service_request
+      RETURNING
+        VALUE(ro_instance) TYPE REF TO zif_btocs_rws_request .
+    CLASS-METHODS create_web_service_response
+      RETURNING
+        VALUE(ro_instance) TYPE REF TO zif_btocs_rws_response .
+    CLASS-METHODS create_instance
+      IMPORTING
+        !iv_interface      TYPE data
+      RETURNING
+        VALUE(ro_instance) TYPE REF TO object .
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 ENDCLASS.
 
 
@@ -77,61 +77,61 @@ CLASS ZCL_BTOCS_FACTORY IMPLEMENTATION.
 
 
   METHOD create_logger.
-    ro_logger ?= create_instance( 'ZIF_BTOCS_UTIL_LOGGER' ).
+    ro_instance ?= create_instance( 'ZIF_BTOCS_UTIL_LOGGER' ).
   ENDMETHOD.
 
 
   METHOD create_web_service_client.
-    ro_logger ?= create_instance( 'ZIF_BTOCS_RWS_CLIENT' ).
+    ro_instance ?= create_instance( 'ZIF_BTOCS_RWS_CLIENT' ).
   ENDMETHOD.
 
 
   METHOD create_web_service_request.
-    ro_logger ?= create_instance( 'ZIF_BTOCS_RWS_REQUEST' ).
+    ro_instance ?= create_instance( 'ZIF_BTOCS_RWS_REQUEST' ).
   ENDMETHOD.
 
 
   METHOD create_web_service_response.
-    ro_logger ?= create_instance( 'ZIF_BTOCS_RWS_RESPONSE' ).
+    ro_instance ?= create_instance( 'ZIF_BTOCS_RWS_RESPONSE' ).
   ENDMETHOD.
 
 
-  METHOD CREATE_CONFIG_MANAGER.
-    ro_logger ?= create_instance( 'ZIF_BTOCS_UTIL_CFG_MGR' ).
+  METHOD create_config_manager.
+    ro_instance ?= create_instance( 'ZIF_BTOCS_UTIL_CFG_MGR' ).
   ENDMETHOD.
 
 
-  METHOD CREATE_SECRET_MANAGER.
-    ro_logger ?= create_instance( 'ZIF_BTOCS_SEC_MGR' ).
+  METHOD create_secret_manager.
+    ro_instance ?= create_instance( 'ZIF_BTOCS_SEC_MGR' ).
   ENDMETHOD.
 
 
   METHOD create_user_util.
-    ro_logger ?= create_instance( 'ZIF_BTOCS_UTIL_USER' ).
+    ro_instance ?= create_instance( 'ZIF_BTOCS_UTIL_USER' ).
   ENDMETHOD.
 
 
-  METHOD CREATE_VALUE_MANAGER.
-    ro_logger ?= create_instance( 'ZIF_BTOCS_VALUE_MGR' ).
+  METHOD create_value_manager.
+    ro_instance ?= create_instance( 'ZIF_BTOCS_VALUE_MGR' ).
   ENDMETHOD.
 
 
-  METHOD CREATE_CONVERT_UTIL.
+  METHOD create_convert_util.
     rr_instance ?= create_instance( 'ZIF_BTOCS_UTIL_CONVERT' ).
   ENDMETHOD.
 
 
-  METHOD CREATE_GUI_UTIL.
+  METHOD create_gui_util.
     rr_instance ?= create_instance( 'ZIF_BTOCS_GUI_UTILS' ).
   ENDMETHOD.
 
 
   METHOD create_json_util.
-    ro_logger ?= create_instance( 'ZIF_BTOCS_UTIL_JSON' ).
+    ro_instance ?= create_instance( 'ZIF_BTOCS_UTIL_JSON' ).
   ENDMETHOD.
 
 
-  METHOD CREATE_TEXT_UTIL.
-    ro_logger ?= create_instance( 'ZIF_BTOCS_UTIL_TEXT' ).
+  METHOD create_text_util.
+    ro_instance ?= create_instance( 'ZIF_BTOCS_UTIL_TEXT' ).
   ENDMETHOD.
 ENDCLASS.
