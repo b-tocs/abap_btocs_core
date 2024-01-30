@@ -31,4 +31,49 @@ CLASS ZCL_BTOCS_UTIL_TEXT IMPLEMENTATION.
     ENDIF.
 
   ENDMETHOD.
+
+
+  METHOD zif_btocs_util_text~replace_eol_with_esc_n.
+    IF cv_text IS NOT INITIAL.
+      REPLACE ALL OCCURRENCES
+        OF cl_abap_char_utilities=>cr_lf " x0D0A
+        IN cv_text
+      WITH '\n'.
+
+      REPLACE ALL OCCURRENCES
+        OF cl_abap_char_utilities=>newline "x0A
+        IN cv_text
+      WITH '\n'.
+    ENDIF.
+  ENDMETHOD.
+
+
+  METHOD zif_btocs_util_text~replace_eol_with_html_br.
+    IF cv_text IS NOT INITIAL.
+      REPLACE ALL OCCURRENCES
+        OF cl_abap_char_utilities=>cr_lf " x0D0A
+        IN cv_text
+      WITH '<br>'.
+
+      REPLACE ALL OCCURRENCES
+        OF cl_abap_char_utilities=>newline "x0A
+        IN cv_text
+      WITH '<br>'.
+    ENDIF.
+  ENDMETHOD.
+
+
+  METHOD zif_btocs_util_text~replace_tab_with_esc_t.
+    IF cv_text IS NOT INITIAL.
+      REPLACE ALL OCCURRENCES
+        OF cl_abap_char_utilities=>horizontal_tab
+        IN cv_text
+      WITH '\t'.
+
+      REPLACE ALL OCCURRENCES
+        OF cl_abap_char_utilities=>horizontal_tab
+        IN cv_text
+      WITH '\t'.
+    ENDIF.
+  ENDMETHOD.
 ENDCLASS.

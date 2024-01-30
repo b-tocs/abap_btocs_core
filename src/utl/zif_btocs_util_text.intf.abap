@@ -18,4 +18,13 @@ interface ZIF_BTOCS_UTIL_TEXT
       !IV_TEXT type STRING
     returning
       value(RV_SEP) type STRING .
+  methods REPLACE_TAB_WITH_ESC_T
+    changing
+      value(CV_TEXT) type STRING .
+  methods REPLACE_EOL_WITH_ESC_N
+    changing
+      value(CV_TEXT) type STRING .
+  methods REPLACE_EOL_WITH_HTML_BR
+    changing
+      value(CV_TEXT) type STRING .
 endinterface.

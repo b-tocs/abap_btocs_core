@@ -16,6 +16,21 @@
      <LANGU>E</LANGU>
      <DESCRIPT>check for line separators</DESCRIPT>
     </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>REPLACE_EOL_WITH_ESC_N</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>replace all CR_LF AND LF with \n</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>REPLACE_EOL_WITH_HTML_BR</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>replace all CR_LF AND LF with &lt;br&gt;</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>REPLACE_TAB_WITH_ESC_T</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>replace all Tabulators with \t</DESCRIPT>
+    </SEOCOMPOTX>
    </DESCRIPTIONS>
   </asx:values>
  </asx:abap>
