@@ -19,7 +19,8 @@ mindmap
       User Context
       JSON Support
       Conversions
-      Config Manager      
+      Config Manager   
+      Text Util   
     Remote Web Services
         WebService Client
         WebService Connector
@@ -79,7 +80,9 @@ flowchart LR
 
 ## Known plugins
 - [LibreTranslate](https://github.com/b-tocs/abap_btocs_libtrl)
-
+- DeepL (coming soon)
+- Ollama (coming soon)
+- Stirling PDF (planned)
 
 ## Prerequisites and Installation 
 
@@ -99,5 +102,3 @@ flowchart LR
 
 ## Known Issues
 - SSL - SAP Basis issue depending on remote certificates in older systems
-
-
