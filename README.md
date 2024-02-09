@@ -79,14 +79,20 @@ flowchart LR
 ```
 
 ## Known plugins
-- [LibreTranslate](https://github.com/b-tocs/abap_btocs_libtrl)
-- DeepL (coming soon)
-- Ollama (coming soon)
-- Stirling PDF (planned)
+
+| Plugin                | Solution                                              | Category              | Repository                                                |
+| ---                   | ---                                                   | ---                   | ---                                                       |
+| DEEPL                 | [DeepL](https://deepl.com/)                           | Translation           | https://github.com/b-tocs/abap_btocs_deepl                |
+| LIBTRL                | [LibreTranslate](https://libretranslate.com/)         | Translation           | https://github.com/b-tocs/abap_btocs_libtrl               |
+| OLLAMA                | [Ollama](https://ollama.ai/)                          | LLM, Chatbot, GPT     | https://github.com/b-tocs/abap_btocs_ollama               |
+
+Planned:
+- Stirling PDF
+
 
 ## Prerequisites and Installation 
 
-- SAP ABAP from 7.40 until current S/4 HANA on premise releases (e.g. 7.5x)
+- SAP ABAP from 7.50 releases until current S/4 HANA on premise 
 - Package name:
     - ZBTOCS_CORE - if your system will be upgraded in the future 
     - otherwise $ZBTOCS_CORE or $BTOCS_CORE without transport requests
