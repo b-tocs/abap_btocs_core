@@ -558,4 +558,14 @@ CLASS ZCL_BTOCS_RWS_CLIENT IMPLEMENTATION.
         io_response = io_response
     ).
   ENDMETHOD.
+
+
+  method ZIF_BTOCS_RWS_CLIENT~GET_REQUEST.
+    ro_request = mo_request.
+  endmethod.
+
+
+  METHOD zif_btocs_rws_client~set_request.
+    mo_request = io_request.
+  ENDMETHOD.
 ENDCLASS.

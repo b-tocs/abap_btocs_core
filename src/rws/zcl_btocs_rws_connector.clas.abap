@@ -35,13 +35,36 @@ CLASS ZCL_BTOCS_RWS_CONNECTOR IMPLEMENTATION.
       RETURN.
     ENDIF.
 
+* -------- prepare api path
+    DATA(lv_path) = |{ iv_api_path }|.
+
+    DATA(lo_request) = mo_client->get_request( ).
+    IF lo_request IS NOT INITIAL.
+      DATA(lt_qpar) = lo_request->get_query_params( ).
+      IF lt_qpar[] IS NOT INITIAL.
+        SPLIT lv_path AT '?' INTO DATA(lv_url) DATA(lv_params).
+
+        LOOP AT lt_qpar ASSIGNING FIELD-SYMBOL(<ls_qpar>).
+          DATA(lv_param) = |{ <ls_qpar>-name }={ <ls_qpar>-value }|.
+          IF lv_params IS INITIAL.
+            lv_params = lv_param.
+          ELSE.
+            lv_params = |{ lv_params }&{ lv_param }|.
+          ENDIF.
+        ENDLOOP.
+
+        lv_path = |{ lv_url }?{ lv_params }|.
+      ENDIF.
+    ENDIF.
+
+
 * -------- set api path
-    IF iv_api_path IS NOT INITIAL.
-      IF lo_client->set_endpoint_path( iv_api_path ) EQ abap_false.
-        ro_response->set_reason( |set api path to { iv_api_path } failed| ).
+    IF lv_path IS NOT INITIAL.
+      IF lo_client->set_endpoint_path( lv_path ) EQ abap_false.
+        ro_response->set_reason( |set api path to { lv_path } failed| ).
         RETURN.
       ELSE.
-        get_logger( )->debug( |connector api path set to { iv_api_path }| ).
+        get_logger( )->debug( |connector api path set to { lv_path }| ).
       ENDIF.
     ENDIF.
 
