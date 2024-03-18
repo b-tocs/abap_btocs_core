@@ -74,4 +74,7 @@ interface ZIF_BTOCS_VALUE
   methods GET_STRING
     returning
       value(RV_STRING) type STRING .
+  methods SET_RAW_VALUE
+    importing
+      !IV_RAW_VALUE type STRING .
 endinterface.

@@ -3,18 +3,18 @@
  <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
   <asx:values>
    <DD04V>
-    <ROLLNAME>ZBTOCS_OPTION_SECRET_METHOD</ROLLNAME>
+    <ROLLNAME>ZBTOCS_DOC_KEY_CHAR</ROLLNAME>
     <DDLANGUAGE>E</DDLANGUAGE>
-    <DOMNAME>ZBTOCS_OPTION_SECRET_METHOD</DOMNAME>
+    <DOMNAME>ZBTOCS_DOC_CHAR</DOMNAME>
     <HEADLEN>55</HEADLEN>
     <SCRLEN1>10</SCRLEN1>
     <SCRLEN2>20</SCRLEN2>
     <SCRLEN3>40</SCRLEN3>
-    <DDTEXT>Secret Method Option</DDTEXT>
-    <REPTEXT>Secret Method</REPTEXT>
-    <SCRTEXT_S>Sec Meth</SCRTEXT_S>
-    <SCRTEXT_M>Secret Method</SCRTEXT_M>
-    <SCRTEXT_L>Secret Method</SCRTEXT_L>
+    <DDTEXT>Document Key</DDTEXT>
+    <REPTEXT>Document Key</REPTEXT>
+    <SCRTEXT_S>Doc Key</SCRTEXT_S>
+    <SCRTEXT_M>Document Key</SCRTEXT_M>
+    <SCRTEXT_L>Document Key</SCRTEXT_L>
     <DTELMASTER>E</DTELMASTER>
     <REFKIND>D</REFKIND>
    </DD04V>

@@ -39,7 +39,7 @@ CLASS ZCL_BTOCS_VALUE_ARRAY IMPLEMENTATION.
 
 
   METHOD zif_btocs_value_array~get.
-    IF iv_index < 1 OR iv_index <= zif_btocs_value_array~count( ).
+    IF iv_index < 1 OR iv_index > zif_btocs_value_array~count( ).
       get_logger( )->error( |invalid array index { iv_index }| ).
       RETURN.
     ELSE.
@@ -51,8 +51,22 @@ CLASS ZCL_BTOCS_VALUE_ARRAY IMPLEMENTATION.
   ENDMETHOD.
 
 
-  method ZIF_BTOCS_VALUE~RENDER.
+  METHOD zif_btocs_value~render.
 
+* ----- raw rendering
+    IF mv_raw_value IS NOT INITIAL.
+      rv_string = super->zif_btocs_value~render(
+        EXPORTING
+          iv_name     = iv_name
+          iv_format   = iv_format
+          iv_level    = iv_level
+          iv_enclosed = abap_true
+      ).
+      RETURN.
+    ENDIF.
+
+
+* ------ normal rendering
     DATA(lv_enc) = get_key_enclose_char( ).
     DATA(lv_format) = get_format( iv_format ).
 
@@ -82,5 +96,5 @@ CLASS ZCL_BTOCS_VALUE_ARRAY IMPLEMENTATION.
         get_logger( )->error( |unknown render format for array| ).
     ENDCASE.
 
-  endmethod.
+  ENDMETHOD.
 ENDCLASS.

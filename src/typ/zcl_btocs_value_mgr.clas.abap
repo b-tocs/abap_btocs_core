@@ -88,6 +88,11 @@ CLASS ZCL_BTOCS_VALUE_MGR IMPLEMENTATION.
     ro_value->set_logger( get_logger( ) ).
     ro_value->set_manager( me ).
     ro_value->set_options( ls_options ).
+
+    IF iv_raw_value IS NOT INITIAL.
+      ro_value->set_raw_value( iv_raw_value ).
+    ENDIF.
+
   ENDMETHOD.
 
 
@@ -105,5 +110,6 @@ CLASS ZCL_BTOCS_VALUE_MGR IMPLEMENTATION.
     ro_value ?= zcl_btocs_factory=>create_instance( 'ZIF_BTOCS_VALUE' ).
     ro_value->set_logger( get_logger( ) ).
     ro_value->set_manager( me ).
+    ro_value->set_raw_value( 'null' ).
   ENDMETHOD.
 ENDCLASS.

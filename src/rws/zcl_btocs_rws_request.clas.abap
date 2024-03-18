@@ -105,6 +105,9 @@ CLASS ZCL_BTOCS_RWS_REQUEST IMPLEMENTATION.
           data = lv_json.
 
       get_logger( )->debug( |set json payload - len { lv_json_len }| ).
+      IF mv_content_type IS INITIAL.
+        io_http_client->request->if_http_entity~set_content_type( 'application/json' ).
+      ENDIF.
     ELSEIF mt_form_fields[] IS NOT INITIAL.
 * -------- form data
       IF set_form_data_to_client( io_http_client ) EQ abap_false.
