@@ -97,4 +97,45 @@ CLASS ZCL_BTOCS_VALUE_ARRAY IMPLEMENTATION.
     ENDCASE.
 
   ENDMETHOD.
+
+
+  METHOD zif_btocs_value_array~get_array.
+    DATA(lo_value) = zif_btocs_value_array~get(
+                       EXPORTING
+                         iv_index  = iv_index
+                       IMPORTING
+                         ev_ref_id = ev_ref_id
+                     ).
+    IF lo_value IS INITIAL.
+      RETURN.
+    ENDIF.
+
+    TRY.
+        ro_array ?= lo_value.
+      CATCH cx_root INTO DATA(lx_exc).
+        DATA(lv_error) = lx_exc->get_text( ).
+        get_logger( )->error( lv_error ).
+    ENDTRY.
+
+  ENDMETHOD.
+
+
+  METHOD zif_btocs_value_array~get_structure.
+    DATA(lo_value) = zif_btocs_value_array~get(
+                       EXPORTING
+                         iv_index  = iv_index
+                       IMPORTING
+                         ev_ref_id = ev_ref_id
+                     ).
+    IF lo_value IS INITIAL.
+      RETURN.
+    ENDIF.
+
+    TRY.
+        ro_structure ?= lo_value.
+      CATCH cx_root INTO DATA(lx_exc).
+        DATA(lv_error) = lx_exc->get_text( ).
+        get_logger( )->error( lv_error ).
+    ENDTRY.
+  ENDMETHOD.
 ENDCLASS.

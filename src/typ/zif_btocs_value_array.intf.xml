@@ -23,6 +23,18 @@
      <LANGU>E</LANGU>
      <DESCRIPT>B-Tocs Value Holder Interface</DESCRIPT>
     </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_ARRAY</CMPNAME>
+     <SCONAME>RO_ARRAY</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>B-Tocs Value Holder Interface</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_STRUCTURE</CMPNAME>
+     <SCONAME>RO_STRUCTURE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>B-Tocs Value Holder Interface</DESCRIPT>
+    </SEOSUBCOTX>
    </DESCRIPTIONS_SUB>
   </asx:values>
  </asx:abap>
