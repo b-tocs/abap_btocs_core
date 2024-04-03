@@ -1,0 +1,327 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_INTF" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOINTERF>
+    <CLSNAME>ZIF_BTOCS_UTIL_MARKDOWN</CLSNAME>
+    <LANGU>E</LANGU>
+    <DESCRIPT>B-Tocs Markdown Builder</DESCRIPT>
+    <EXPOSURE>2</EXPOSURE>
+    <STATE>1</STATE>
+    <UNICODE>X</UNICODE>
+   </VSEOINTERF>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>ADD</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>append current line</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>ADD_CODE_LINES</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>append lines of of code</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>ADD_EMPTY_LINE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>append a empty line</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>ADD_H1</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>add header level 1</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>ADD_H2</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>add header level 2</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>ADD_H3</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>add header level 3</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>ADD_H4</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>add header level 4</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>ADD_HEADER</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>append a main header (level 1)</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>ADD_HX</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>add header with given level</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>ADD_LINES</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>append lines of strings</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>ADD_ROW_SEPARATOR</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>append a row separator</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>ADD_STRUCTURE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>append structure as list</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>ADD_SUBHEADER</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>add a sub header (level 2)</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>ADD_TEXT</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>append text (with line separators)</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>BOLD</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>set the text formatted as bold to current line</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>BOLD_ITALIC</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>set the text formatted as bold + italic to current line</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CODE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>set the text as code formatted to current line</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_END_OF_LINE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>get the line separator for rendering</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_LAST_CHAR</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>get the last character of a string input</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_LAST_HEADER_LEVEL</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>get the last header level</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_LINE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>get the current line</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_LINES</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>get the collected lines as string table</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_LINES_COUNT</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>get count of collected lines</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_MARKDOWN</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>get the content as markdown string</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_PARAMETERS</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>get the parameters object</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>ITALIC</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>set the text formatted as italic to current line</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>RESET</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>reset content</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>set the text to current line</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_END_OF_LINE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>set default line separator for rendering</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_LINE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>set current line</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_MARKDOWN</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>set content from markdown string - delete others</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>TEXT</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>set the text formatted as normal to current line</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>TO_HTML</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>get the markdown rendered for html</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>TO_STRING</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>get the text as string</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD</CMPNAME>
+     <SCONAME>RO_SELF</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>B-Tocs Markdown Builder</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_CODE_LINES</CMPNAME>
+     <SCONAME>IT_CODE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Table of Strings</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_CODE_LINES</CMPNAME>
+     <SCONAME>RO_SELF</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>B-Tocs Markdown Builder</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_EMPTY_LINE</CMPNAME>
+     <SCONAME>RO_SELF</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>B-Tocs Markdown Builder</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_LINES</CMPNAME>
+     <SCONAME>IT_LINES</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Table of Strings</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_LINES</CMPNAME>
+     <SCONAME>RO_SELF</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>B-Tocs Markdown Builder</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_ROW_SEPARATOR</CMPNAME>
+     <SCONAME>RO_SELF</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>B-Tocs Markdown Builder</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_STRUCTURE</CMPNAME>
+     <SCONAME>IS_DATA</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Table of Strings</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_STRUCTURE</CMPNAME>
+     <SCONAME>RO_SELF</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>B-Tocs Markdown Builder</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ADD_TEXT</CMPNAME>
+     <SCONAME>RO_SELF</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>B-Tocs Markdown Builder</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>BOLD</CMPNAME>
+     <SCONAME>RO_SELF</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>B-Tocs Markdown Builder</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>BOLD_ITALIC</CMPNAME>
+     <SCONAME>RO_SELF</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>B-Tocs Markdown Builder</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CODE</CMPNAME>
+     <SCONAME>RO_SELF</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>B-Tocs Markdown Builder</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_LINES</CMPNAME>
+     <SCONAME>RT_LINES</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Table of Strings</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_PARAMETERS</CMPNAME>
+     <SCONAME>RO_PARAMS</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>B-Tocs Value type structure</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>ITALIC</CMPNAME>
+     <SCONAME>RO_SELF</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>B-Tocs Markdown Builder</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET</CMPNAME>
+     <SCONAME>RO_SELF</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>B-Tocs Markdown Builder</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_END_OF_LINE</CMPNAME>
+     <SCONAME>RO_SELF</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>B-Tocs Markdown Builder</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_LINE</CMPNAME>
+     <SCONAME>RO_SELF</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>B-Tocs Markdown Builder</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_MARKDOWN</CMPNAME>
+     <SCONAME>RO_SELF</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>B-Tocs Markdown Builder</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>TEXT</CMPNAME>
+     <SCONAME>RO_SELF</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>B-Tocs Markdown Builder</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>TO_HTML</CMPNAME>
+     <SCONAME>IO_EXIT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>B-Tocs Render HTML Exit Interface</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>TO_HTML</CMPNAME>
+     <SCONAME>IV_EXIT_NAME</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>exit class implementing</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>
