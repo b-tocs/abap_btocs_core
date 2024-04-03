@@ -108,6 +108,28 @@ interface ZIF_BTOCS_UTIL_MARKDOWN
       !IV_ADD_SPACE_AFTER type ABAP_BOOL default ABAP_TRUE
     returning
       value(RO_SELF) type ref to ZIF_BTOCS_UTIL_MARKDOWN .
+  methods IMAGE
+    importing
+      !IV_URL type STRING
+      !IV_TEXT type STRING optional
+      !IV_CHECK_SPACE_BEFORE type ABAP_BOOL default ABAP_TRUE
+      !IV_ADD_SPACE_AFTER type ABAP_BOOL default ABAP_TRUE
+    returning
+      value(RO_SELF) type ref to ZIF_BTOCS_UTIL_MARKDOWN .
+  methods LINK
+    importing
+      !IV_URL type STRING
+      !IV_TEXT type STRING optional
+      !IV_DESC type STRING optional
+      !IV_CHECK_SPACE_BEFORE type ABAP_BOOL default ABAP_TRUE
+      !IV_ADD_SPACE_AFTER type ABAP_BOOL default ABAP_TRUE
+    returning
+      value(RO_SELF) type ref to ZIF_BTOCS_UTIL_MARKDOWN .
+  methods CLOSE
+    importing
+      !IV_CHAR type STRING default '.'
+    returning
+      value(RO_SELF) type ref to ZIF_BTOCS_UTIL_MARKDOWN .
   methods ADD
     returning
       value(RO_SELF) type ref to ZIF_BTOCS_UTIL_MARKDOWN .
@@ -115,6 +137,13 @@ interface ZIF_BTOCS_UTIL_MARKDOWN
     importing
       !IV_TEXT type STRING
       !IV_LINE_SEPARATOR type STRING optional
+    returning
+      value(RO_SELF) type ref to ZIF_BTOCS_UTIL_MARKDOWN .
+  methods ADD_IMAGE
+    importing
+      !IV_URL type STRING
+      !IV_TEXT type STRING optional
+      !IV_PREFIX type STRING optional
     returning
       value(RO_SELF) type ref to ZIF_BTOCS_UTIL_MARKDOWN .
   methods ADD_CODE_LINES
@@ -127,6 +156,9 @@ interface ZIF_BTOCS_UTIL_MARKDOWN
     importing
       !IS_DATA type DATA
       !IV_STYLE type STRING optional
+      !IV_NO_EMPTY type ABAP_BOOL default ABAP_TRUE
+      !IV_PREFIX type STRING default '-'
+      !IV_SEPARATOR type STRING default ':'
     returning
       value(RO_SELF) type ref to ZIF_BTOCS_UTIL_MARKDOWN .
   methods ADD_LINES

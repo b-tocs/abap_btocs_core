@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZCL_BTOCS_BOD_RND_BUPA</CLSNAME>
+    <LANGU>E</LANGU>
+    <DESCRIPT>B-Tocs Example Implementation Business Partner</DESCRIPT>
+    <STATE>1</STATE>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+   </VSEOCLASS>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>MS_BUT000</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>BP: General data I</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MS_CEN_DATA</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>General BP Data, Independent of Business Partner Category</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MS_CEN_GRP</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>SAP BP: BAPI Structure for Group Data</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MS_CEN_ORG</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>SAP BP: BAPI Structure for Organization Data</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MS_CEN_PER</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>SAP BP: BAPI Structure for Personal Data</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MV_DESCRIPTION</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Long Description of a Business Partner</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MV_PARTNER</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Business Partner Number</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

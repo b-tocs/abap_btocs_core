@@ -416,4 +416,124 @@ CLASS ZCL_BTOCS_UTIL_MARKDOWN IMPLEMENTATION.
   METHOD zif_btocs_util_markdown~to_string.
     rv_string = zif_btocs_util_markdown~get_markdown( iv_line_separator ).
   ENDMETHOD.
+
+
+  method ZIF_BTOCS_UTIL_MARKDOWN~ADD_IMAGE.
+* ------ prepare
+    DATA(lv_text) = COND #( WHEN iv_text IS NOT INITIAL
+                            THEN iv_text
+                            ELSE iv_url ).
+    DATA(lv_line) = |{ iv_prefix }![{ lv_text }]({ iv_url })|.
+
+* ------ append
+    APPEND lv_line to mt_lines.
+
+    ro_self = me.
+  endmethod.
+
+
+  METHOD zif_btocs_util_markdown~add_structure.
+
+* ------ init and check
+    DATA(lr_ut_struc) = zcl_btocs_factory=>create_ddic_structure_util( ).
+    IF lr_ut_struc->set_data( is_data ) EQ abap_false.
+      get_logger( )->error( |invalid structure for markdown add_structure| ).
+    ELSE.
+* ------ get fieldnames
+      IF iv_no_empty EQ abap_false.
+        DATA(lt_fields) = lr_ut_struc->get_fieldnames( ).
+      ELSE.
+        lt_fields = lr_ut_struc->get_fieldnames_not_empty( ).
+      ENDIF.
+
+
+
+      IF lt_fields[] IS INITIAL.
+        get_logger( )->error( |no valid fields found in structure for markdown add_structure| ).
+      ELSE.
+* ------- preparations
+        DATA(lv_prefix) =    COND #( WHEN iv_prefix IS INITIAL
+                                  THEN ||
+                                  ELSE |{ iv_prefix } | ).
+
+        DATA(lv_separator) = COND #( WHEN iv_separator IS INITIAL
+                                  THEN ||
+                                  ELSE |{ iv_separator } | ).
+* ------- loop all field
+        CASE iv_style.
+          WHEN OTHERS.
+            LOOP AT lt_fields ASSIGNING FIELD-SYMBOL(<lv_fieldname>).
+              DATA(lr_ut_field) = lr_ut_struc->get_field( <lv_fieldname> ).
+              IF lr_ut_field IS INITIAL.
+                get_logger( )->error( |field util for { <lv_fieldname> } not availabke for markdown add_structure| ).
+              ELSE.
+                DATA(lv_line) = lv_prefix.
+                DATA(lv_label) = lr_ut_field->get_label( ).
+                DATA(lv_value) = lr_ut_field->get_value( ).
+                DATA(lv_desc)  = lr_ut_field->get_value_text( ).
+                IF lv_desc IS NOT INITIAL.
+                  lv_line = lv_line && lv_label && lv_separator && lv_desc && ' (' && lv_value && ')'.
+                ELSE.
+                  lv_line = lv_line && lv_label && lv_separator && lv_value.
+                ENDIF.
+                zif_btocs_util_markdown~add_text( lv_line ).
+              ENDIF.
+            ENDLOOP.
+        ENDCASE.
+      ENDIF.
+    ENDIF.
+
+
+  ENDMETHOD.
+
+
+  METHOD zif_btocs_util_markdown~close.
+    ro_self = zif_btocs_util_markdown~set(
+        iv_text               = |{ iv_char }|
+        iv_check_space_before = abap_false
+        iv_add_space_after    = abap_false
+    ).
+  ENDMETHOD.
+
+
+  METHOD zif_btocs_util_markdown~image.
+
+* ------ prepare
+    DATA(lv_text) = COND #( WHEN iv_text IS NOT INITIAL
+                            THEN iv_text
+                            ELSE iv_url ).
+    DATA(lv_line) = |![{ lv_text }]({ iv_url })|.
+
+* ------ insert
+    ro_self = zif_btocs_util_markdown~set(
+        iv_text               = lv_line
+        iv_check_space_before = iv_check_space_before
+        iv_add_space_after    = iv_add_space_after
+    ).
+
+    ro_self = me.
+
+  ENDMETHOD.
+
+
+  METHOD zif_btocs_util_markdown~link.
+* ------ prepare
+    DATA(lv_text) = COND #( WHEN iv_text IS NOT INITIAL
+                            THEN iv_text
+                            ELSE iv_url ).
+    DATA(lv_line) = |[{ lv_text }]({ iv_url }|.
+    IF iv_desc IS NOT INITIAL.
+      lv_line = lv_line && | "{ iv_desc }"|.
+    ENDIF.
+    lv_line = lv_line && ')'.
+
+* ------ insert
+    ro_self = zif_btocs_util_markdown~set(
+        iv_text               = lv_line
+        iv_check_space_before = iv_check_space_before
+        iv_add_space_after    = iv_add_space_after
+    ).
+
+    ro_self = me.
+  ENDMETHOD.
 ENDCLASS.

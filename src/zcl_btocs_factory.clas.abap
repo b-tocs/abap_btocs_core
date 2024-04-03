@@ -9,6 +9,12 @@ public section.
   class-methods CREATE_CONVERT_UTIL
     returning
       value(RR_INSTANCE) type ref to ZIF_BTOCS_UTIL_CONVERT .
+  class-methods CREATE_DDIC_FIELD_UTIL
+    returning
+      value(RR_INSTANCE) type ref to ZIF_BTOCS_UTIL_FIELD .
+  class-methods CREATE_DDIC_STRUCTURE_UTIL
+    returning
+      value(RR_INSTANCE) type ref to ZIF_BTOCS_UTIL_STRUCTURE .
   class-methods CREATE_MARKDOWN_UTIL
     returning
       value(RR_INSTANCE) type ref to ZIF_BTOCS_UTIL_MARKDOWN .
@@ -18,6 +24,9 @@ public section.
   class-methods CREATE_LOGGER
     returning
       value(RO_INSTANCE) type ref to ZIF_BTOCS_UTIL_LOGGER .
+  class-methods CREATE_BO_DOCUMENT_MANAGER
+    returning
+      value(RO_INSTANCE) type ref to ZIF_BTOCS_BOD_MGR .
   class-methods CREATE_CONFIG_MANAGER
     returning
       value(RO_INSTANCE) type ref to ZIF_BTOCS_UTIL_CFG_MGR .
@@ -141,5 +150,20 @@ CLASS ZCL_BTOCS_FACTORY IMPLEMENTATION.
 
   METHOD CREATE_MARKDOWN_UTIL.
     rr_instance ?= create_instance( 'ZIF_BTOCS_UTIL_MARKDOWN' ).
+  ENDMETHOD.
+
+
+  METHOD CREATE_BO_DOCUMENT_MANAGER.
+    ro_instance ?= create_instance( 'ZIF_BTOCS_BOD_MGR' ).
+  ENDMETHOD.
+
+
+  METHOD CREATE_DDIC_FIELD_UTIL.
+    rr_instance ?= create_instance( 'ZIF_BTOCS_UTIL_FIELD' ).
+  ENDMETHOD.
+
+
+  METHOD CREATE_DDIC_STRUCTURE_UTIL.
+    rr_instance ?= create_instance( 'ZIF_BTOCS_UTIL_STRUCTURE' ).
   ENDMETHOD.
 ENDCLASS.

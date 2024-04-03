@@ -41,6 +41,11 @@ interface ZIF_BTOCS_UTIL_STRUCTURE
       !IV_FIELDNAME type STRING
     returning
       value(RS_DDIC) type DFIES .
+  methods GET_FIELD
+    importing
+      !IV_FIELDNAME type STRING
+    returning
+      value(RO_UTIL) type ref to ZIF_BTOCS_UTIL_FIELD .
   methods GET_LABEL
     importing
       !IV_FIELDNAME type STRING
@@ -51,6 +56,12 @@ interface ZIF_BTOCS_UTIL_STRUCTURE
       !IV_FIELDNAME type STRING
     returning
       value(RV_VALUE) type STRING .
+  methods SET_VALUE
+    importing
+      !IV_FIELDNAME type STRING
+      !IV_VALUE type DATA
+    returning
+      value(RV_SUCCESS) type ABAP_BOOL .
   methods IS_FIELDNAME
     importing
       !IV_FIELDNAME type STRING

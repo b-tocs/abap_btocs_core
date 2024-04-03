@@ -57,6 +57,11 @@
      <DESCRIPT>add header with given level</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
+     <CMPNAME>ADD_IMAGE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>append image line</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
      <CMPNAME>ADD_LINES</CMPNAME>
      <LANGU>E</LANGU>
      <DESCRIPT>append lines of strings</DESCRIPT>
@@ -90,6 +95,11 @@
      <CMPNAME>BOLD_ITALIC</CMPNAME>
      <LANGU>E</LANGU>
      <DESCRIPT>set the text formatted as bold + italic to current line</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>CLOSE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>add a closing char the current line</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CMPNAME>CODE</CMPNAME>
@@ -137,9 +147,19 @@
      <DESCRIPT>get the parameters object</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
+     <CMPNAME>IMAGE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>set the image  to current line</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
      <CMPNAME>ITALIC</CMPNAME>
      <LANGU>E</LANGU>
      <DESCRIPT>set the text formatted as italic to current line</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>LINK</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>set the link  to current line</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CMPNAME>RESET</CMPNAME>
@@ -208,6 +228,12 @@
      <DESCRIPT>B-Tocs Markdown Builder</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
+     <CMPNAME>ADD_IMAGE</CMPNAME>
+     <SCONAME>RO_SELF</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>B-Tocs Markdown Builder</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
      <CMPNAME>ADD_LINES</CMPNAME>
      <SCONAME>IT_LINES</SCONAME>
      <LANGU>E</LANGU>
@@ -256,6 +282,12 @@
      <DESCRIPT>B-Tocs Markdown Builder</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
+     <CMPNAME>CLOSE</CMPNAME>
+     <SCONAME>RO_SELF</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>B-Tocs Markdown Builder</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
      <CMPNAME>CODE</CMPNAME>
      <SCONAME>RO_SELF</SCONAME>
      <LANGU>E</LANGU>
@@ -274,7 +306,19 @@
      <DESCRIPT>B-Tocs Value type structure</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
+     <CMPNAME>IMAGE</CMPNAME>
+     <SCONAME>RO_SELF</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>B-Tocs Markdown Builder</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
      <CMPNAME>ITALIC</CMPNAME>
+     <SCONAME>RO_SELF</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>B-Tocs Markdown Builder</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>LINK</CMPNAME>
      <SCONAME>RO_SELF</SCONAME>
      <LANGU>E</LANGU>
      <DESCRIPT>B-Tocs Markdown Builder</DESCRIPT>

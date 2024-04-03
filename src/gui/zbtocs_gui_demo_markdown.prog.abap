@@ -13,11 +13,32 @@ INITIALIZATION.
 
 START-OF-SELECTION.
 
-* ----- simple usage with main headers and text adding
+* ----- simple usage with main headers and text adding with builder pattern
   lo_md->add_header( |B-Tocs Markdown Demo| ).
+  lo_md->add_image(
+    iv_url  = 'https://raw.githubusercontent.com/b-tocs/abap_btocs_core/main/res/btocs_logo.gif'
+    iv_text = 'B-Tocs Logo'
+  ).
+
   lo_md->add_subheader( |Overview| ).
   lo_md->add_text( |This is a demo for using the **B-Tocs Markdown Builder Util** to render user and machine readable documents in markdown format.| ).
   lo_md->add_text( |See [Markdown Guide](https://www.markdownguide.org/) for more information.| ).
+
+  lo_md->text( |The Markdown util is part of the B-Tocs ABAP SDK.|
+  )->add(
+  )->text( |You will find the repository|
+  )->link(
+    iv_url  = 'https://github.com/b-tocs/abap_btocs_core'
+    iv_text = 'here'
+    iv_desc = 'B-Tocs ABAP SDK Github Repository'
+  )->close( '.'
+  )->text( |B-Tocs is powered by [abapGit](https://abapgit.org/).|
+  )->add(
+  )->image(
+    iv_url  = 'https://abapgit.org/img/logo.svg'
+    iv_text = 'abapgit.org'
+  )->add( ).
+
 
 * ----- add headers with level and using builder pattern
   lo_md->add_subheader( 'Header generation header 1..4' ).
@@ -63,6 +84,18 @@ START-OF-SELECTION.
   lo_md->add_code_lines(
       it_code      = lt_python                 " Table of Strings
       iv_code_type = 'python'
+  ).
+
+* ------ enter structure
+  DATA ls_t000 TYPE t000.
+  SELECT SINGLE *
+    FROM t000
+    INTO ls_t000
+   WHERE mandt = sy-mandt.
+
+  lo_md->add_subheader( 'Structure embedding' ).
+  lo_md->add_structure(
+      is_data      = ls_t000                 " Table of Strings
   ).
 
 
