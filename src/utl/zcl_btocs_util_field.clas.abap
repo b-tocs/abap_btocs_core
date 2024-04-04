@@ -155,4 +155,37 @@ CLASS ZCL_BTOCS_UTIL_FIELD IMPLEMENTATION.
       rv_table = abap_true.
     ENDIF.
   ENDMETHOD.
+
+
+  method ZIF_BTOCS_UTIL_FIELD~GET_UNIT.
+* ---- check
+    if is_data is INITIAL
+      or ms_ddic is INITIAL.
+      return.
+    endif.
+  endmethod.
+
+
+  METHOD zif_btocs_util_field~get_user_text.
+
+    rv_text = zif_btocs_util_field~get_value( ).
+
+    DATA(lv_unit) = zif_btocs_util_field~get_unit( is_data ).
+    IF lv_unit IS NOT INITIAL.
+      rv_text = |{ rv_text } { lv_unit }|.
+    ENDIF.
+
+    DATA(lv_desc) = zif_btocs_util_field~get_value_text( ).
+    IF lv_desc IS NOT INITIAL.
+      rv_text = |{ rv_text } - { lv_desc }|.
+    ENDIF.
+
+    IF iv_label EQ abap_true.
+      DATA(lv_label) = zif_btocs_util_field~get_label( ).
+      IF lv_label IS NOT INITIAL.
+        rv_text = |{ lv_label }{ iv_label_separator }{ rv_text }|.
+      ENDIF.
+    ENDIF.
+
+  ENDMETHOD.
 ENDCLASS.

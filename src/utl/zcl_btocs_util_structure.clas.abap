@@ -232,13 +232,53 @@ CLASS ZCL_BTOCS_UTIL_STRUCTURE IMPLEMENTATION.
 
 
   METHOD zif_btocs_util_structure~get_field.
+
+* ------- prepare
     DATA(lt_ddic) = zif_btocs_util_structure~get_ddic( ).
-    IF mt_field_utils[] IS NOT INITIAL.
-      READ TABLE mt_field_utils ASSIGNING FIELD-SYMBOL(<ls_cache>)
-        WITH KEY fieldname = iv_fieldname.
-      IF sy-subrc EQ 0.
-        ro_util = <ls_cache>-field_util.
+
+    IF iv_no_cache EQ abap_false.
+
+
+      IF mt_field_utils[] IS NOT INITIAL.
+        READ TABLE mt_field_utils ASSIGNING FIELD-SYMBOL(<ls_cache>)
+          WITH KEY fieldname = iv_fieldname.
+        IF sy-subrc EQ 0.
+          ro_util = <ls_cache>-field_util.
+        ENDIF.
       ENDIF.
+    ELSE.
+* ----- new field util
+      READ TABLE lt_ddic ASSIGNING FIELD-SYMBOL(<ls_ddic>)
+        WITH KEY fieldname = iv_fieldname.
+
+      IF <ls_ddic> IS NOT ASSIGNED
+        OR mr_data IS INITIAL.
+        get_logger( )->error( |field { iv_fieldname } is not available in structure| ).
+        RETURN.
+      ENDIF.
+
+
+      ASSIGN mr_data->* TO FIELD-SYMBOL(<ls_data>).
+      ASSIGN COMPONENT iv_fieldname OF STRUCTURE <ls_data> TO FIELD-SYMBOL(<lv_field>).
+      IF <lv_field> IS NOT ASSIGNED.
+        get_logger( )->error( |field { iv_fieldname } is not available in structure| ).
+        RETURN.
+      ENDIF.
+
+      DATA(lo_fld_util) = zcl_btocs_factory=>create_ddic_field_util( ).
+      lo_fld_util->set_logger( get_logger( ) ).
+
+
+      IF lo_fld_util->set_data(
+        EXPORTING
+          iv_data    = <lv_field>
+          is_ddic    = <ls_ddic>                 " DD Interface: Table Fields for DDIF_FIELDINFO_GET
+      ) EQ abap_false.
+        get_logger( )->warning( |init field util for { <ls_ddic>-fieldname } failed| ).
+      ELSE.
+        ro_util = lo_fld_util.
+      ENDIF.
+
     ENDIF.
   ENDMETHOD.
 
@@ -262,6 +302,15 @@ CLASS ZCL_BTOCS_UTIL_STRUCTURE IMPLEMENTATION.
         <lv_field> = iv_value.
         rv_success = abap_true.
       ENDIF.
+    ENDIF.
+  ENDMETHOD.
+
+
+  METHOD zif_btocs_util_structure~set_structure_data.
+    IF mr_data IS NOT INITIAL.
+      ASSIGN mr_data->* TO FIELD-SYMBOL(<ls_data>).
+      MOVE-CORRESPONDING is_data TO <ls_data>.
+      rv_success = abap_true.
     ENDIF.
   ENDMETHOD.
 ENDCLASS.

@@ -45,6 +45,7 @@ interface ZIF_BTOCS_UTIL_STRUCTURE
   methods GET_FIELD
     importing
       !IV_FIELDNAME type STRING
+      !IV_NO_CACHE type ABAP_BOOL default ABAP_FALSE
     returning
       value(RO_UTIL) type ref to ZIF_BTOCS_UTIL_FIELD .
   methods GET_LABEL
@@ -73,4 +74,9 @@ interface ZIF_BTOCS_UTIL_STRUCTURE
       !IV_FIELDNAME type STRING
     returning
       value(RV_EMPTY) type ABAP_BOOL .
+  methods SET_STRUCTURE_DATA
+    importing
+      !IS_DATA type DATA
+    returning
+      value(RV_SUCCESS) type ABAP_BOOL .
 endinterface.

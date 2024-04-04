@@ -33,17 +33,27 @@ interface ZIF_BTOCS_UTIL_FIELD
   methods GET_VALUE
     returning
       value(RV_VALUE) type STRING .
+  methods GET_UNIT
+    importing
+      !IS_DATA type DATA
+    returning
+      value(RV_UNIT) type STRING .
   methods GET_VALUE_TEXT
     importing
       !IV_VALUE type DATA optional
+    returning
+      value(RV_TEXT) type STRING .
+  methods GET_USER_TEXT
+    importing
+      !IS_DATA type DATA
+      !IV_LABEL type ABAP_BOOL default ABAP_FALSE
+      !IV_LABEL_SEPARATOR type STRING default ':'
     returning
       value(RV_TEXT) type STRING .
   methods GET_INT_TYPE
     returning
       value(RV_TYPE) type INTTYPE .
   methods IS_EMPTY
-    importing
-      !IV_FIELDNAME type STRING
     returning
       value(RV_EMPTY) type ABAP_BOOL .
   methods IS_DDIC

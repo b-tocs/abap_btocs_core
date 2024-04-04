@@ -16,6 +16,35 @@ protected section.
   data MO_PARAMS type ref to ZIF_BTOCS_VALUE_STRUCTURE .
   data MV_LAST_HEADER_LEVEL type I .
   data MV_PATH_SEPARATOR type STRING value '/' ##NO_TEXT.
+  data MV_TABLE_STYLE type STRING value 'table' ##NO_TEXT.
+  data MV_STRUC_STYLE type STRING value 'list' ##NO_TEXT.
+  data MV_TABLE_SEPARATOR type STRING value ',' ##NO_TEXT.
+  data MV_STRUC_LIST_PREFIX type STRING value '-' ##NO_TEXT.
+
+  methods FORMAT_TEXT
+    importing
+      !IV_TEXT type STRING
+      !IV_ALIGN type STRING default 'L'
+      !IV_MAX_LEN type I
+      !IV_ADD_SPACE type ABAP_BOOL default ABAP_TRUE
+    returning
+      value(RV_TEXT) type STRING .
+  methods RENDER_TABLE_CSV
+    importing
+      !IV_START_ROW type I default 1
+      !IV_STOP_ROW type I
+      !IO_TABLE_UTIL type ref to ZIF_BTOCS_UTIL_TABLE
+      !IT_FIELDS type STRING_TABLE
+    returning
+      value(RT_LINES) type STRING_TABLE .
+  methods RENDER_TABLE_MD
+    importing
+      !IV_START_ROW type I default 1
+      !IV_STOP_ROW type I
+      !IO_TABLE_UTIL type ref to ZIF_BTOCS_UTIL_TABLE
+      !IT_FIELDS type STRING_TABLE
+    returning
+      value(RT_LINES) type STRING_TABLE .
 private section.
 ENDCLASS.
 
@@ -491,7 +520,7 @@ CLASS ZCL_BTOCS_UTIL_MARKDOWN IMPLEMENTATION.
           WHEN OTHERS.
             LOOP AT lt_fields ASSIGNING FIELD-SYMBOL(<lv_fieldname>).
 * ------- prepare
-              DATA(lv_path) = ||.
+              DATA(lv_path) = iv_path.
               IF lv_path IS INITIAL.
                 lv_path = <lv_fieldname>.
               ELSE.
@@ -521,7 +550,19 @@ CLASS ZCL_BTOCS_UTIL_MARKDOWN IMPLEMENTATION.
                       it_headers       = it_headers                 " Key value tab
                   ).
                 ELSEIF lr_ut_field->is_table( ) EQ abap_true.
-                  get_logger( )->debug( |table { <lv_fieldname> } skipped| ).
+                  FIELD-SYMBOLS: <lt_table> TYPE table.
+                  ASSIGN COMPONENT <lv_fieldname> OF STRUCTURE is_data TO <lt_table>.
+                  IF <lt_table> IS NOT INITIAL.
+                    zif_btocs_util_markdown~add_table(
+                        it_data          = <lt_table>
+*                      iv_style         =
+                        iv_no_empty      = iv_no_empty
+                        iv_path          = lv_path
+                        iv_current_level = lv_next_level
+                        iv_max_level     = iv_max_level
+                        it_headers       = it_headers
+                    ).
+                  ENDIF.
                 ELSEIF lr_ut_field->is_not_printable( ) EQ abap_true.
                   get_logger( )->debug( |unprintable field { <lv_fieldname> } skipped| ).
                 ELSE.
@@ -609,5 +650,295 @@ CLASS ZCL_BTOCS_UTIL_MARKDOWN IMPLEMENTATION.
           iv_level = lv_level
          iv_save_level = abap_false
     ).
+  ENDMETHOD.
+
+
+  METHOD format_text.
+
+* ----- prepare
+    rv_text = iv_text.
+    DATA(lv_len) = strlen( rv_text ).
+    DATA(lv_max) = COND #( WHEN iv_add_space EQ abap_false
+                           THEN iv_max_len
+                           ELSE iv_max_len - 2 ).
+    IF lv_max <= 0.
+      RETURN.
+    ENDIF.
+
+* ----- check max len
+    IF lv_len > lv_max.
+      rv_text = rv_text(lv_max).
+    ENDIF.
+
+* ----- check borders
+    IF iv_add_space EQ abap_true.
+      rv_text = | { rv_text } |.
+    ENDIF.
+
+
+* ------ alignment
+    CASE iv_align.
+      WHEN 'L'.
+        DO.
+          lv_len = strlen( rv_text ).
+          IF lv_len >= iv_max_len.
+            EXIT.
+          ELSE.
+            rv_text = |{ rv_text } |.
+          ENDIF.
+        ENDDO.
+
+      WHEN 'R'.
+        DO.
+          lv_len = strlen( rv_text ).
+          IF lv_len >= iv_max_len.
+            EXIT.
+          ELSE.
+            rv_text = | { rv_text }|.
+          ENDIF.
+        ENDDO.
+    ENDCASE.
+
+
+
+  ENDMETHOD.
+
+
+  METHOD render_table_csv.
+
+* ---- open csv code section
+    APPEND |```csv| TO rt_lines.
+    DATA(lv_sep) = ','.
+
+* ---- append header
+    DATA(lv_header) = ||.
+    LOOP AT it_fields ASSIGNING FIELD-SYMBOL(<lv_fieldname>).
+      IF lv_header IS INITIAL.
+        lv_header = <lv_fieldname>.
+      ELSE.
+        lv_header = |{ lv_header }{ lv_sep }{ <lv_fieldname> }|.
+      ENDIF.
+    ENDLOOP.
+    APPEND lv_header TO rt_lines.
+
+
+* ---- append rows
+    DATA(lv_row) = iv_start_row.
+    DO.
+      IF lv_row > iv_stop_row.
+        EXIT.
+      ENDIF.
+
+      DATA(lv_content) = ||.
+      DATA(lt_content) = io_table_util->get_parsed_content_row( lv_row ).
+
+      LOOP AT it_fields ASSIGNING <lv_fieldname>.
+        DATA(lv_value) = ||.
+        READ TABLE lt_content ASSIGNING FIELD-SYMBOL(<ls_cell>)
+          WITH KEY fieldname = <lv_fieldname>.
+        IF sy-subrc EQ 0.
+          lv_value = <ls_cell>-value.
+        ENDIF.
+
+        IF lv_content IS INITIAL.
+          lv_content = lv_value.
+        ELSE.
+          lv_content = |{ lv_content }{ lv_sep }{ lv_value }|.
+        ENDIF.
+      ENDLOOP.
+
+      APPEND lv_content TO rt_lines.
+      ADD 1 TO lv_row.
+    ENDDO.
+
+
+* ---- close csv code section
+    APPEND |```| TO rt_lines.
+
+
+  ENDMETHOD.
+
+
+  METHOD render_table_md.
+
+
+* ---- append header
+    DATA(lv_sep) = '|'.
+    DATA(lv_sep_line) = '-'.
+    DATA(lv_header) = |{ lv_sep }|.
+    DATA(lv_seprow) = |{ lv_sep }|.
+    DATA(lt_meta) = io_table_util->get_parsed_metainfo( ).
+    DATA lt_cols LIKE lt_meta.
+
+    LOOP AT it_fields ASSIGNING FIELD-SYMBOL(<lv_fieldname>).
+
+      READ TABLE lt_meta ASSIGNING FIELD-SYMBOL(<ls_meta>)
+        WITH KEY fieldname = <lv_fieldname>.
+      IF sy-subrc EQ 0.
+
+*       get header text
+        DATA(lv_text) = CONV string( <ls_meta>-scrtext_s ).
+        IF lv_text IS INITIAL.
+          lv_text = <ls_meta>-fieldname.
+        ENDIF.
+
+*       calc cell space
+        DATA(lv_len) = strlen( lv_text ).
+        IF <ls_meta>-max_text_len_all < lv_len.
+          <ls_meta>-max_text_len_all = lv_len.
+        ENDIF.
+        ADD 2 TO <ls_meta>-max_text_len_all.
+
+        APPEND <ls_meta> TO lt_cols.
+
+*       format header and append
+        lv_text = format_text(
+                     iv_text    = lv_text
+                     iv_align   = 'L'
+                     iv_max_len = <ls_meta>-max_text_len_all
+                     iv_add_space = abap_true
+        ).
+        lv_header = |{ lv_header }{ lv_text }{ lv_sep }|.
+
+*       append header separator line
+        DATA(lv_rsep) = ||.
+        DO <ls_meta>-max_text_len_all TIMES.
+          lv_rsep = |{ lv_rsep }{ lv_sep_line }|.
+        ENDDO.
+        lv_seprow = |{ lv_seprow }{ lv_rsep }{ lv_sep }|.
+
+      ENDIF.
+    ENDLOOP.
+    APPEND lv_header TO rt_lines.
+    APPEND lv_seprow TO rt_lines.
+
+
+* ---- append rows
+    DATA(lv_row) = iv_start_row.
+    DO.
+      IF lv_row > iv_stop_row.
+        EXIT.
+      ENDIF.
+
+      DATA(lv_content) = |{ lv_sep }|.
+      DATA(lt_content) = io_table_util->get_parsed_content_row( lv_row ).
+
+      LOOP AT lt_cols ASSIGNING FIELD-SYMBOL(<ls_col>).
+        DATA(lv_value) = ||.
+        READ TABLE lt_content ASSIGNING FIELD-SYMBOL(<ls_cell>)
+          WITH KEY fieldname = <ls_col>-fieldname.
+        IF sy-subrc EQ 0.
+          lv_value = <ls_cell>-value.
+        ENDIF.
+
+        lv_value = format_text(
+                     iv_text    = lv_value
+                     iv_align   = 'L'
+                     iv_max_len = <ls_meta>-max_text_len_all
+                     iv_add_space = abap_true
+        ).
+
+
+        lv_content = |{ lv_content }{ lv_value }{ lv_sep }|.
+      ENDLOOP.
+
+      APPEND lv_content TO rt_lines.
+      ADD 1 TO lv_row.
+    ENDDO.
+
+
+  ENDMETHOD.
+
+
+  METHOD zif_btocs_util_markdown~add_table.
+
+* ----- init
+    ro_self = me.
+    IF it_data[] IS INITIAL.
+      RETURN.
+    ENDIF.
+
+* ------ check level
+    IF iv_max_level > 0
+      AND iv_max_level < iv_current_level.
+      get_logger( )->debug( |markdown add table: max level { iv_max_level } reached| ).
+      RETURN.
+    ENDIF.
+
+* ------- parse table via util
+    DATA(lr_util) = zcl_btocs_factory=>create_ddic_table_util( ).
+    IF lr_util->set_data(
+      EXPORTING
+        it_data       = it_data
+        iv_store_data = abap_true
+    ) EQ abap_false.
+      get_logger( )->error( |markdown add table: no valid table format| ).
+      RETURN.
+    ENDIF.
+
+    IF lr_util->parse( ) EQ abap_false.
+      get_logger( )->error( |markdown add table: parse data failed| ).
+      RETURN.
+    ENDIF.
+
+    DATA(lt_fields) = lr_util->get_fieldnames_not_empty( ).
+    IF lt_fields[] IS INITIAL.
+      get_logger( )->debug( |markdown add table: no filled columns| ).
+      RETURN.
+    ENDIF.
+
+    DATA(lv_style) = COND #( WHEN iv_style IS NOT INITIAL
+                             THEN iv_style
+                             ELSE mv_table_style ).
+
+* -------- render table
+    DATA(lv_max)    = lines( it_data ).
+    DATA(lt_lines)  = VALUE string_table( ).
+    CASE lv_style.
+      WHEN 'csv'.
+        lt_lines = render_table_csv(
+            iv_start_row  = 1
+            iv_stop_row   = lv_max
+            io_table_util = lr_util
+            it_fields     = lt_fields
+         ).
+      WHEN 'table'.
+        lt_lines = render_table_md(
+            iv_start_row  = 1
+            iv_stop_row   = lv_max
+            io_table_util = lr_util
+            it_fields     = lt_fields
+         ).
+      WHEN OTHERS.
+        get_logger( )->error( |unknown or empty table style: { lv_style }| ).
+    ENDCASE.
+
+
+    IF lt_lines[] IS INITIAL.
+      get_logger( )->error( |markdown add table: no table data rendered| ).
+      RETURN.
+    ENDIF.
+
+
+* ------- check for header
+    IF it_headers[] IS NOT INITIAL.
+      READ TABLE it_headers ASSIGNING FIELD-SYMBOL(<ls_header>)
+        WITH KEY key = iv_path.
+      IF sy-subrc EQ 0 AND <ls_header>-value IS NOT INITIAL.
+        zif_btocs_util_markdown~add_header_relative(
+            iv_delta = iv_current_level
+            iv_text  = <ls_header>-value
+        ).
+      ELSE.
+        get_logger( )->debug( |Table header not found for path: { iv_path }| ).
+        zif_btocs_util_markdown~add_empty_line( ).
+      ENDIF.
+    ENDIF.
+
+
+* ------- insert table data
+    zif_btocs_util_markdown~add_lines( lt_lines ).
+
+
   ENDMETHOD.
 ENDCLASS.

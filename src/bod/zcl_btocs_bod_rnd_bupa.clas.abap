@@ -1,15 +1,17 @@
-CLASS zcl_btocs_bod_rnd_bupa DEFINITION
-  PUBLIC
-  INHERITING FROM zcl_btocs_bod_rnd
-  CREATE PUBLIC .
+class ZCL_BTOCS_BOD_RND_BUPA definition
+  public
+  inheriting from ZCL_BTOCS_BOD_RND
+  create public .
 
-  PUBLIC SECTION.
+public section.
 
-    METHODS zif_btocs_bod_rnd~set_context
-        REDEFINITION .
-    METHODS zif_btocs_bod_rnd~render
-        REDEFINITION .
-  PROTECTED SECTION.
+  methods ZIF_BTOCS_BOD_RND~RENDER
+    redefinition .
+  methods ZIF_BTOCS_BOD_RND~SET_CONTEXT
+    redefinition .
+  methods ZIF_BTOCS_BOD_RND~GET_TITLE
+    redefinition .
+protected section.
 
 *    TYPES: tt_bapiadtel TYPE TABLE OF bapiadtel WITH NON-UNIQUE DEFAULT KEY.
 *    TYPES: tt_bapiadfax TYPE TABLE OF bapiadfax.
@@ -39,7 +41,6 @@ CLASS zcl_btocs_bod_rnd_bupa DEFINITION
 *        email   TYPE com_bupa_bapiadsmtp,
 *        uri     TYPE com_bupa_bapiaduri,
 *      END OF ts_bupa_data_adr.
-
 *"  EXPORTING
 *"     VALUE(ADDRESSDATA) LIKE  BAPIBUS1006_ADDRESS STRUCTURE
 *"        BAPIBUS1006_ADDRESS
@@ -65,8 +66,6 @@ CLASS zcl_btocs_bod_rnd_bupa DEFINITION
 *"      BAPIADVERSPERS STRUCTURE  BAPIAD2VD OPTIONAL
 *"      BAPIADUSE STRUCTURE  BAPIADUSE OPTIONAL
 *"      RETURN STRUCTURE  BAPIRET2 OPTIONAL
-
-
 *    TYPES:
 *      BEGIN OF ts_bupa_data,
 *        partner    TYPE bu_partner,
@@ -74,18 +73,17 @@ CLASS zcl_btocs_bod_rnd_bupa DEFINITION
 *        cen        TYPE ts_bupa_data_cen,
 *        adr        TYPE ts_bupa_data_adr,
 *      END OF ts_bupa_data .
+  data MV_VALID_DATE type BU_VALDT .
+  data MS_BUPA type ZBTOCS_BOD_S_DOC_BUPA .
+  data:
+    mt_return TYPE TABLE OF bapiret2 .
 
-    DATA mv_valid_date TYPE bu_valdt.
-    DATA ms_bupa TYPE zbtocs_bod_s_doc_bupa.
-    DATA mt_return TYPE TABLE OF bapiret2 .
-
-
-    METHODS check_id
-      RETURNING
-        VALUE(rv_valid) TYPE abap_bool .
-    METHODS load_data
-      RETURNING
-        VALUE(rv_success) TYPE abap_bool .
+  methods CHECK_ID
+    returning
+      value(RV_VALID) type ABAP_BOOL .
+  methods LOAD_DATA
+    returning
+      value(RV_SUCCESS) type ABAP_BOOL .
   PRIVATE SECTION.
 ENDCLASS.
 
@@ -122,8 +120,16 @@ CLASS ZCL_BTOCS_BOD_RND_BUPA IMPLEMENTATION.
     DATA(lv_max_level) = 3.
 
     DATA(lt_header) = VALUE zbtocs_t_key_value(
-      ( key = '/cen' value = 'Central data' )
-      ( key = '/adr' value = 'Address data' )
+      ( key = '/cen'            value = 'Central data' )
+      ( key = '/cen/EMAIL'      value = 'Private Email' )
+      ( key = '/cen/TEL'        value = 'Private Telephone' )
+      ( key = '/cen/FAX'        value = 'Private Fax' )
+      ( key = '/cen/URI'        value = 'Private URI' )
+      ( key = '/adr'            value = 'Address data' )
+      ( key = '/adr/EMAIL'      value = 'Business Email' )
+      ( key = '/adr/TEL'        value = 'Business Telephone' )
+      ( key = '/adr/FAX'        value = 'Business Fax' )
+      ( key = '/adr/URI'        value = 'Business URI' )
     ).
 
 * ------- central
@@ -316,5 +322,14 @@ CLASS ZCL_BTOCS_BOD_RND_BUPA IMPLEMENTATION.
 
 * ------ finally true
     rv_success = abap_true.
+  ENDMETHOD.
+
+
+  METHOD zif_btocs_bod_rnd~get_title.
+    IF ms_bupa-descr_long IS NOT INITIAL.
+      rv_title = |{ ms_bupa-partner } - { ms_bupa-descr_long }|.
+    ELSE.
+      rv_title = super->zif_btocs_bod_rnd~get_title( ).
+    ENDIF.
   ENDMETHOD.
 ENDCLASS.

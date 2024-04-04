@@ -165,6 +165,20 @@ INTERFACE zif_btocs_util_markdown
       !it_headers       TYPE zbtocs_t_key_value OPTIONAL
     RETURNING
       VALUE(ro_self)    TYPE REF TO zif_btocs_util_markdown .
+
+  METHODS add_table
+    IMPORTING
+      !it_data          TYPE table
+      !iv_style         TYPE string OPTIONAL
+      !iv_no_empty      TYPE abap_bool DEFAULT abap_true
+      !iv_path          TYPE string OPTIONAL
+      !iv_current_level TYPE i OPTIONAL
+      !iv_max_level     TYPE i OPTIONAL
+      !it_headers       TYPE zbtocs_t_key_value OPTIONAL
+    RETURNING
+      VALUE(ro_self)    TYPE REF TO zif_btocs_util_markdown .
+
+
   METHODS add_lines
     IMPORTING
       !it_lines      TYPE string_table
