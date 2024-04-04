@@ -141,15 +141,24 @@ CLASS ZCL_BTOCS_UTIL_STRUCTURE IMPLEMENTATION.
 
 
   METHOD zif_btocs_util_structure~set_data.
+* ---- init
     zif_btocs_util_structure~reset( ).
+    mv_incl_sub = iv_complex_mode.
+
     TRY.
+* ----  create ddic util
         mo_type_descr ?= cl_abap_structdescr=>describe_by_data( is_data ).
         rv_success = abap_true.
 
+* ---- create internal data value holder
         CREATE DATA mr_data LIKE is_data.
         ASSIGN mr_data->* TO FIELD-SYMBOL(<ls_data>).
         MOVE-CORRESPONDING is_data TO <ls_data>.
 
+* ---- success
+        rv_success = abap_true.
+
+* ----- catch errors
       CATCH cx_root INTO DATA(lx_exc).
         DATA(lv_error) = lx_exc->get_text( ).
         get_logger( )->error( lv_error ).

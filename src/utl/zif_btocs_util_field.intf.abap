@@ -38,6 +38,9 @@ interface ZIF_BTOCS_UTIL_FIELD
       !IV_VALUE type DATA optional
     returning
       value(RV_TEXT) type STRING .
+  methods GET_INT_TYPE
+    returning
+      value(RV_TYPE) type INTTYPE .
   methods IS_EMPTY
     importing
       !IV_FIELDNAME type STRING
@@ -46,4 +49,13 @@ interface ZIF_BTOCS_UTIL_FIELD
   methods IS_DDIC
     returning
       value(RV_DDIC) type ABAP_BOOL .
+  methods IS_TABLE
+    returning
+      value(RV_TABLE) type ABAP_BOOL .
+  methods IS_STRUCTURE
+    returning
+      value(RV_STRUCTURE) type ABAP_BOOL .
+  methods IS_NOT_PRINTABLE
+    returning
+      value(RV_NO_PRINT) type ABAP_BOOL .
 endinterface.

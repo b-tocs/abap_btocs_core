@@ -54,6 +54,12 @@
      <LANGU>E</LANGU>
      <DESCRIPT>Runtime Type Services</DESCRIPT>
     </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_DATA</CMPNAME>
+     <SCONAME>IV_COMPLEX_MODE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>active, if complex includes are required</DESCRIPT>
+    </SEOSUBCOTX>
    </DESCRIPTIONS_SUB>
   </asx:values>
  </asx:abap>

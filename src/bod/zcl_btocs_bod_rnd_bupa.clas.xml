@@ -13,39 +13,9 @@
    </VSEOCLASS>
    <DESCRIPTIONS>
     <SEOCOMPOTX>
-     <CMPNAME>MS_BUT000</CMPNAME>
+     <CMPNAME>CHECK_ID</CMPNAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>BP: General data I</DESCRIPT>
-    </SEOCOMPOTX>
-    <SEOCOMPOTX>
-     <CMPNAME>MS_CEN_DATA</CMPNAME>
-     <LANGU>E</LANGU>
-     <DESCRIPT>General BP Data, Independent of Business Partner Category</DESCRIPT>
-    </SEOCOMPOTX>
-    <SEOCOMPOTX>
-     <CMPNAME>MS_CEN_GRP</CMPNAME>
-     <LANGU>E</LANGU>
-     <DESCRIPT>SAP BP: BAPI Structure for Group Data</DESCRIPT>
-    </SEOCOMPOTX>
-    <SEOCOMPOTX>
-     <CMPNAME>MS_CEN_ORG</CMPNAME>
-     <LANGU>E</LANGU>
-     <DESCRIPT>SAP BP: BAPI Structure for Organization Data</DESCRIPT>
-    </SEOCOMPOTX>
-    <SEOCOMPOTX>
-     <CMPNAME>MS_CEN_PER</CMPNAME>
-     <LANGU>E</LANGU>
-     <DESCRIPT>SAP BP: BAPI Structure for Personal Data</DESCRIPT>
-    </SEOCOMPOTX>
-    <SEOCOMPOTX>
-     <CMPNAME>MV_DESCRIPTION</CMPNAME>
-     <LANGU>E</LANGU>
-     <DESCRIPT>Long Description of a Business Partner</DESCRIPT>
-    </SEOCOMPOTX>
-    <SEOCOMPOTX>
-     <CMPNAME>MV_PARTNER</CMPNAME>
-     <LANGU>E</LANGU>
-     <DESCRIPT>Business Partner Number</DESCRIPT>
+     <DESCRIPT>check given id is a business partner</DESCRIPT>
     </SEOCOMPOTX>
    </DESCRIPTIONS>
   </asx:values>

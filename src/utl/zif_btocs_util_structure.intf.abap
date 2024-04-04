@@ -22,6 +22,7 @@ interface ZIF_BTOCS_UTIL_STRUCTURE
   methods SET_DATA
     importing
       !IS_DATA type DATA
+      !IV_COMPLEX_MODE type ABAP_BOOL default ABAP_FALSE
     returning
       value(RV_SUCCESS) type ABAP_BOOL .
   methods GET_STRUCTDESCR

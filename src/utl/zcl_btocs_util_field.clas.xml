@@ -24,6 +24,11 @@
      <LANGU>E</LANGU>
      <DESCRIPT>DD Interface: Table Fields for DDIF_FIELDINFO_GET</DESCRIPT>
     </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MV_INT_TYPE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>ABAP data type (C,D,N,...)</DESCRIPT>
+    </SEOCOMPOTX>
    </DESCRIPTIONS>
   </asx:values>
  </asx:abap>

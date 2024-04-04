@@ -15,6 +15,7 @@ protected section.
   data MV_EMPTY_LINE_AFTER_HEADER type ABAP_BOOL value ABAP_TRUE ##NO_TEXT.
   data MO_PARAMS type ref to ZIF_BTOCS_VALUE_STRUCTURE .
   data MV_LAST_HEADER_LEVEL type I .
+  data MV_PATH_SEPARATOR type STRING value '/' ##NO_TEXT.
 private section.
 ENDCLASS.
 
@@ -434,9 +435,24 @@ CLASS ZCL_BTOCS_UTIL_MARKDOWN IMPLEMENTATION.
 
   METHOD zif_btocs_util_markdown~add_structure.
 
+* ------ init
+    ro_self = me.
+
+
+* ------ check level
+    IF iv_max_level > 0
+      AND iv_max_level < iv_current_level.
+      get_logger( )->debug( |markdown add structure: max level { iv_max_level } reached| ).
+      RETURN.
+    ENDIF.
+
+
 * ------ init and check
     DATA(lr_ut_struc) = zcl_btocs_factory=>create_ddic_structure_util( ).
-    IF lr_ut_struc->set_data( is_data ) EQ abap_false.
+    IF lr_ut_struc->set_data(
+      is_data = is_data
+      iv_complex_mode = abap_false
+    ) EQ abap_false.
       get_logger( )->error( |invalid structure for markdown add_structure| ).
     ELSE.
 * ------ get fieldnames
@@ -446,11 +462,22 @@ CLASS ZCL_BTOCS_UTIL_MARKDOWN IMPLEMENTATION.
         lt_fields = lr_ut_struc->get_fieldnames_not_empty( ).
       ENDIF.
 
-
-
       IF lt_fields[] IS INITIAL.
         get_logger( )->error( |no valid fields found in structure for markdown add_structure| ).
       ELSE.
+* ------- check for header
+        IF it_headers[] IS NOT INITIAL.
+          READ TABLE it_headers ASSIGNING FIELD-SYMBOL(<ls_header>)
+            WITH KEY key = iv_path.
+          IF sy-subrc EQ 0 AND <ls_header>-value IS NOT INITIAL.
+            zif_btocs_util_markdown~add_header_relative(
+                iv_delta = iv_current_level
+                iv_text  = <ls_header>-value
+            ).
+          ENDIF.
+        ENDIF.
+
+
 * ------- preparations
         DATA(lv_prefix) =    COND #( WHEN iv_prefix IS INITIAL
                                   THEN ||
@@ -463,26 +490,58 @@ CLASS ZCL_BTOCS_UTIL_MARKDOWN IMPLEMENTATION.
         CASE iv_style.
           WHEN OTHERS.
             LOOP AT lt_fields ASSIGNING FIELD-SYMBOL(<lv_fieldname>).
+* ------- prepare
+              DATA(lv_path) = ||.
+              IF lv_path IS INITIAL.
+                lv_path = <lv_fieldname>.
+              ELSE.
+                lv_path = |{ lv_path }{ mv_path_separator }{ <lv_fieldname> }|.
+              ENDIF.
+
+              DATA(lv_next_level) = iv_current_level + 1.
+
               DATA(lr_ut_field) = lr_ut_struc->get_field( <lv_fieldname> ).
               IF lr_ut_field IS INITIAL.
                 get_logger( )->error( |field util for { <lv_fieldname> } not availabke for markdown add_structure| ).
               ELSE.
-                DATA(lv_line) = lv_prefix.
-                DATA(lv_label) = lr_ut_field->get_label( ).
-                DATA(lv_value) = lr_ut_field->get_value( ).
-                DATA(lv_desc)  = lr_ut_field->get_value_text( ).
-                IF lv_desc IS NOT INITIAL.
-                  lv_line = lv_line && lv_label && lv_separator && lv_desc && ' (' && lv_value && ')'.
+* ------- render field depending on general type
+                IF lr_ut_field->is_structure( ) EQ abap_true.
+                  ASSIGN COMPONENT <lv_fieldname> OF STRUCTURE is_data TO FIELD-SYMBOL(<ls_struc>).
+
+                  zif_btocs_util_markdown~add_structure(
+                    EXPORTING
+                      is_data          = <ls_struc>                 " Table of Strings
+                      iv_style         = iv_style
+                      iv_no_empty      = iv_no_empty
+                      iv_prefix        = iv_prefix
+                      iv_separator     = iv_separator
+                      iv_path          = lv_path
+                      iv_current_level = lv_next_level
+                      iv_max_level     = iv_max_level
+                      it_headers       = it_headers                 " Key value tab
+                  ).
+                ELSEIF lr_ut_field->is_table( ) EQ abap_true.
+                  get_logger( )->debug( |table { <lv_fieldname> } skipped| ).
+                ELSEIF lr_ut_field->is_not_printable( ) EQ abap_true.
+                  get_logger( )->debug( |unprintable field { <lv_fieldname> } skipped| ).
                 ELSE.
-                  lv_line = lv_line && lv_label && lv_separator && lv_value.
+* -------- standard field printable
+                  DATA(lv_line) = lv_prefix.
+                  DATA(lv_label) = lr_ut_field->get_label( ).
+                  DATA(lv_value) = lr_ut_field->get_value( ).
+                  DATA(lv_desc)  = lr_ut_field->get_value_text( ).
+                  IF lv_desc IS NOT INITIAL.
+                    lv_line = lv_line && lv_label && lv_separator && lv_desc && ' (' && lv_value && ')'.
+                  ELSE.
+                    lv_line = lv_line && lv_label && lv_separator && lv_value.
+                  ENDIF.
+                  zif_btocs_util_markdown~add_text( lv_line ).
                 ENDIF.
-                zif_btocs_util_markdown~add_text( lv_line ).
               ENDIF.
             ENDLOOP.
         ENDCASE.
       ENDIF.
     ENDIF.
-
 
   ENDMETHOD.
 
@@ -535,5 +594,20 @@ CLASS ZCL_BTOCS_UTIL_MARKDOWN IMPLEMENTATION.
     ).
 
     ro_self = me.
+  ENDMETHOD.
+
+
+  METHOD zif_btocs_util_markdown~add_header_relative.
+
+    DATA(lv_level) = mv_last_header_level + iv_delta.
+    IF lv_level <= 0.
+      lv_level = 1.
+    ENDIF.
+
+    ro_self = zif_btocs_util_markdown~add_hx(
+          iv_text  = iv_text
+          iv_level = lv_level
+         iv_save_level = abap_false
+    ).
   ENDMETHOD.
 ENDCLASS.
