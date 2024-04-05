@@ -13,6 +13,11 @@
    </VSEOCLASS>
    <DESCRIPTIONS>
     <SEOCOMPOTX>
+     <CMPNAME>MO_DDIC_UTIL</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>B-Tocs Util Data Dictionary</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
      <CMPNAME>MO_PARAMS</CMPNAME>
      <LANGU>E</LANGU>
      <DESCRIPT>B-Tocs Value type structure</DESCRIPT>

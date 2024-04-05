@@ -5,11 +5,11 @@ class ZCL_BTOCS_BOD_RND_BUPA definition
 
 public section.
 
+  methods ZIF_BTOCS_BOD_RND~LOAD_DATA
+    redefinition .
   methods ZIF_BTOCS_BOD_RND~RENDER
     redefinition .
   methods ZIF_BTOCS_BOD_RND~SET_CONTEXT
-    redefinition .
-  methods ZIF_BTOCS_BOD_RND~GET_TITLE
     redefinition .
 protected section.
 
@@ -81,9 +81,6 @@ protected section.
   methods CHECK_ID
     returning
       value(RV_VALID) type ABAP_BOOL .
-  methods LOAD_DATA
-    returning
-      value(RV_SUCCESS) type ABAP_BOOL .
   PRIVATE SECTION.
 ENDCLASS.
 
@@ -94,6 +91,16 @@ CLASS ZCL_BTOCS_BOD_RND_BUPA IMPLEMENTATION.
 
   METHOD zif_btocs_bod_rnd~render.
 
+* ------- loaad data
+    IF zif_btocs_bod_rnd~is_data_loaded( ) EQ abap_false.
+      IF zif_btocs_bod_rnd~load_data(
+         iv_detail_level = iv_detail_level
+        ) EQ abap_false.
+        get_logger( )->error( |loading data failed| ).
+        RETURN.
+      ENDIF.
+    ENDIF.
+
 * ------- check
     IF ms_bupa-partner IS INITIAL
       OR ms_bupa-descr_long IS INITIAL.
@@ -101,24 +108,25 @@ CLASS ZCL_BTOCS_BOD_RND_BUPA IMPLEMENTATION.
       RETURN.
     ENDIF.
 
+* ------- set defaults
+    DATA(lv_header_level) = iv_header_level + 1.
+    DATA(lv_style)        = ||.
+    DATA(lv_max_level)    = 3.
 
-* ------- init tools
-    DATA(lo_doc) = io_doc.
-    IF lo_doc IS INITIAL.
-      lo_doc = zcl_btocs_factory=>create_bo_document_manager( )->new_document( ).
-      lo_doc->set_logger( get_logger( ) ).
+
+* ------- init markdown
+    DATA(lo_md) = zif_btocs_bod_rnd~get_markdown_util( ).
+
+    IF iv_structure_style IS NOT INITIAL.
+      lo_md->set_style_structure( iv_structure_style ).
     ENDIF.
 
-    DATA(lo_md) = zcl_btocs_factory=>create_markdown_util( ).
-    lo_md->set_logger( get_logger( ) ).
+    IF iv_table_style IS NOT INITIAL.
+      lo_md->set_style_table( iv_table_style ).
+    ENDIF.
 
 
-* ------- render
-    lo_md->add_header( |Business Partner { ms_bupa-partner } - { ms_bupa-descr_long }| ).
-
-    DATA(lv_style)     = ||.
-    DATA(lv_max_level) = 3.
-
+* ------- define texts
     DATA(lt_header) = VALUE zbtocs_t_key_value(
       ( key = '/cen'            value = 'Central data' )
       ( key = '/cen/EMAIL'      value = 'Private Email' )
@@ -132,48 +140,54 @@ CLASS ZCL_BTOCS_BOD_RND_BUPA IMPLEMENTATION.
       ( key = '/adr/URI'        value = 'Business URI' )
     ).
 
+
+* ------- render
+    IF iv_no_title EQ abap_false.
+      DATA(lv_title) = zif_btocs_bod_rnd~get_title( ).
+      lo_md->add_hx(
+          iv_text       = lv_title
+          iv_level      = lv_header_level
+      ).
+    ELSE.
+      lo_md->set_last_header_level( lv_header_level ).
+    ENDIF.
+
+    IF iv_detail_level = zif_btocs_bod_rnd=>c_detail_level-abstract.
+      lo_md->add_lines( zif_btocs_bod_rnd~get_abstract( ) ).
+    ELSE.
+
 * ------- central
-    lo_md->add_structure(
-        is_data          = ms_bupa-central                 " Table of Strings
-        iv_style         = lv_style
-        iv_no_empty      = abap_true
-        iv_prefix        = '-'
+      lo_md->add_structure(
+          is_data          = ms_bupa-central                 " Table of Strings
+          iv_style         = lv_style
+          iv_no_empty      = abap_true
+          iv_prefix        = '-'
 *        iv_separator     = ':'
-        iv_path          = '/cen'
-        iv_current_level = 1
-        iv_max_level     = iv_detail_level
-        it_headers       = lt_header                 " Key value tab
-    ).
+          iv_path          = '/cen'
+          iv_current_level = 1
+          iv_max_level     = iv_detail_level
+          it_headers       = lt_header                 " Key value tab
+      ).
 
-    lo_md->add_structure(
-        is_data          = ms_bupa-address                 " Table of Strings
-        iv_style         = lv_style
-        iv_no_empty      = abap_true
-        iv_prefix        = '-'
+      lo_md->add_structure(
+          is_data          = ms_bupa-address                 " Table of Strings
+          iv_style         = lv_style
+          iv_no_empty      = abap_true
+          iv_prefix        = '-'
 *        iv_separator     = ':'
-        iv_path          = '/adr'
-        iv_current_level = 1
-        iv_max_level     = iv_detail_level
-        it_headers       = lt_header                 " Key value tab
-    ).
-
-
-
-* ------- get content
-    DATA(lv_md) = lo_md->to_string( ).
-    lo_doc->set_content(
-      iv_content      = lv_md
-      iv_content_type = 'text/markdown'
-*    iv_chunk        =
-*    iv_page         =
-*    iv_offset       =
-    ).
+          iv_path          = '/adr'
+          iv_current_level = 1
+          iv_max_level     = iv_detail_level
+          it_headers       = lt_header                 " Key value tab
+      ).
+    ENDIF.
 
 
 * ------- set success
-    ro_doc = lo_doc.
-
-
+    ro_doc = transform_markdown_to_doc(
+      io_markdown = lo_md
+      io_doc      = io_doc
+    ).
 
   ENDMETHOD.
 
@@ -196,8 +210,10 @@ CLASS ZCL_BTOCS_BOD_RND_BUPA IMPLEMENTATION.
     ENDIF.
 
 * ------- load data
-    IF load_data( ) EQ abap_false.
-      RETURN.
+    IF iv_load_data EQ abap_true.
+      IF ZIF_BTOCS_BOD_RND~load_data( ) EQ abap_false.
+        RETURN.
+      ENDIF.
     ENDIF.
 
 
@@ -254,14 +270,20 @@ CLASS ZCL_BTOCS_BOD_RND_BUPA IMPLEMENTATION.
       get_logger( )->error( |no a valid business partner: { lv_partner }| ).
     ELSE.
       ms_bupa-partner = lv_partner.
+
+      IF ms_bupa-descr_long IS NOT INITIAL.
+        mv_title = |{ ms_bupa-partner } - { ms_bupa-descr_long }|.
+      ELSE.
+        mv_title = |{ mv_type }{ ms_bupa-partner }|.
+      ENDIF.
+
       rv_valid        = abap_true.
     ENDIF.
 
   ENDMETHOD.
 
 
-  METHOD load_data.
-
+  METHOD zif_btocs_bod_rnd~load_data.
 * ------ check
     IF ms_bupa-partner IS INITIAL.
       get_logger( )->error( |no partner id initialized| ).
@@ -315,21 +337,12 @@ CLASS ZCL_BTOCS_BOD_RND_BUPA IMPLEMENTATION.
 
     get_logger( )->add_msgs( mt_return ).
     IF get_logger( )->has_errors( mt_return ).
-      get_logger( )->error( |loading bupa address data failed| ).
-      RETURN.
+      get_logger( )->warning( |loading bupa address data failed| ).
     ENDIF.
 
 
 * ------ finally true
-    rv_success = abap_true.
-  ENDMETHOD.
-
-
-  METHOD zif_btocs_bod_rnd~get_title.
-    IF ms_bupa-descr_long IS NOT INITIAL.
-      rv_title = |{ ms_bupa-partner } - { ms_bupa-descr_long }|.
-    ELSE.
-      rv_title = super->zif_btocs_bod_rnd~get_title( ).
-    ENDIF.
+    mv_data_loaded  = abap_true.
+    rv_success      = abap_true.
   ENDMETHOD.
 ENDCLASS.

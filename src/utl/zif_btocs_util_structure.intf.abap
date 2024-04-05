@@ -79,4 +79,10 @@ interface ZIF_BTOCS_UTIL_STRUCTURE
       !IS_DATA type DATA
     returning
       value(RV_SUCCESS) type ABAP_BOOL .
+  methods SET_DDIC_UTIL
+    importing
+      !IO_UTIL type ref to ZIF_BTOCS_UTIL_DDIC .
+  methods GET_DDIC_UTIL
+    returning
+      value(RO_UTIL) type ref to ZIF_BTOCS_UTIL_DDIC .
 endinterface.

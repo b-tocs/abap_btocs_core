@@ -13,6 +13,13 @@ interface ZIF_BTOCS_UTIL_FIELD
   aliases SET_LOGGER
     for ZIF_BTOCS_UTIL_BASE~SET_LOGGER .
 
+  methods SET_DDIC_UTIL
+    importing
+      !IO_UTIL type ref to ZIF_BTOCS_UTIL_DDIC .
+  methods GET_DDIC_UTIL
+    returning
+      value(RO_UTIL) type ref to ZIF_BTOCS_UTIL_DDIC .
+
   methods RESET .
   methods SET_DATA
     importing

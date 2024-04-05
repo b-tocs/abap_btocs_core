@@ -14,6 +14,7 @@ protected section.
   data MT_FIELD_UTILS type ZBTOCS_T_FIELD_UTIL_CACHE .
   data MV_LANGUAGE type SYLANGU .
   data MV_INCL_SUB type FLAG value ABAP_FALSE ##NO_TEXT.
+  data MO_DDIC_UTIL type ref to ZIF_BTOCS_UTIL_DDIC .
 
   methods INIT_FIELD_UTILS
     returning
@@ -267,6 +268,7 @@ CLASS ZCL_BTOCS_UTIL_STRUCTURE IMPLEMENTATION.
 
       DATA(lo_fld_util) = zcl_btocs_factory=>create_ddic_field_util( ).
       lo_fld_util->set_logger( get_logger( ) ).
+      lo_fld_util->set_ddic_util( zif_btocs_util_structure~get_ddic_util( ) ).
 
 
       IF lo_fld_util->set_data(
@@ -313,4 +315,18 @@ CLASS ZCL_BTOCS_UTIL_STRUCTURE IMPLEMENTATION.
       rv_success = abap_true.
     ENDIF.
   ENDMETHOD.
+
+
+  method ZIF_BTOCS_UTIL_STRUCTURE~GET_DDIC_UTIL.
+    IF mo_ddic_util IS INITIAL.
+      mo_ddic_util = zcl_btocs_factory=>create_ddic_util( ).
+      mo_ddic_util->set_logger( get_logger( ) ).
+    ENDIF.
+    ro_util = mo_ddic_util.
+  endmethod.
+
+
+  method ZIF_BTOCS_UTIL_STRUCTURE~SET_DDIC_UTIL.
+    mo_ddic_util = io_util.
+  endmethod.
 ENDCLASS.

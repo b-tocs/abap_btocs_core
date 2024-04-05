@@ -15,6 +15,7 @@ protected section.
   data MS_DDIC type DFIES .
   data MV_FIELDNAME type STRING .
   data MV_INT_TYPE type INTTYPE .
+  data MO_DDIC_UTIL type ref to ZIF_BTOCS_UTIL_DDIC .
 private section.
 ENDCLASS.
 
@@ -72,9 +73,38 @@ CLASS ZCL_BTOCS_UTIL_FIELD IMPLEMENTATION.
   ENDMETHOD.
 
 
-  method ZIF_BTOCS_UTIL_FIELD~GET_VALUE_TEXT.
-    "Todo
-  endmethod.
+  METHOD zif_btocs_util_field~get_value_text.
+* ------ check ms
+    IF ms_ddic IS INITIAL
+      OR ms_ddic-f4availabl NE abap_true.
+      RETURN.
+    ENDIF.
+
+* ------ prepare
+    DATA(lv_lang) = zif_btocs_util_field~get_ddic_util( )->lang_get_default( ).
+
+
+* ------ f4
+    IF ms_ddic-tabname IS NOT INITIAL
+      AND ms_ddic-fieldname IS NOT INITIAL
+      AND ms_ddic-f4availabl EQ abap_true.
+      rv_text = zif_btocs_util_field~get_ddic_util( )->f4_table_field_get_text(
+          iv_table      = ms_ddic-tabname
+          iv_field      = ms_ddic-fieldname
+          iv_code       = iv_value
+          iv_lang       = lv_lang
+*        iv_lang2      =
+          iv_try_others = abap_true
+*        iv_no_cache   = abap_false
+*        iv_default    =
+*      IMPORTING
+*        ev_language   =                  " F4 Language (ISO)
+*        et_f4         =                  " Table of F4 translations for codes
+      ).
+    ENDIF.
+
+
+  ENDMETHOD.
 
 
   METHOD zif_btocs_util_field~is_ddic.
@@ -187,5 +217,19 @@ CLASS ZCL_BTOCS_UTIL_FIELD IMPLEMENTATION.
       ENDIF.
     ENDIF.
 
+  ENDMETHOD.
+
+
+  method ZIF_BTOCS_UTIL_FIELD~GET_DDIC_UTIL.
+    IF mo_ddic_util IS INITIAL.
+      mo_ddic_util = zcl_btocs_factory=>create_ddic_util( ).
+      mo_ddic_util->set_logger( get_logger( ) ).
+    ENDIF.
+    ro_util = mo_ddic_util.
+  endmethod.
+
+
+  METHOD zif_btocs_util_field~set_ddic_util.
+    mo_ddic_util = io_util.
   ENDMETHOD.
 ENDCLASS.

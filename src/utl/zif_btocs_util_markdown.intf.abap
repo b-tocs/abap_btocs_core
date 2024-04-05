@@ -1,251 +1,270 @@
-INTERFACE zif_btocs_util_markdown
-  PUBLIC .
+interface ZIF_BTOCS_UTIL_MARKDOWN
+  public .
 
 
-  INTERFACES zif_btocs_util_base .
+  interfaces ZIF_BTOCS_UTIL_BASE .
 
-  ALIASES destroy
-    FOR zif_btocs_util_base~destroy .
-  ALIASES get_logger
-    FOR zif_btocs_util_base~get_logger .
-  ALIASES is_logger_external
-    FOR zif_btocs_util_base~is_logger_external .
-  ALIASES set_logger
-    FOR zif_btocs_util_base~set_logger .
+  aliases DESTROY
+    for ZIF_BTOCS_UTIL_BASE~DESTROY .
+  aliases GET_LOGGER
+    for ZIF_BTOCS_UTIL_BASE~GET_LOGGER .
+  aliases IS_LOGGER_EXTERNAL
+    for ZIF_BTOCS_UTIL_BASE~IS_LOGGER_EXTERNAL .
+  aliases SET_LOGGER
+    for ZIF_BTOCS_UTIL_BASE~SET_LOGGER .
 
-  METHODS reset .
-  METHODS get_lines_count
-    RETURNING
-      VALUE(rv_count) TYPE i .
-  METHODS get_lines
-    RETURNING
-      VALUE(rt_lines) TYPE string_table .
-  METHODS get_line
-    RETURNING
-      VALUE(rv_line) TYPE string .
-  METHODS get_line_count
-    RETURNING
-      VALUE(rv_count) TYPE i .
-  METHODS get_row_separator
-    IMPORTING
-      !iv_text            TYPE string
-      !iv_count           TYPE i
-    RETURNING
-      VALUE(rv_separator) TYPE string .
-  METHODS get_markdown
-    IMPORTING
-      !iv_line_separator TYPE string OPTIONAL
-    RETURNING
-      VALUE(rv_markdown) TYPE string .
-  METHODS get_end_of_line
-    RETURNING
-      VALUE(rv_eol) TYPE string .
-  METHODS get_parameters
-    RETURNING
-      VALUE(ro_params) TYPE REF TO zif_btocs_value_structure .
-  METHODS get_last_header_level
-    RETURNING
-      VALUE(rv_level) TYPE i .
-  METHODS get_last_char
-    IMPORTING
-      !iv_in         TYPE string
-    RETURNING
-      VALUE(rv_last) TYPE string .
-  METHODS set_markdown
-    IMPORTING
-      !iv_markdown   TYPE string
-    RETURNING
-      VALUE(ro_self) TYPE REF TO zif_btocs_util_markdown .
-  METHODS set
-    IMPORTING
-      !iv_text               TYPE string
-      !iv_check_space_before TYPE abap_bool DEFAULT abap_true
-      !iv_add_space_after    TYPE abap_bool DEFAULT abap_true
-    RETURNING
-      VALUE(ro_self)         TYPE REF TO zif_btocs_util_markdown .
-  METHODS set_line
-    IMPORTING
-      !iv_line       TYPE string
-    RETURNING
-      VALUE(ro_self) TYPE REF TO zif_btocs_util_markdown .
-  METHODS set_end_of_line
-    IMPORTING
-      !iv_eol        TYPE string DEFAULT '\n'
-    RETURNING
-      VALUE(ro_self) TYPE REF TO zif_btocs_util_markdown .
-  METHODS text
-    IMPORTING
-      !iv_text               TYPE string
-      !iv_check_space_before TYPE abap_bool DEFAULT abap_true
-      !iv_add_space_after    TYPE abap_bool DEFAULT abap_true
-    RETURNING
-      VALUE(ro_self)         TYPE REF TO zif_btocs_util_markdown .
-  METHODS bold
-    IMPORTING
-      !iv_text               TYPE string
-      !iv_check_space_before TYPE abap_bool DEFAULT abap_true
-      !iv_add_space_after    TYPE abap_bool DEFAULT abap_true
-    RETURNING
-      VALUE(ro_self)         TYPE REF TO zif_btocs_util_markdown .
-  METHODS bold_italic
-    IMPORTING
-      !iv_text               TYPE string
-      !iv_check_space_before TYPE abap_bool DEFAULT abap_true
-      !iv_add_space_after    TYPE abap_bool DEFAULT abap_true
-    RETURNING
-      VALUE(ro_self)         TYPE REF TO zif_btocs_util_markdown .
-  METHODS italic
-    IMPORTING
-      !iv_text               TYPE string
-      !iv_check_space_before TYPE abap_bool DEFAULT abap_true
-      !iv_add_space_after    TYPE abap_bool DEFAULT abap_true
-    RETURNING
-      VALUE(ro_self)         TYPE REF TO zif_btocs_util_markdown .
-  METHODS code
-    IMPORTING
-      !iv_text               TYPE string
-      !iv_check_space_before TYPE abap_bool DEFAULT abap_true
-      !iv_add_space_after    TYPE abap_bool DEFAULT abap_true
-    RETURNING
-      VALUE(ro_self)         TYPE REF TO zif_btocs_util_markdown .
-  METHODS image
-    IMPORTING
-      !iv_url                TYPE string
-      !iv_text               TYPE string OPTIONAL
-      !iv_check_space_before TYPE abap_bool DEFAULT abap_true
-      !iv_add_space_after    TYPE abap_bool DEFAULT abap_true
-    RETURNING
-      VALUE(ro_self)         TYPE REF TO zif_btocs_util_markdown .
-  METHODS link
-    IMPORTING
-      !iv_url                TYPE string
-      !iv_text               TYPE string OPTIONAL
-      !iv_desc               TYPE string OPTIONAL
-      !iv_check_space_before TYPE abap_bool DEFAULT abap_true
-      !iv_add_space_after    TYPE abap_bool DEFAULT abap_true
-    RETURNING
-      VALUE(ro_self)         TYPE REF TO zif_btocs_util_markdown .
-  METHODS close
-    IMPORTING
-      !iv_char       TYPE string DEFAULT '.'
-    RETURNING
-      VALUE(ro_self) TYPE REF TO zif_btocs_util_markdown .
-  METHODS add
-    RETURNING
-      VALUE(ro_self) TYPE REF TO zif_btocs_util_markdown .
-  METHODS add_text
-    IMPORTING
-      !iv_text           TYPE string
-      !iv_line_separator TYPE string OPTIONAL
-    RETURNING
-      VALUE(ro_self)     TYPE REF TO zif_btocs_util_markdown .
-  METHODS add_image
-    IMPORTING
-      !iv_url        TYPE string
-      !iv_text       TYPE string OPTIONAL
-      !iv_prefix     TYPE string OPTIONAL
-    RETURNING
-      VALUE(ro_self) TYPE REF TO zif_btocs_util_markdown .
-  METHODS add_code_lines
-    IMPORTING
-      !it_code       TYPE string_table
-      !iv_code_type  TYPE string OPTIONAL
-    RETURNING
-      VALUE(ro_self) TYPE REF TO zif_btocs_util_markdown .
-  METHODS add_structure
-    IMPORTING
-      !is_data          TYPE data
-      !iv_style         TYPE string OPTIONAL
-      !iv_no_empty      TYPE abap_bool DEFAULT abap_true
-      !iv_prefix        TYPE string DEFAULT '-'
-      !iv_separator     TYPE string DEFAULT ':'
-      !iv_path          TYPE string OPTIONAL
-      !iv_current_level TYPE i OPTIONAL
-      !iv_max_level     TYPE i OPTIONAL
-      !it_headers       TYPE zbtocs_t_key_value OPTIONAL
-    RETURNING
-      VALUE(ro_self)    TYPE REF TO zif_btocs_util_markdown .
+  methods SET_DDIC_UTIL
+    importing
+      !IO_UTIL type ref to ZIF_BTOCS_UTIL_DDIC .
+  methods GET_DDIC_UTIL
+    returning
+      value(RO_UTIL) type ref to ZIF_BTOCS_UTIL_DDIC .
 
-  METHODS add_table
-    IMPORTING
-      !it_data          TYPE table
-      !iv_style         TYPE string OPTIONAL
-      !iv_no_empty      TYPE abap_bool DEFAULT abap_true
-      !iv_path          TYPE string OPTIONAL
-      !iv_current_level TYPE i OPTIONAL
-      !iv_max_level     TYPE i OPTIONAL
-      !it_headers       TYPE zbtocs_t_key_value OPTIONAL
-    RETURNING
-      VALUE(ro_self)    TYPE REF TO zif_btocs_util_markdown .
-
-
-  METHODS add_lines
-    IMPORTING
-      !it_lines      TYPE string_table
-    RETURNING
-      VALUE(ro_self) TYPE REF TO zif_btocs_util_markdown .
-  METHODS add_empty_line
-    RETURNING
-      VALUE(ro_self) TYPE REF TO zif_btocs_util_markdown .
-  METHODS add_row_separator
-    IMPORTING
-      !iv_text       TYPE string
-      !iv_count      TYPE i DEFAULT 1
-    RETURNING
-      VALUE(ro_self) TYPE REF TO zif_btocs_util_markdown .
-  METHODS add_header
-    IMPORTING
-      !iv_text       TYPE string
-    RETURNING
-      VALUE(ro_self) TYPE REF TO zif_btocs_util_markdown .
-  METHODS add_subheader
-    IMPORTING
-      !iv_text       TYPE string
-    RETURNING
-      VALUE(ro_self) TYPE REF TO zif_btocs_util_markdown .
-  METHODS add_header_relative
-    IMPORTING
-      !iv_delta      TYPE i DEFAULT 0
-      !iv_text       TYPE string
-    RETURNING
-      VALUE(ro_self) TYPE REF TO zif_btocs_util_markdown .
-  METHODS add_h1
-    IMPORTING
-      !iv_text       TYPE string
-    RETURNING
-      VALUE(ro_self) TYPE REF TO zif_btocs_util_markdown .
-  METHODS add_h2
-    IMPORTING
-      !iv_text       TYPE string
-    RETURNING
-      VALUE(ro_self) TYPE REF TO zif_btocs_util_markdown .
-  METHODS add_h3
-    IMPORTING
-      !iv_text       TYPE string
-    RETURNING
-      VALUE(ro_self) TYPE REF TO zif_btocs_util_markdown .
-  METHODS add_h4
-    IMPORTING
-      !iv_text       TYPE string
-    RETURNING
-      VALUE(ro_self) TYPE REF TO zif_btocs_util_markdown .
-  METHODS add_hx
-    IMPORTING
-      !iv_text       TYPE string
-      !iv_level      TYPE i
-      !iv_save_level TYPE abap_bool DEFAULT abap_true
-    RETURNING
-      VALUE(ro_self) TYPE REF TO zif_btocs_util_markdown .
-  METHODS to_string
-    IMPORTING
-      !iv_line_separator TYPE string DEFAULT '\n'
-    RETURNING
-      VALUE(rv_string)   TYPE string .
-  METHODS to_html
-    IMPORTING
-      !io_exit       TYPE REF TO zif_btocs_exit_render_html OPTIONAL
-      !iv_exit_name  TYPE string OPTIONAL
-      !iv_complete   TYPE abap_bool DEFAULT abap_true
-    RETURNING
-      VALUE(rv_html) TYPE string .
-ENDINTERFACE.
+  methods RESET .
+  methods GET_LINES_COUNT
+    returning
+      value(RV_COUNT) type I .
+  methods GET_LINES
+    returning
+      value(RT_LINES) type STRING_TABLE .
+  methods GET_LINE
+    returning
+      value(RV_LINE) type STRING .
+  methods GET_LINE_COUNT
+    returning
+      value(RV_COUNT) type I .
+  methods GET_ROW_SEPARATOR
+    importing
+      !IV_TEXT type STRING
+      !IV_COUNT type I
+    returning
+      value(RV_SEPARATOR) type STRING .
+  methods GET_MARKDOWN
+    importing
+      !IV_LINE_SEPARATOR type STRING optional
+    returning
+      value(RV_MARKDOWN) type STRING .
+  methods GET_END_OF_LINE
+    returning
+      value(RV_EOL) type STRING .
+  methods GET_PARAMETERS
+    returning
+      value(RO_PARAMS) type ref to ZIF_BTOCS_VALUE_STRUCTURE .
+  methods GET_LAST_HEADER_LEVEL
+    returning
+      value(RV_LEVEL) type I .
+  methods GET_LAST_CHAR
+    importing
+      !IV_IN type STRING
+    returning
+      value(RV_LAST) type STRING .
+  methods SET_MARKDOWN
+    importing
+      !IV_MARKDOWN type STRING
+    returning
+      value(RO_SELF) type ref to ZIF_BTOCS_UTIL_MARKDOWN .
+  methods SET
+    importing
+      !IV_TEXT type STRING
+      !IV_CHECK_SPACE_BEFORE type ABAP_BOOL default ABAP_TRUE
+      !IV_ADD_SPACE_AFTER type ABAP_BOOL default ABAP_TRUE
+    returning
+      value(RO_SELF) type ref to ZIF_BTOCS_UTIL_MARKDOWN .
+  methods SET_LINE
+    importing
+      !IV_LINE type STRING
+    returning
+      value(RO_SELF) type ref to ZIF_BTOCS_UTIL_MARKDOWN .
+  methods SET_END_OF_LINE
+    importing
+      !IV_EOL type STRING default '\n'
+    returning
+      value(RO_SELF) type ref to ZIF_BTOCS_UTIL_MARKDOWN .
+  methods SET_STYLE_TABLE
+    importing
+      !IV_STYLE type STRING
+    returning
+      value(RO_SELF) type ref to ZIF_BTOCS_UTIL_MARKDOWN .
+  methods SET_STYLE_STRUCTURE
+    importing
+      !IV_STYLE type STRING
+    returning
+      value(RO_SELF) type ref to ZIF_BTOCS_UTIL_MARKDOWN .
+  methods SET_LAST_HEADER_LEVEL
+    importing
+      !IV_LEVEL type I
+    returning
+      value(RO_SELF) type ref to ZIF_BTOCS_UTIL_MARKDOWN .
+  methods TEXT
+    importing
+      !IV_TEXT type STRING
+      !IV_CHECK_SPACE_BEFORE type ABAP_BOOL default ABAP_TRUE
+      !IV_ADD_SPACE_AFTER type ABAP_BOOL default ABAP_TRUE
+    returning
+      value(RO_SELF) type ref to ZIF_BTOCS_UTIL_MARKDOWN .
+  methods BOLD
+    importing
+      !IV_TEXT type STRING
+      !IV_CHECK_SPACE_BEFORE type ABAP_BOOL default ABAP_TRUE
+      !IV_ADD_SPACE_AFTER type ABAP_BOOL default ABAP_TRUE
+    returning
+      value(RO_SELF) type ref to ZIF_BTOCS_UTIL_MARKDOWN .
+  methods BOLD_ITALIC
+    importing
+      !IV_TEXT type STRING
+      !IV_CHECK_SPACE_BEFORE type ABAP_BOOL default ABAP_TRUE
+      !IV_ADD_SPACE_AFTER type ABAP_BOOL default ABAP_TRUE
+    returning
+      value(RO_SELF) type ref to ZIF_BTOCS_UTIL_MARKDOWN .
+  methods ITALIC
+    importing
+      !IV_TEXT type STRING
+      !IV_CHECK_SPACE_BEFORE type ABAP_BOOL default ABAP_TRUE
+      !IV_ADD_SPACE_AFTER type ABAP_BOOL default ABAP_TRUE
+    returning
+      value(RO_SELF) type ref to ZIF_BTOCS_UTIL_MARKDOWN .
+  methods CODE
+    importing
+      !IV_TEXT type STRING
+      !IV_CHECK_SPACE_BEFORE type ABAP_BOOL default ABAP_TRUE
+      !IV_ADD_SPACE_AFTER type ABAP_BOOL default ABAP_TRUE
+    returning
+      value(RO_SELF) type ref to ZIF_BTOCS_UTIL_MARKDOWN .
+  methods IMAGE
+    importing
+      !IV_URL type STRING
+      !IV_TEXT type STRING optional
+      !IV_CHECK_SPACE_BEFORE type ABAP_BOOL default ABAP_TRUE
+      !IV_ADD_SPACE_AFTER type ABAP_BOOL default ABAP_TRUE
+    returning
+      value(RO_SELF) type ref to ZIF_BTOCS_UTIL_MARKDOWN .
+  methods LINK
+    importing
+      !IV_URL type STRING
+      !IV_TEXT type STRING optional
+      !IV_DESC type STRING optional
+      !IV_CHECK_SPACE_BEFORE type ABAP_BOOL default ABAP_TRUE
+      !IV_ADD_SPACE_AFTER type ABAP_BOOL default ABAP_TRUE
+    returning
+      value(RO_SELF) type ref to ZIF_BTOCS_UTIL_MARKDOWN .
+  methods CLOSE
+    importing
+      !IV_CHAR type STRING default '.'
+    returning
+      value(RO_SELF) type ref to ZIF_BTOCS_UTIL_MARKDOWN .
+  methods ADD
+    returning
+      value(RO_SELF) type ref to ZIF_BTOCS_UTIL_MARKDOWN .
+  methods ADD_TEXT
+    importing
+      !IV_TEXT type STRING
+      !IV_LINE_SEPARATOR type STRING optional
+    returning
+      value(RO_SELF) type ref to ZIF_BTOCS_UTIL_MARKDOWN .
+  methods ADD_IMAGE
+    importing
+      !IV_URL type STRING
+      !IV_TEXT type STRING optional
+      !IV_PREFIX type STRING optional
+    returning
+      value(RO_SELF) type ref to ZIF_BTOCS_UTIL_MARKDOWN .
+  methods ADD_CODE_LINES
+    importing
+      !IT_CODE type STRING_TABLE
+      !IV_CODE_TYPE type STRING optional
+    returning
+      value(RO_SELF) type ref to ZIF_BTOCS_UTIL_MARKDOWN .
+  methods ADD_STRUCTURE
+    importing
+      !IS_DATA type DATA
+      !IV_STYLE type STRING optional
+      !IV_NO_EMPTY type ABAP_BOOL default ABAP_TRUE
+      !IV_PREFIX type STRING default '-'
+      !IV_SEPARATOR type STRING default ':'
+      !IV_PATH type STRING optional
+      !IV_CURRENT_LEVEL type I optional
+      !IV_MAX_LEVEL type I optional
+      !IT_HEADERS type ZBTOCS_T_KEY_VALUE optional
+    returning
+      value(RO_SELF) type ref to ZIF_BTOCS_UTIL_MARKDOWN .
+  methods ADD_TABLE
+    importing
+      !IT_DATA type TABLE
+      !IV_STYLE type STRING optional
+      !IV_NO_EMPTY type ABAP_BOOL default ABAP_TRUE
+      !IV_PATH type STRING optional
+      !IV_CURRENT_LEVEL type I optional
+      !IV_MAX_LEVEL type I optional
+      !IT_HEADERS type ZBTOCS_T_KEY_VALUE optional
+    returning
+      value(RO_SELF) type ref to ZIF_BTOCS_UTIL_MARKDOWN .
+  methods ADD_LINES
+    importing
+      !IT_LINES type STRING_TABLE
+    returning
+      value(RO_SELF) type ref to ZIF_BTOCS_UTIL_MARKDOWN .
+  methods ADD_EMPTY_LINE
+    returning
+      value(RO_SELF) type ref to ZIF_BTOCS_UTIL_MARKDOWN .
+  methods ADD_ROW_SEPARATOR
+    importing
+      !IV_TEXT type STRING
+      !IV_COUNT type I default 1
+    returning
+      value(RO_SELF) type ref to ZIF_BTOCS_UTIL_MARKDOWN .
+  methods ADD_HEADER
+    importing
+      !IV_TEXT type STRING
+    returning
+      value(RO_SELF) type ref to ZIF_BTOCS_UTIL_MARKDOWN .
+  methods ADD_SUBHEADER
+    importing
+      !IV_TEXT type STRING
+    returning
+      value(RO_SELF) type ref to ZIF_BTOCS_UTIL_MARKDOWN .
+  methods ADD_HEADER_RELATIVE
+    importing
+      !IV_DELTA type I default 0
+      !IV_TEXT type STRING
+    returning
+      value(RO_SELF) type ref to ZIF_BTOCS_UTIL_MARKDOWN .
+  methods ADD_H1
+    importing
+      !IV_TEXT type STRING
+    returning
+      value(RO_SELF) type ref to ZIF_BTOCS_UTIL_MARKDOWN .
+  methods ADD_H2
+    importing
+      !IV_TEXT type STRING
+    returning
+      value(RO_SELF) type ref to ZIF_BTOCS_UTIL_MARKDOWN .
+  methods ADD_H3
+    importing
+      !IV_TEXT type STRING
+    returning
+      value(RO_SELF) type ref to ZIF_BTOCS_UTIL_MARKDOWN .
+  methods ADD_H4
+    importing
+      !IV_TEXT type STRING
+    returning
+      value(RO_SELF) type ref to ZIF_BTOCS_UTIL_MARKDOWN .
+  methods ADD_HX
+    importing
+      !IV_TEXT type STRING
+      !IV_LEVEL type I
+      !IV_SAVE_LEVEL type ABAP_BOOL default ABAP_TRUE
+    returning
+      value(RO_SELF) type ref to ZIF_BTOCS_UTIL_MARKDOWN .
+  methods TO_STRING
+    importing
+      !IV_LINE_SEPARATOR type STRING default '\n'
+    returning
+      value(RV_STRING) type STRING .
+  methods TO_HTML
+    importing
+      !IO_EXIT type ref to ZIF_BTOCS_EXIT_RENDER_HTML optional
+      !IV_EXIT_NAME type STRING optional
+      !IV_COMPLETE type ABAP_BOOL default ABAP_TRUE
+    returning
+      value(RV_HTML) type STRING .
+endinterface.

@@ -31,6 +31,12 @@
      <DESCRIPT>DD Interface: Table Fields for DDIF_FIELDINFO_GET</DESCRIPT>
     </SEOSUBCOTX>
     <SEOSUBCOTX>
+     <CMPNAME>GET_DDIC_UTIL</CMPNAME>
+     <SCONAME>RO_UTIL</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>B-Tocs Util Data Dictionary</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
      <CMPNAME>GET_FIELDNAMES</CMPNAME>
      <SCONAME>RT_NAMES</SCONAME>
      <LANGU>E</LANGU>
@@ -59,6 +65,12 @@
      <SCONAME>IV_COMPLEX_MODE</SCONAME>
      <LANGU>E</LANGU>
      <DESCRIPT>active, if complex includes are required</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_DDIC_UTIL</CMPNAME>
+     <SCONAME>IO_UTIL</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>B-Tocs Util Data Dictionary</DESCRIPT>
     </SEOSUBCOTX>
    </DESCRIPTIONS_SUB>
   </asx:values>

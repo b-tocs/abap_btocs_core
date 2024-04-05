@@ -60,4 +60,11 @@ interface ZIF_BTOCS_UTIL_TABLE
       !IV_NO_CONTENT type ABAP_BOOL default ABAP_FALSE
     returning
       value(RV_SUCCESS) type ABAP_BOOL .
+
+  methods SET_DDIC_UTIL
+    importing
+      !IO_UTIL type ref to ZIF_BTOCS_UTIL_DDIC .
+  methods GET_DDIC_UTIL
+    returning
+      value(RO_UTIL) type ref to ZIF_BTOCS_UTIL_DDIC .
 endinterface.

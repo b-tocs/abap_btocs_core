@@ -20,6 +20,7 @@ protected section.
   data MV_STRUC_STYLE type STRING value 'list' ##NO_TEXT.
   data MV_TABLE_SEPARATOR type STRING value ',' ##NO_TEXT.
   data MV_STRUC_LIST_PREFIX type STRING value '-' ##NO_TEXT.
+  data MO_DDIC_UTIL type ref to ZIF_BTOCS_UTIL_DDIC .
 
   methods FORMAT_TEXT
     importing
@@ -477,7 +478,7 @@ CLASS ZCL_BTOCS_UTIL_MARKDOWN IMPLEMENTATION.
 
 
 * ------ init and check
-    DATA(lr_ut_struc) = zcl_btocs_factory=>create_ddic_structure_util( ).
+    DATA(lr_ut_struc) = zif_btocs_util_markdown~get_ddic_util( )->get_util_structure( ).
     IF lr_ut_struc->set_data(
       is_data = is_data
       iv_complex_mode = abap_false
@@ -866,7 +867,7 @@ CLASS ZCL_BTOCS_UTIL_MARKDOWN IMPLEMENTATION.
     ENDIF.
 
 * ------- parse table via util
-    DATA(lr_util) = zcl_btocs_factory=>create_ddic_table_util( ).
+    DATA(lr_util) = zif_btocs_util_markdown~get_ddic_util( )->get_util_table( ).
     IF lr_util->set_data(
       EXPORTING
         it_data       = it_data
@@ -940,5 +941,37 @@ CLASS ZCL_BTOCS_UTIL_MARKDOWN IMPLEMENTATION.
     zif_btocs_util_markdown~add_lines( lt_lines ).
 
 
+  ENDMETHOD.
+
+
+  METHOD zif_btocs_util_markdown~get_ddic_util.
+    IF mo_ddic_util IS INITIAL.
+      mo_ddic_util = zcl_btocs_factory=>create_ddic_util( ).
+      mo_ddic_util->set_logger( get_logger( ) ).
+    ENDIF.
+    ro_util = mo_ddic_util.
+  ENDMETHOD.
+
+
+  method ZIF_BTOCS_UTIL_MARKDOWN~SET_DDIC_UTIL.
+    mo_ddic_util = io_util.
+  endmethod.
+
+
+  method ZIF_BTOCS_UTIL_MARKDOWN~SET_LAST_HEADER_LEVEL.
+    mv_last_header_level = iv_level.
+    ro_self = me.
+  endmethod.
+
+
+  method ZIF_BTOCS_UTIL_MARKDOWN~SET_STYLE_STRUCTURE.
+    mv_struc_style = iv_style.
+    ro_self = me.
+  endmethod.
+
+
+  METHOD zif_btocs_util_markdown~set_style_table.
+    mv_table_style = iv_style.
+    ro_self = me.
   ENDMETHOD.
 ENDCLASS.

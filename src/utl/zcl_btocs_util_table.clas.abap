@@ -14,6 +14,7 @@ protected section.
   data MR_TABLE type ref to DATA .
   data MT_CONTENT type ZBTOCS_T_TABLE_CONTENT .
   data MT_METAINFO type ZBTOCS_T_TABLE_METAINFO .
+  data MO_DDIC_UTIL type ref to ZIF_BTOCS_UTIL_DDIC .
 private section.
 ENDCLASS.
 
@@ -236,4 +237,18 @@ CLASS ZCL_BTOCS_UTIL_TABLE IMPLEMENTATION.
         get_logger( )->error( lv_error ).
     ENDTRY.
   ENDMETHOD.
+
+
+  METHOD zif_btocs_util_table~get_ddic_util.
+    IF mo_ddic_util IS INITIAL.
+      mo_ddic_util = zcl_btocs_factory=>create_ddic_util( ).
+      mo_ddic_util->set_logger( get_logger( ) ).
+    ENDIF.
+    ro_util = mo_ddic_util.
+  ENDMETHOD.
+
+
+  method ZIF_BTOCS_UTIL_TABLE~SET_DDIC_UTIL.
+    mo_ddic_util = io_util.
+  endmethod.
 ENDCLASS.

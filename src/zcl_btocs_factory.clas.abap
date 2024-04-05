@@ -18,6 +18,9 @@ public section.
   class-methods CREATE_DDIC_TABLE_UTIL
     returning
       value(RR_INSTANCE) type ref to ZIF_BTOCS_UTIL_TABLE .
+  class-methods CREATE_DDIC_UTIL
+    returning
+      value(RR_INSTANCE) type ref to ZIF_BTOCS_UTIL_DDIC .
   class-methods CREATE_MARKDOWN_UTIL
     returning
       value(RR_INSTANCE) type ref to ZIF_BTOCS_UTIL_MARKDOWN .
@@ -173,5 +176,10 @@ CLASS ZCL_BTOCS_FACTORY IMPLEMENTATION.
 
   METHOD create_ddic_table_util.
     rr_instance ?= create_instance( 'ZIF_BTOCS_UTIL_TABLE' ).
+  ENDMETHOD.
+
+
+  METHOD CREATE_DDIC_UTIL.
+    rr_instance ?= create_instance( 'ZIF_BTOCS_UTIL_DDIC' ).
   ENDMETHOD.
 ENDCLASS.

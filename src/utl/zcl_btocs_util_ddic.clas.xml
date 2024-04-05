@@ -3,9 +3,9 @@
  <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
   <asx:values>
    <VSEOCLASS>
-    <CLSNAME>ZCL_BTOCS_UTIL_TABLE</CLSNAME>
+    <CLSNAME>ZCL_BTOCS_UTIL_DDIC</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>B-Tocs Implementation DDIC Table Util</DESCRIPT>
+    <DESCRIPT>B-Tocs Implementation User Utils</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>
@@ -15,29 +15,24 @@
    </VSEOCLASS>
    <DESCRIPTIONS>
     <SEOCOMPOTX>
-     <CMPNAME>MO_DDIC_UTIL</CMPNAME>
+     <CMPNAME>GT_F4_CACHE</CMPNAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>B-Tocs Util Data Dictionary</DESCRIPT>
+     <DESCRIPT>table of cached f4 translations texts</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
-     <CMPNAME>MO_STRUC_UTIL</CMPNAME>
+     <CMPNAME>MO_UTIL_STRUCTURE</CMPNAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Runtime Type Services</DESCRIPT>
+     <DESCRIPT>B-Tocs Structure Util</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
-     <CMPNAME>MO_TYPE_DESCR</CMPNAME>
+     <CMPNAME>MO_UTIL_TABLE</CMPNAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>Runtime Type Services</DESCRIPT>
+     <DESCRIPT>B-Tocs Util DDIC Table</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
-     <CMPNAME>MT_CONTENT</CMPNAME>
+     <CMPNAME>MV_LANG</CMPNAME>
      <LANGU>E</LANGU>
-     <DESCRIPT>table content</DESCRIPT>
-    </SEOCOMPOTX>
-    <SEOCOMPOTX>
-     <CMPNAME>MT_METAINFO</CMPNAME>
-     <LANGU>E</LANGU>
-     <DESCRIPT>table of metainfos for ddic table (enhanced)</DESCRIPT>
+     <DESCRIPT>Language Key</DESCRIPT>
     </SEOCOMPOTX>
    </DESCRIPTIONS>
   </asx:values>

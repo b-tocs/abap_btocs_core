@@ -142,6 +142,11 @@
      <DESCRIPT>get count of collected lines</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
+     <CMPNAME>GET_LINE_COUNT</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>get the count of prepared lines</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
      <CMPNAME>GET_MARKDOWN</CMPNAME>
      <LANGU>E</LANGU>
      <DESCRIPT>get the content as markdown string</DESCRIPT>
@@ -150,6 +155,11 @@
      <CMPNAME>GET_PARAMETERS</CMPNAME>
      <LANGU>E</LANGU>
      <DESCRIPT>get the parameters object</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>GET_ROW_SEPARATOR</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>get the row separator</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CMPNAME>IMAGE</CMPNAME>
@@ -182,6 +192,11 @@
      <DESCRIPT>set default line separator for rendering</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
+     <CMPNAME>SET_LAST_HEADER_LEVEL</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>set the last header leaver externally</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
      <CMPNAME>SET_LINE</CMPNAME>
      <LANGU>E</LANGU>
      <DESCRIPT>set current line</DESCRIPT>
@@ -190,6 +205,16 @@
      <CMPNAME>SET_MARKDOWN</CMPNAME>
      <LANGU>E</LANGU>
      <DESCRIPT>set content from markdown string - delete others</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_STYLE_STRUCTURE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>set the style for formatting tables</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>SET_STYLE_TABLE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>set the style for formatting structures</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
      <CMPNAME>TEXT</CMPNAME>

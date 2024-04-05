@@ -8,6 +8,13 @@ REPORT zbtocs_gui_demo_bod_gen.
 PARAMETERS: p_bodt TYPE zbtocs_bod_type OBLIGATORY DEFAULT 'BUPA'.
 PARAMETERS: p_boid TYPE zbtocs_bod_id   OBLIGATORY.
 SELECTION-SCREEN: ULINE.
+PARAMETERS: p_detl TYPE zbtocs_bod_detail_level.
+PARAMETERS: p_hdrl TYPE zbtocs_bod_header_level.
+PARAMETERS: p_sttb TYPE zbtocs_bod_style_table.
+PARAMETERS: p_stst TYPE zbtocs_bod_style_structure.
+SELECTION-SCREEN: SKIP.
+PARAMETERS: p_noti AS CHECKBOX TYPE zbtocs_flag_no_title.
+SELECTION-SCREEN: ULINE.
 PARAMETERS: p_proto AS CHECKBOX TYPE zbtocs_flag_protocol         DEFAULT 'X'.
 PARAMETERS: p_trace AS CHECKBOX TYPE zbtocs_flag_display_trace    DEFAULT 'X'.
 
@@ -39,7 +46,13 @@ START-OF-SELECTION.
     lo_logger->error( |no renderer found| ).
   ELSE.
 * ------ render now
-    DATA(lo_bod_doc) = lo_bod_rnd->render( ).
+    DATA(lo_bod_doc) = lo_bod_rnd->render(
+      iv_header_level     = p_hdrl
+      iv_detail_level     = p_detl
+      iv_table_style      = CONV string( p_sttb )
+      iv_structure_style  = CONV string( p_stst )
+      iv_no_title         = p_noti
+    ).
     IF lo_bod_doc IS INITIAL.
       lo_logger->error( |no document rendered| ).
     ELSE.

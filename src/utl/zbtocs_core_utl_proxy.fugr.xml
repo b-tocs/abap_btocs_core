@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_FUGR" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <AREAT>B-Tocs Proxy Modules</AREAT>
+   <INCLUDES>
+    <SOBJ_NAME>LZBTOCS_CORE_UTL_PROXYTOP</SOBJ_NAME>
+    <SOBJ_NAME>SAPLZBTOCS_CORE_UTL_PROXY</SOBJ_NAME>
+   </INCLUDES>
+   <FUNCTIONS>
+    <item>
+     <FUNCNAME>Z_BTOCS_CORE_UTL_PROXY_F4_GET</FUNCNAME>
+     <REMOTE_CALL>R</REMOTE_CALL>
+     <SHORT_TEXT>B-Tocs: Proxy F4 Help Values</SHORT_TEXT>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>IV_TABLE</PARAMETER>
+       <TYP>TABNAME</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>IV_FIELD</PARAMETER>
+       <TYP>FIELDNAME</TYP>
+      </RSIMP>
+     </IMPORT>
+     <EXPORT>
+      <RSEXP>
+       <PARAMETER>EV_ERROR</PARAMETER>
+       <TYP>STRING</TYP>
+      </RSEXP>
+      <RSEXP>
+       <PARAMETER>EV_SUBRC</PARAMETER>
+       <TYP>SYSUBRC</TYP>
+      </RSEXP>
+      <RSEXP>
+       <PARAMETER>ET_F4</PARAMETER>
+       <TYP>ZBTOCS_T_F4</TYP>
+      </RSEXP>
+     </EXPORT>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>IV_TABLE</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Table Name</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>IV_FIELD</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Field Name</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>EV_ERROR</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>EV_SUBRC</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Return Code</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>ET_F4</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Table of F4 translations for codes</STEXT>
+      </RSFDO>
+     </DOCUMENTATION>
+    </item>
+   </FUNCTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>
