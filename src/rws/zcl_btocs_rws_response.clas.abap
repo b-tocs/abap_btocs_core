@@ -274,4 +274,12 @@ CLASS ZCL_BTOCS_RWS_RESPONSE IMPLEMENTATION.
     ro_value ?= lo_json.
 
   ENDMETHOD.
+
+
+  METHOD zif_btocs_rws_response~is_json_array.
+    IF zif_btocs_rws_response~is_json_response( ) EQ abap_true
+      AND mv_content CP '[*]'.
+      rv_json_array = abap_true.
+    ENDIF.
+  ENDMETHOD.
 ENDCLASS.

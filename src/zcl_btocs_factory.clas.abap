@@ -57,6 +57,9 @@ public section.
   class-methods CREATE_WEB_SERVICE_REQUEST
     returning
       value(RO_INSTANCE) type ref to ZIF_BTOCS_RWS_REQUEST .
+  class-methods CREATE_WEB_SERVICE_CONNECTOR
+    returning
+      value(RO_INSTANCE) type ref to ZIF_BTOCS_RWS_CONNECTOR .
   class-methods CREATE_WEB_SERVICE_RESPONSE
     returning
       value(RO_INSTANCE) type ref to ZIF_BTOCS_RWS_RESPONSE .
@@ -181,5 +184,10 @@ CLASS ZCL_BTOCS_FACTORY IMPLEMENTATION.
 
   METHOD CREATE_DDIC_UTIL.
     rr_instance ?= create_instance( 'ZIF_BTOCS_UTIL_DDIC' ).
+  ENDMETHOD.
+
+
+  METHOD CREATE_WEB_SERVICE_CONNECTOR.
+    ro_instance ?= create_instance( 'ZIF_BTOCS_RWS_CONNECTOR' ).
   ENDMETHOD.
 ENDCLASS.

@@ -98,6 +98,11 @@
      <DESCRIPT>create a new instance of webservice client</DESCRIPT>
     </SEOCOMPOTX>
     <SEOCOMPOTX>
+     <CMPNAME>CREATE_WEB_SERVICE_CONNECTOR</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>create a new instance of a webservice connector</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
      <CMPNAME>CREATE_WEB_SERVICE_REQUEST</CMPNAME>
      <LANGU>E</LANGU>
      <DESCRIPT>create a new instance of request client</DESCRIPT>
@@ -162,6 +167,12 @@
      <SCONAME>RO_INSTANCE</SCONAME>
      <LANGU>E</LANGU>
      <DESCRIPT>B-Tocs Logger Interface</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>CREATE_WEB_SERVICE_CONNECTOR</CMPNAME>
+     <SCONAME>RO_INSTANCE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>B-Tocs Connector Interface</DESCRIPT>
     </SEOSUBCOTX>
    </DESCRIPTIONS_SUB>
   </asx:values>

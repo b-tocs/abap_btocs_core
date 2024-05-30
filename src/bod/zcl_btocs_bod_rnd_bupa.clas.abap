@@ -182,6 +182,66 @@ CLASS ZCL_BTOCS_BOD_RND_BUPA IMPLEMENTATION.
       ).
     ENDIF.
 
+* ------------- relations
+    IF ms_bupa-relations_in[] IS NOT INITIAL
+      OR ms_bupa-relations_out[] IS NOT INITIAL
+      OR ms_bupa-contacts_for[] IS NOT INITIAL
+      OR ms_bupa-my_contacts[] IS NOT INITIAL.
+
+      DATA(lv_rel_level) = lv_header_level + 1.
+
+      lo_md->add_hx(
+          iv_text       = 'Relations'
+          iv_level      = lv_rel_level
+      ).
+
+      lo_md->add_table(
+        EXPORTING
+          it_data          = ms_bupa-relations_out
+*      iv_style         =
+          iv_no_empty      = abap_true
+          iv_path          = '/rel/out'
+          iv_current_level = 1
+          iv_max_level     = 1
+          it_headers       = lt_header
+      ).
+
+      lo_md->add_table(
+        EXPORTING
+          it_data          = ms_bupa-relations_in
+*      iv_style         =
+          iv_no_empty      = abap_true
+          iv_path          = '/rel/in'
+          iv_current_level = 1
+          iv_max_level     = 1
+          it_headers       = lt_header
+      ).
+
+      lo_md->add_table(
+        EXPORTING
+          it_data          = ms_bupa-my_contacts
+*      iv_style         =
+          iv_no_empty      = abap_true
+          iv_path          = '/rel/myc'
+          iv_current_level = 1
+          iv_max_level     = 1
+          it_headers       = lt_header
+      ).
+
+      lo_md->add_table(
+        EXPORTING
+          it_data          = ms_bupa-contacts_for
+*      iv_style         =
+          iv_no_empty      = abap_true
+          iv_path          = '/rel/con'
+          iv_current_level = 1
+          iv_max_level     = 1
+          it_headers       = lt_header
+      ).
+
+    ENDIF.
+
+
 
 * ------- set success
     ro_doc = transform_markdown_to_doc(
@@ -339,6 +399,44 @@ CLASS ZCL_BTOCS_BOD_RND_BUPA IMPLEMENTATION.
     IF get_logger( )->has_errors( mt_return ).
       get_logger( )->warning( |loading bupa address data failed| ).
     ENDIF.
+
+
+* ------ select relations
+    DATA(lv_date_to) = '99991231'.
+    DATA(lv_date_from) = sy-datum.
+
+    SELECT partner2 AS partner,
+           date_to,
+           date_from,
+           reltyp,
+           crusr,
+           crdat,
+           chusr,
+           chdat
+      FROM but050
+      INTO CORRESPONDING FIELDS OF TABLE @ms_bupa-relations_in
+     WHERE date_to   >= @lv_date_from
+       AND date_from <= @lv_date_from
+       AND partner1   = @ms_bupa-partner
+     ORDER BY reltyp, crdat DESCENDING.
+
+    SELECT partner1 AS partner,
+           date_to,
+           date_from,
+           reltyp,
+           crusr,
+           crdat,
+           chusr,
+           chdat
+      FROM but050
+      INTO CORRESPONDING FIELDS OF TABLE @ms_bupa-relations_out
+     WHERE date_to   >= @lv_date_from
+       AND date_from <= @lv_date_from
+       AND partner2   = @ms_bupa-partner
+     ORDER BY reltyp, crdat DESCENDING.
+
+
+
 
 
 * ------ finally true

@@ -1,84 +1,89 @@
-interface ZIF_BTOCS_RWS_RESPONSE
-  public .
+INTERFACE zif_btocs_rws_response
+  PUBLIC .
 
 
-  interfaces ZIF_BTOCS_UTIL_BASE .
+  INTERFACES zif_btocs_util_base .
 
-  aliases DESTROY
-    for ZIF_BTOCS_UTIL_BASE~DESTROY .
-  aliases GET_LOGGER
-    for ZIF_BTOCS_UTIL_BASE~GET_LOGGER .
-  aliases IS_LOGGER_EXTERNAL
-    for ZIF_BTOCS_UTIL_BASE~IS_LOGGER_EXTERNAL .
-  aliases SET_LOGGER
-    for ZIF_BTOCS_UTIL_BASE~SET_LOGGER .
+  ALIASES destroy
+    FOR zif_btocs_util_base~destroy .
+  ALIASES get_logger
+    FOR zif_btocs_util_base~get_logger .
+  ALIASES is_logger_external
+    FOR zif_btocs_util_base~is_logger_external .
+  ALIASES set_logger
+    FOR zif_btocs_util_base~set_logger .
 
-  methods GET_STATUS_CODE
-    returning
-      value(RV_STATUS) type I .
-  methods GET_REASON
-    returning
-      value(RV_REASON) type STRING .
-  methods GET_HEADER_FIELDS
-    returning
-      value(RT_HEADER) type TIHTTPNVP .
-  methods GET_FORM_FIELDS
-    returning
-      value(RT_FORM_FIELDS) type TIHTTPNVP .
-  methods GET_CONTENT_TYPE
-    returning
-      value(RV_CONTENT_TYPE) type STRING .
-  methods GET_CONTENT
-    returning
-      value(RV_CONTENT) type STRING .
-  methods GET_BINARY
-    returning
-      value(RV_BINARY) type XSTRING .
-  methods SET_REASON
-    importing
-      !IV_REASON type DATA
-      !IV_NO_FORMWARD type ABAP_BOOL default ABAP_FALSE .
-  methods SET_STATUS_CODE
-    importing
-      !IV_STATUS_CODE type I default 500 .
-  methods SET_FROM_CLIENT
-    importing
-      !IO_HTTP_CLIENT type ref to IF_HTTP_CLIENT
-    returning
-      value(RV_SUCCESS) type ABAP_BOOL .
-  methods SET_FROM_RESPONSE
-    importing
-      !IO_HTTP_RESPONSE type ref to IF_HTTP_RESPONSE
-    returning
-      value(RV_SUCCESS) type ABAP_BOOL .
-  methods IS_HTTP_REQUEST_SUCCESS
-    returning
-      value(RV_SUCCESS) type ABAP_BOOL .
-  methods IS_BINARY
-    returning
-      value(RV_BINARY) type ABAP_BOOL .
-  methods IS_JSON_RESPONSE
-    importing
-      !IV_PREPARE type ABAP_BOOL default ABAP_TRUE
-    returning
-      value(RV_JSON) type ABAP_BOOL .
-  methods IS_JSON_OBJECT
-    returning
-      value(RV_JSON_OBJECT) type ABAP_BOOL .
-  methods IS_FORM_FIELDS
-    returning
-      value(RV_FORM_FIELDS) type ABAP_BOOL .
-  methods IS_HEADER_FIELDS
-    returning
-      value(RV_HEADER_FIELDS) type ABAP_BOOL .
-  methods GET_VALUES_FROM_PARSED_JSON
-    returning
-      value(RO_VALUE) type ref to ZIF_BTOCS_VALUE .
-  methods GET_BINARY_AS_FILE
-    importing
-      !IV_FILENAME type STRING
-      !IV_SHORT_FILENAME type ABAP_BOOL default ABAP_TRUE
-      !IV_DETECT_MIMETYPE type ABAP_BOOL default ABAP_TRUE
-    returning
-      value(RS_FILE) type ZBTOCS_S_FILE_DATA .
-endinterface.
+  METHODS get_status_code
+    RETURNING
+      VALUE(rv_status) TYPE i .
+  METHODS get_reason
+    RETURNING
+      VALUE(rv_reason) TYPE string .
+  METHODS get_header_fields
+    RETURNING
+      VALUE(rt_header) TYPE tihttpnvp .
+  METHODS get_form_fields
+    RETURNING
+      VALUE(rt_form_fields) TYPE tihttpnvp .
+  METHODS get_content_type
+    RETURNING
+      VALUE(rv_content_type) TYPE string .
+  METHODS get_content
+    RETURNING
+      VALUE(rv_content) TYPE string .
+  METHODS get_binary
+    RETURNING
+      VALUE(rv_binary) TYPE xstring .
+  METHODS set_reason
+    IMPORTING
+      !iv_reason      TYPE data
+      !iv_no_formward TYPE abap_bool DEFAULT abap_false .
+  METHODS set_status_code
+    IMPORTING
+      !iv_status_code TYPE i DEFAULT 500 .
+  METHODS set_from_client
+    IMPORTING
+      !io_http_client   TYPE REF TO if_http_client
+    RETURNING
+      VALUE(rv_success) TYPE abap_bool .
+  METHODS set_from_response
+    IMPORTING
+      !io_http_response TYPE REF TO if_http_response
+    RETURNING
+      VALUE(rv_success) TYPE abap_bool .
+  METHODS is_http_request_success
+    RETURNING
+      VALUE(rv_success) TYPE abap_bool .
+  METHODS is_binary
+    RETURNING
+      VALUE(rv_binary) TYPE abap_bool .
+  METHODS is_json_response
+    IMPORTING
+      !iv_prepare    TYPE abap_bool DEFAULT abap_true
+    RETURNING
+      VALUE(rv_json) TYPE abap_bool .
+  METHODS is_json_object
+    RETURNING
+      VALUE(rv_json_object) TYPE abap_bool .
+
+  METHODS is_json_array
+    RETURNING
+      VALUE(rv_json_array) TYPE abap_bool .
+
+  METHODS is_form_fields
+    RETURNING
+      VALUE(rv_form_fields) TYPE abap_bool .
+  METHODS is_header_fields
+    RETURNING
+      VALUE(rv_header_fields) TYPE abap_bool .
+  METHODS get_values_from_parsed_json
+    RETURNING
+      VALUE(ro_value) TYPE REF TO zif_btocs_value .
+  METHODS get_binary_as_file
+    IMPORTING
+      !iv_filename        TYPE string
+      !iv_short_filename  TYPE abap_bool DEFAULT abap_true
+      !iv_detect_mimetype TYPE abap_bool DEFAULT abap_true
+    RETURNING
+      VALUE(rs_file)      TYPE zbtocs_s_file_data .
+ENDINTERFACE.
