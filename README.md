@@ -78,7 +78,11 @@ flowchart LR
 
 ```
 
-## Known plugins
+## Plugins
+
+### Available
+
+The following plugins are available from B-Tocs or other contributors:
 
 | Plugin                | Solution                                              | Category              | Repository                                                |
 | ---                   | ---                                                   | ---                   | ---                                                       |
@@ -86,8 +90,15 @@ flowchart LR
 | LIBTRL                | [LibreTranslate](https://libretranslate.com/)         | Translation           | https://github.com/b-tocs/abap_btocs_libtrl               |
 | OLLAMA                | [Ollama](https://ollama.ai/)                          | LLM, Chatbot, GPT     | https://github.com/b-tocs/abap_btocs_ollama               |
 
-Planned:
-- Stirling PDF
+
+### Backlog
+
+The following ideas for future plugins exist:
+
+- [Apache Kafka](https://kafka.apache.org/)
+- [ChromaDB](https://www.trychroma.com/)
+- [Bookstack](https://www.bookstackapp.com/)
+- [Stirling PDF](https://stirlingtools.com/)
 
 
 ## Prerequisites and Installation 
@@ -103,7 +114,7 @@ Planned:
 | SAP object                    | Description                           |
 | ----------------------------- | ------------------------------------- |
 | PROG ZBTOCS_GUI_DEMO_RWS_CALL | B-Tocs Demo - Call Remote Web Service |
-
+| PROG ZBTOCS_GUI_DEMO_MARKDOWN | B-Tocs Demo - Markdown Utility        |
 
 
 ## Known Issues
