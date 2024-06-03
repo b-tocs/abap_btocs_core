@@ -13,6 +13,7 @@ protected section.
   data MS_OPTIONS type ZBTOCS_TYP_S_VALUE_OPTIONS .
   data MR_DATA type ref to DATA .
   data MO_OBJECT type ref to OBJECT .
+  data MV_RAW_VALUE type STRING .
 
   methods GET_FORMAT
     importing
@@ -145,8 +146,20 @@ CLASS ZCL_BTOCS_VALUE IMPLEMENTATION.
     DATA lr_object  TYPE REF TO zif_btocs_value.
 
 * ------ default rendering
-    data(lv_enc) = GET_KEY_ENCLOSE_CHAR( ).
+    DATA(lv_enc) = get_key_enclose_char( ).
 
+
+* ------ check raw value given
+    IF mv_raw_value IS NOT INITIAL.
+      IF iv_name IS NOT INITIAL.
+        rv_string = |{ lv_enc }{ iv_name }{ lv_enc }: { mv_raw_value }|.
+      ELSE.
+        rv_string = mv_raw_value.
+      ENDIF.
+      RETURN.
+    ENDIF.
+
+* ------ normal rendering
     IF zif_btocs_value~is_null( ) EQ abap_true.
       rv_string = ls_option-render_null.
     ELSEIF zif_btocs_value~is_data( ) EQ abap_true.
@@ -248,4 +261,9 @@ CLASS ZCL_BTOCS_VALUE IMPLEMENTATION.
         get_logger( )->error( |error while determine structure value: { lv_error }| ).
     ENDTRY.
   ENDMETHOD.
+
+
+  method ZIF_BTOCS_VALUE~SET_RAW_VALUE.
+    mv_raw_value = iv_raw_value.
+  endmethod.
 ENDCLASS.

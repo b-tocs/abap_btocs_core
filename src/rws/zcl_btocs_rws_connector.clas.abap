@@ -35,13 +35,36 @@ CLASS ZCL_BTOCS_RWS_CONNECTOR IMPLEMENTATION.
       RETURN.
     ENDIF.
 
+* -------- prepare api path
+    DATA(lv_path) = |{ iv_api_path }|.
+
+    DATA(lo_request) = mo_client->get_request( ).
+    IF lo_request IS NOT INITIAL.
+      DATA(lt_qpar) = lo_request->get_query_params( ).
+      IF lt_qpar[] IS NOT INITIAL.
+        SPLIT lv_path AT '?' INTO DATA(lv_url) DATA(lv_params).
+
+        LOOP AT lt_qpar ASSIGNING FIELD-SYMBOL(<ls_qpar>).
+          DATA(lv_param) = |{ <ls_qpar>-name }={ <ls_qpar>-value }|.
+          IF lv_params IS INITIAL.
+            lv_params = lv_param.
+          ELSE.
+            lv_params = |{ lv_params }&{ lv_param }|.
+          ENDIF.
+        ENDLOOP.
+
+        lv_path = |{ lv_url }?{ lv_params }|.
+      ENDIF.
+    ENDIF.
+
+
 * -------- set api path
-    IF iv_api_path IS NOT INITIAL.
-      IF lo_client->set_endpoint_path( iv_api_path ) EQ abap_false.
-        ro_response->set_reason( |set api path to { iv_api_path } failed| ).
+    IF lv_path IS NOT INITIAL.
+      IF lo_client->set_endpoint_path( lv_path ) EQ abap_false.
+        ro_response->set_reason( |set api path to { lv_path } failed| ).
         RETURN.
       ELSE.
-        get_logger( )->debug( |connector api path set to { iv_api_path }| ).
+        get_logger( )->debug( |connector api path set to { lv_path }| ).
       ENDIF.
     ENDIF.
 
@@ -147,27 +170,36 @@ CLASS ZCL_BTOCS_RWS_CONNECTOR IMPLEMENTATION.
 
   METHOD zif_btocs_rws_connector~execute_get.
 
-
-* -------- prepare response
-    DATA(lo_response) = COND #( WHEN io_response IS NOT INITIAL
-                                THEN io_response
-                                ELSE zif_btocs_rws_connector~new_response( ) ).
-
-* -------- prepare client
-    DATA(lo_client) = zcl_btocs_factory=>create_web_service_client( ).
-    lo_client->set_logger( get_logger( ) ).
-    IF lo_client->set_endpoint_by_url(
-         iv_url     = iv_url
-         iv_profile = iv_profile                 " Remote Web Service Profile
-       ) EQ abap_false.
-      get_logger( )->error( |init connector client for url { iv_url } failed| ).
-      RETURN.
+* -------- prepare client: created before or here
+    DATA(lo_client) = mo_client.
+    IF lo_client IS INITIAL.
+      lo_client = zcl_btocs_factory=>create_web_service_client( ).
+      lo_client->set_logger( get_logger( ) ).
+      IF lo_client->set_endpoint_by_url(
+           iv_url     = iv_url
+           iv_profile = iv_profile                 " Remote Web Service Profile
+         ) EQ abap_false.
+        get_logger( )->error( |init connector client for url { iv_url } failed| ).
+        RETURN.
+      ENDIF.
+    ELSE.
+*   created before - set path if given
+      IF iv_url IS NOT INITIAL.
+        IF lo_client->set_endpoint_path( iv_path = iv_url ) EQ abap_false.
+          get_logger( )->error( |set path to connector client failed for url { iv_url }| ).
+          RETURN.
+        ENDIF.
+      ENDIF.
     ENDIF.
 
 
-* --------- get request
+* --------- init request and response object
     DATA(lo_request) = zcl_btocs_factory=>create_web_service_request( ).
     lo_request->set_logger( get_logger( ) ).
+
+    DATA(lo_response) = COND #( WHEN io_response IS NOT INITIAL
+                                THEN io_response
+                                ELSE zif_btocs_rws_connector~new_response( ) ).
 
 
 * -------- execute

@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_INTF" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOINTERF>
+    <CLSNAME>ZIF_BTOCS_BOD_MGR</CLSNAME>
+    <LANGU>E</LANGU>
+    <DESCRIPT>B-Tocs BO Document Manager</DESCRIPT>
+    <EXPOSURE>2</EXPOSURE>
+    <STATE>1</STATE>
+    <UNICODE>X</UNICODE>
+   </VSEOINTERF>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_RENDERER</CMPNAME>
+     <SCONAME>IT_CONTEXT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Key value tab</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_RENDERER</CMPNAME>
+     <SCONAME>RO_RENDERER</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>B-Tocs BO Document Renderer</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>NEW_DOCUMENT</CMPNAME>
+     <SCONAME>RO_DOC</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>B-Tocs BO Document</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

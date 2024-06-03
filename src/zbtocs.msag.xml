@@ -50,6 +50,12 @@
      <MSGNR>006</MSGNR>
      <TEXT>EXCEPTION: &amp;1&amp;2&amp;3&amp;4.</TEXT>
     </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZBTOCS</ARBGB>
+     <MSGNR>007</MSGNR>
+     <TEXT>Invalid parameters: &amp;1.</TEXT>
+    </T100>
    </T100>
   </asx:values>
  </asx:abap>

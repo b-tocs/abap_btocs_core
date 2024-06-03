@@ -27,6 +27,7 @@ interface ZIF_BTOCS_VALUE_MGR
   methods NEW_JSON_ARRAY
     importing
       !IS_OPTIONS type ZBTOCS_TYP_S_VALUE_OPTIONS optional
+      !IV_RAW_VALUE type STRING optional
     returning
       value(RO_VALUE) type ref to ZIF_BTOCS_VALUE_ARRAY .
   methods NEW_STRING
@@ -46,7 +47,7 @@ interface ZIF_BTOCS_VALUE_MGR
       value(RO_VALUE) type ref to ZIF_BTOCS_VALUE_BOOLEAN .
   methods NEW_NULL
     returning
-      value(RO_VALUE) type ref to ZIF_BTOCS_VALUE_BOOLEAN .
+      value(RO_VALUE) type ref to ZIF_BTOCS_VALUE .
   methods GET_DEFAULT_JSON_OPTIONS
     returning
       value(RS_OPTION) type ZBTOCS_TYP_S_VALUE_OPTIONS .

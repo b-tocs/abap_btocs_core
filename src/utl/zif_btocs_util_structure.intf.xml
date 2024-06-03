@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_INTF" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOINTERF>
+    <CLSNAME>ZIF_BTOCS_UTIL_STRUCTURE</CLSNAME>
+    <LANGU>E</LANGU>
+    <DESCRIPT>B-Tocs Structure Util</DESCRIPT>
+    <EXPOSURE>2</EXPOSURE>
+    <STATE>1</STATE>
+    <UNICODE>X</UNICODE>
+   </VSEOINTERF>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>RESET</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>reset data</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_DDIC</CMPNAME>
+     <SCONAME>RT_DDIC</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>DD Interface: Table Fields for DDIF_FIELDINFO_GET</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_DDIC_FIELDNAME</CMPNAME>
+     <SCONAME>RS_DDIC</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>DD Interface: Table Fields for DDIF_FIELDINFO_GET</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_DDIC_UTIL</CMPNAME>
+     <SCONAME>RO_UTIL</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>B-Tocs Util Data Dictionary</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_FIELDNAMES</CMPNAME>
+     <SCONAME>RT_NAMES</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Table of Strings</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_FIELDNAMES_NOT_EMPTY</CMPNAME>
+     <SCONAME>RT_NAMES</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Table of Strings</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_LABEL</CMPNAME>
+     <SCONAME>RV_LABEL</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>DD Interface: Table Fields for DDIF_FIELDINFO_GET</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_STRUCTDESCR</CMPNAME>
+     <SCONAME>RO_TYPE_DESCR</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Runtime Type Services</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_DATA</CMPNAME>
+     <SCONAME>IV_COMPLEX_MODE</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>active, if complex includes are required</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_DDIC_UTIL</CMPNAME>
+     <SCONAME>IO_UTIL</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>B-Tocs Util Data Dictionary</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

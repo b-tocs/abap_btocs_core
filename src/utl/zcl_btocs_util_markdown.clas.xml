@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZCL_BTOCS_UTIL_MARKDOWN</CLSNAME>
+    <LANGU>E</LANGU>
+    <DESCRIPT>B-Tocs Markdown Builder Util Impl</DESCRIPT>
+    <STATE>1</STATE>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+   </VSEOCLASS>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>MO_DDIC_UTIL</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>B-Tocs Util Data Dictionary</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MO_PARAMS</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>B-Tocs Value type structure</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>MT_LINES</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Table of Strings</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>RENDER_TABLE_CSV</CMPNAME>
+     <SCONAME>IO_TABLE_UTIL</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>B-Tocs Util DDIC Table</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>RENDER_TABLE_CSV</CMPNAME>
+     <SCONAME>IT_FIELDS</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Table of Strings</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>RENDER_TABLE_CSV</CMPNAME>
+     <SCONAME>RT_LINES</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Table of Strings</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>RENDER_TABLE_MD</CMPNAME>
+     <SCONAME>IO_TABLE_UTIL</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>B-Tocs Util DDIC Table</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>RENDER_TABLE_MD</CMPNAME>
+     <SCONAME>IT_FIELDS</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Table of Strings</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>RENDER_TABLE_MD</CMPNAME>
+     <SCONAME>RT_LINES</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Table of Strings</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

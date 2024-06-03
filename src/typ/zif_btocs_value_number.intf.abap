@@ -1,47 +1,63 @@
-INTERFACE zif_btocs_value_number
-  PUBLIC .
+interface ZIF_BTOCS_VALUE_NUMBER
+  public .
 
 
-  INTERFACES zif_btocs_util_base .
-  INTERFACES zif_btocs_value .
+  interfaces ZIF_BTOCS_UTIL_BASE .
+  interfaces ZIF_BTOCS_VALUE .
 
-  ALIASES destroy
-    FOR zif_btocs_value~destroy .
-  ALIASES get_data_ref
-    FOR zif_btocs_value~get_data_ref .
-  ALIASES get_logger
-    FOR zif_btocs_value~get_logger .
-  ALIASES get_manager
-    FOR zif_btocs_value~get_manager .
-  ALIASES get_object_ref
-    FOR zif_btocs_value~get_object_ref .
-  ALIASES get_options
-    FOR zif_btocs_value~get_options .
-  ALIASES is_data
-    FOR zif_btocs_value~is_data .
-  ALIASES is_logger_external
-    FOR zif_btocs_value~is_logger_external .
-  ALIASES is_object
-    FOR zif_btocs_value~is_object .
-  ALIASES is_options
-    FOR zif_btocs_value~is_options .
-  ALIASES render
-    FOR zif_btocs_value~render .
-  ALIASES set_data_ref
-    FOR zif_btocs_value~set_data_ref .
-  ALIASES set_logger
-    FOR zif_btocs_value~set_logger .
-  ALIASES set_manager
-    FOR zif_btocs_value~set_manager .
-  ALIASES set_object_ref
-    FOR zif_btocs_value~set_object_ref .
-  ALIASES set_options
-    FOR zif_btocs_value~set_options .
-  ALIASES set_string
-    FOR zif_btocs_value~set_string .
+  aliases DESTROY
+    for ZIF_BTOCS_VALUE~DESTROY .
+  aliases GET_DATA_REF
+    for ZIF_BTOCS_VALUE~GET_DATA_REF .
+  aliases GET_LOGGER
+    for ZIF_BTOCS_VALUE~GET_LOGGER .
+  aliases GET_MANAGER
+    for ZIF_BTOCS_VALUE~GET_MANAGER .
+  aliases GET_OBJECT_REF
+    for ZIF_BTOCS_VALUE~GET_OBJECT_REF .
+  aliases GET_OPTIONS
+    for ZIF_BTOCS_VALUE~GET_OPTIONS .
+  aliases GET_STRING
+    for ZIF_BTOCS_VALUE~GET_STRING .
+  aliases IS_DATA
+    for ZIF_BTOCS_VALUE~IS_DATA .
+  aliases IS_LOGGER_EXTERNAL
+    for ZIF_BTOCS_VALUE~IS_LOGGER_EXTERNAL .
+  aliases IS_NULL
+    for ZIF_BTOCS_VALUE~IS_NULL .
+  aliases IS_OBJECT
+    for ZIF_BTOCS_VALUE~IS_OBJECT .
+  aliases IS_OPTIONS
+    for ZIF_BTOCS_VALUE~IS_OPTIONS .
+  aliases RENDER
+    for ZIF_BTOCS_VALUE~RENDER .
+  aliases SET_DATA_REF
+    for ZIF_BTOCS_VALUE~SET_DATA_REF .
+  aliases SET_LOGGER
+    for ZIF_BTOCS_VALUE~SET_LOGGER .
+  aliases SET_MANAGER
+    for ZIF_BTOCS_VALUE~SET_MANAGER .
+  aliases SET_OBJECT_REF
+    for ZIF_BTOCS_VALUE~SET_OBJECT_REF .
+  aliases SET_OPTIONS
+    for ZIF_BTOCS_VALUE~SET_OPTIONS .
+  aliases SET_RAW_VALUE
+    for ZIF_BTOCS_VALUE~SET_RAW_VALUE .
+  aliases SET_STRING
+    for ZIF_BTOCS_VALUE~SET_STRING .
 
-
-  METHODS set_number
-    IMPORTING
-      !iv_number TYPE data .
-ENDINTERFACE.
+  methods SET_NUMBER
+    importing
+      !IV_NUMBER type DATA .
+  methods GET_INTEGER
+    returning
+      value(RV_VALUE) type I .
+  methods GET_FLOAT
+    returning
+      value(RV_VALUE) type F .
+  methods GET_AS
+    changing
+      !CV_VALUE type DATA
+    returning
+      value(RV_SUCCESS) type ABAP_BOOL .
+endinterface.

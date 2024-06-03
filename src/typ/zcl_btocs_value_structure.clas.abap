@@ -108,4 +108,48 @@ CLASS ZCL_BTOCS_VALUE_STRUCTURE IMPLEMENTATION.
       rv_string = lo_value->get_string( ).
     ENDIF.
   ENDMETHOD.
+
+
+  METHOD zif_btocs_value_structure~get_boolean_value.
+    TRY.
+        IF zif_btocs_value_structure~has_name( iv_name ) EQ abap_false.
+          get_logger( )->debug( |GET_BOOLEAN_VALUE: key { iv_name } not available| ).
+          RETURN.
+        ELSE.
+          ro_value ?= zif_btocs_value_structure~get( iv_name ).
+        ENDIF.
+      CATCH cx_root INTO DATA(lx_exc).
+        get_logger( )->error( |Exception GET_BOOLEAN_VALUE: { lx_exc->get_text( ) }| ).
+    ENDTRY.
+
+  ENDMETHOD.
+
+
+  method ZIF_BTOCS_VALUE_STRUCTURE~GET_NUMBER_VALUE.
+    TRY.
+        IF zif_btocs_value_structure~has_name( iv_name ) EQ abap_false.
+          get_logger( )->debug( |GET_NUMBER_VALUE: key { iv_name } not available| ).
+          RETURN.
+        ELSE.
+          ro_value ?= zif_btocs_value_structure~get( iv_name ).
+        ENDIF.
+      CATCH cx_root INTO DATA(lx_exc).
+        get_logger( )->error( |Exception GET_NUMBER_VALUE: { lx_exc->get_text( ) }| ).
+    ENDTRY.
+
+  endmethod.
+
+
+  METHOD zif_btocs_value_structure~get_string_value.
+    TRY.
+        IF zif_btocs_value_structure~has_name( iv_name ) EQ abap_false.
+          get_logger( )->debug( |GET_STRING_VALUE: key { iv_name } not available| ).
+          RETURN.
+        ELSE.
+          ro_value ?= zif_btocs_value_structure~get( iv_name ).
+        ENDIF.
+      CATCH cx_root INTO DATA(lx_exc).
+        get_logger( )->error( |Exception GET_STRING_VALUE: { lx_exc->get_text( ) }| ).
+    ENDTRY.
+  ENDMETHOD.
 ENDCLASS.

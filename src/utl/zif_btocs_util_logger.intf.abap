@@ -53,6 +53,8 @@ interface ZIF_BTOCS_UTIL_LOGGER
     returning
       value(RT_MESSAGES) type BAPIRET2_TAB .
   methods HAS_ERRORS
+    importing
+      !IT_MSG type BAPIRET2_TAB optional
     returning
       value(RV_ERROR) type ABAP_BOOL .
   methods GET_SNAPSHOT

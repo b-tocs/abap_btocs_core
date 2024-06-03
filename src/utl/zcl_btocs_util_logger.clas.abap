@@ -151,11 +151,22 @@ CLASS ZCL_BTOCS_UTIL_LOGGER IMPLEMENTATION.
 
 
   METHOD zif_btocs_util_logger~has_errors.
+
+* -------- prepare & check
+    DATA(lt_msg) = COND #( WHEN it_msg[] IS NOT INITIAL
+                           THEN it_msg
+                           ELSE mt_msg ).
+    IF lt_msg[] IS INITIAL.
+      RETURN.
+    ENDIF.
+
+* -------- check
     LOOP AT mt_msg TRANSPORTING NO FIELDS
      WHERE type CA 'EAX'.
       rv_error = abap_true.
       RETURN.
     ENDLOOP.
+
   ENDMETHOD.
 
 

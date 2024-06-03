@@ -1,72 +1,98 @@
-interface ZIF_BTOCS_VALUE_STRUCTURE
-  public .
+INTERFACE zif_btocs_value_structure
+  PUBLIC .
 
 
-  interfaces ZIF_BTOCS_UTIL_BASE .
-  interfaces ZIF_BTOCS_VALUE .
+  INTERFACES zif_btocs_util_base .
+  INTERFACES zif_btocs_value .
 
-  aliases DESTROY
-    for ZIF_BTOCS_VALUE~DESTROY .
-  aliases GET_DATA_REF
-    for ZIF_BTOCS_VALUE~GET_DATA_REF .
-  aliases GET_LOGGER
-    for ZIF_BTOCS_VALUE~GET_LOGGER .
-  aliases GET_MANAGER
-    for ZIF_BTOCS_VALUE~GET_MANAGER .
-  aliases GET_OBJECT_REF
-    for ZIF_BTOCS_VALUE~GET_OBJECT_REF .
-  aliases GET_OPTIONS
-    for ZIF_BTOCS_VALUE~GET_OPTIONS .
-  aliases IS_DATA
-    for ZIF_BTOCS_VALUE~IS_DATA .
-  aliases IS_LOGGER_EXTERNAL
-    for ZIF_BTOCS_VALUE~IS_LOGGER_EXTERNAL .
-  aliases IS_OBJECT
-    for ZIF_BTOCS_VALUE~IS_OBJECT .
-  aliases IS_OPTIONS
-    for ZIF_BTOCS_VALUE~IS_OPTIONS .
-  aliases RENDER
-    for ZIF_BTOCS_VALUE~RENDER .
-  aliases SET_DATA_REF
-    for ZIF_BTOCS_VALUE~SET_DATA_REF .
-  aliases SET_LOGGER
-    for ZIF_BTOCS_VALUE~SET_LOGGER .
-  aliases SET_MANAGER
-    for ZIF_BTOCS_VALUE~SET_MANAGER .
-  aliases SET_OBJECT_REF
-    for ZIF_BTOCS_VALUE~SET_OBJECT_REF .
-  aliases SET_OPTIONS
-    for ZIF_BTOCS_VALUE~SET_OPTIONS .
-  aliases SET_STRING
-    for ZIF_BTOCS_VALUE~SET_STRING .
+  ALIASES destroy
+    FOR zif_btocs_value~destroy .
+  ALIASES get_array_value
+    FOR zif_btocs_value~get_array_value .
+  ALIASES get_data_ref
+    FOR zif_btocs_value~get_data_ref .
+  ALIASES get_logger
+    FOR zif_btocs_value~get_logger .
+  ALIASES get_manager
+    FOR zif_btocs_value~get_manager .
+  ALIASES get_object_ref
+    FOR zif_btocs_value~get_object_ref .
+  ALIASES get_options
+    FOR zif_btocs_value~get_options .
+  ALIASES get_structure_value
+    FOR zif_btocs_value~get_structure_value .
+  ALIASES is_data
+    FOR zif_btocs_value~is_data .
+  ALIASES is_logger_external
+    FOR zif_btocs_value~is_logger_external .
+  ALIASES is_object
+    FOR zif_btocs_value~is_object .
+  ALIASES is_options
+    FOR zif_btocs_value~is_options .
+  ALIASES render
+    FOR zif_btocs_value~render .
+  ALIASES set_data_ref
+    FOR zif_btocs_value~set_data_ref .
+  ALIASES set_logger
+    FOR zif_btocs_value~set_logger .
+  ALIASES set_manager
+    FOR zif_btocs_value~set_manager .
+  ALIASES set_object_ref
+    FOR zif_btocs_value~set_object_ref .
+  ALIASES set_options
+    FOR zif_btocs_value~set_options .
+  ALIASES set_string
+    FOR zif_btocs_value~set_string .
 
-  methods SET
-    importing
-      !IV_NAME type STRING
-      !IO_VALUE type ref to ZIF_BTOCS_VALUE
-      !IV_MAPPED type STRING optional
-      !IV_OVERWRITE type ABAP_BOOL default ABAP_TRUE
-    returning
-      value(RV_SUCCESS) type ABAP_BOOL .
-  methods GET
-    importing
-      !IV_NAME type STRING
-    exporting
-      value(EV_MAPPED) type STRING
-    returning
-      value(RO_VALUE) type ref to ZIF_BTOCS_VALUE .
-  methods COUNT
-    returning
-      value(RV_COUNT) type I .
-  methods HAS_NAME
-    importing
-      !IV_NAME type STRING
-    returning
-      value(RV_EXISTS) type ABAP_BOOL .
-  methods CLEAR .
-  methods GET_STRING
-    importing
-      !IV_NAME type DATA
-    returning
-      value(RV_STRING) type STRING .
-endinterface.
+  METHODS set
+    IMPORTING
+      !iv_name          TYPE string
+      !io_value         TYPE REF TO zif_btocs_value
+      !iv_mapped        TYPE string OPTIONAL
+      !iv_overwrite     TYPE abap_bool DEFAULT abap_true
+    RETURNING
+      VALUE(rv_success) TYPE abap_bool .
+  METHODS get
+    IMPORTING
+      !iv_name         TYPE string
+    EXPORTING
+      VALUE(ev_mapped) TYPE string
+    RETURNING
+      VALUE(ro_value)  TYPE REF TO zif_btocs_value .
+  METHODS count
+    RETURNING
+      VALUE(rv_count) TYPE i .
+  METHODS has_name
+    IMPORTING
+      !iv_name         TYPE string
+    RETURNING
+      VALUE(rv_exists) TYPE abap_bool .
+  METHODS clear .
+  METHODS get_string
+    IMPORTING
+      !iv_name         TYPE data
+    RETURNING
+      VALUE(rv_string) TYPE string .
+
+  METHODS get_string_value
+    IMPORTING
+      !iv_name        TYPE data
+    RETURNING
+      VALUE(ro_value) TYPE REF TO zif_btocs_value_string .
+
+  METHODS get_number_value
+    IMPORTING
+      !iv_name        TYPE data
+    RETURNING
+      VALUE(ro_value) TYPE REF TO zif_btocs_value_number .
+
+
+  METHODS get_boolean_value
+    IMPORTING
+      !iv_name        TYPE data
+    RETURNING
+      VALUE(ro_value) TYPE REF TO zif_btocs_value_boolean .
+
+
+
+ENDINTERFACE.

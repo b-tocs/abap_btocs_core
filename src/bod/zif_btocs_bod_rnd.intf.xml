@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_INTF" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOINTERF>
+    <CLSNAME>ZIF_BTOCS_BOD_RND</CLSNAME>
+    <LANGU>E</LANGU>
+    <DESCRIPT>B-Tocs BO Document Renderer</DESCRIPT>
+    <EXPOSURE>2</EXPOSURE>
+    <STATE>1</STATE>
+    <UNICODE>X</UNICODE>
+   </VSEOINTERF>
+   <DESCRIPTIONS_SUB>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_ABSTRACT</CMPNAME>
+     <SCONAME>RT_TEXT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Table of Strings</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_CONTEXT</CMPNAME>
+     <SCONAME>RT_CONTEXT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Key value tab</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_DDIC_UTIL</CMPNAME>
+     <SCONAME>RO_UTIL</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>B-Tocs Util Data Dictionary</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>GET_MARKDOWN_UTIL</CMPNAME>
+     <SCONAME>RO_UTIL</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>B-Tocs Markdown Builder</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>LOAD_DATA</CMPNAME>
+     <SCONAME>IV_DETAIL_LEVEL</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Detail Level for Business Object Document</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>RENDER</CMPNAME>
+     <SCONAME>IO_DOC</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>B-Tocs BO Document</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>RENDER</CMPNAME>
+     <SCONAME>IV_DETAIL_LEVEL</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Detail Level for Business Object Document</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>RENDER</CMPNAME>
+     <SCONAME>RO_DOC</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>B-Tocs BO Document</DESCRIPT>
+    </SEOSUBCOTX>
+    <SEOSUBCOTX>
+     <CMPNAME>SET_CONTEXT</CMPNAME>
+     <SCONAME>IT_CONTEXT</SCONAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Key value tab</DESCRIPT>
+    </SEOSUBCOTX>
+   </DESCRIPTIONS_SUB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

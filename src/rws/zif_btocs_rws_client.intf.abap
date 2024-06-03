@@ -59,6 +59,12 @@ interface ZIF_BTOCS_RWS_CLIENT
   methods NEW_REQUEST
     returning
       value(RO_REQUEST) type ref to ZIF_BTOCS_RWS_REQUEST .
+  methods GET_REQUEST
+    returning
+      value(RO_REQUEST) type ref to ZIF_BTOCS_RWS_REQUEST .
+  methods SET_REQUEST
+    importing
+      !IO_REQUEST type ref to ZIF_BTOCS_RWS_REQUEST .
   methods SET_CONFIG
     importing
       !IS_CONFIG type ZBTOCS_CFG_S_RFC_REC .

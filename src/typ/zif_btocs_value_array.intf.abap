@@ -37,6 +37,8 @@ interface ZIF_BTOCS_VALUE_ARRAY
     for ZIF_BTOCS_VALUE~SET_OBJECT_REF .
   aliases SET_OPTIONS
     for ZIF_BTOCS_VALUE~SET_OPTIONS .
+  aliases SET_RAW_VALUE
+    for ZIF_BTOCS_VALUE~SET_RAW_VALUE .
   aliases SET_STRING
     for ZIF_BTOCS_VALUE~SET_STRING .
 
@@ -57,4 +59,18 @@ interface ZIF_BTOCS_VALUE_ARRAY
       !EV_REF_ID type STRING
     returning
       value(RO_VALUE) type ref to ZIF_BTOCS_VALUE .
+  methods GET_STRUCTURE
+    importing
+      !IV_INDEX type I
+    exporting
+      !EV_REF_ID type STRING
+    returning
+      value(RO_STRUCTURE) type ref to ZIF_BTOCS_VALUE_STRUCTURE .
+  methods GET_ARRAY
+    importing
+      !IV_INDEX type I
+    exporting
+      !EV_REF_ID type STRING
+    returning
+      value(RO_ARRAY) type ref to ZIF_BTOCS_VALUE_ARRAY .
 endinterface.

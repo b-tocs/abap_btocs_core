@@ -228,8 +228,8 @@ CLASS ZCL_BTOCS_JSON_PARSER IMPLEMENTATION.
         ls_data-json ?= lo_json->new_null( ).
       WHEN OTHERS.
         DATA: lv_integer          TYPE abap_bool.
-        FIELD-SYMBOLS: <integer>  TYPE i.
-        FIELD-SYMBOLS: <double>   TYPE f.
+        FIELD-SYMBOLS: <integer>  TYPE zbtocs_json_integer.
+        FIELD-SYMBOLS: <double>   TYPE zbtocs_json_decimal.
         FIELD-SYMBOLS: <bigint>   TYPE zbtocs_json_bigint.
 
         IF iv_json+lv_pos(1) CA '0123456789-'.
@@ -575,12 +575,12 @@ CLASS ZCL_BTOCS_JSON_PARSER IMPLEMENTATION.
       ADD lv_length TO lv_pos.
 * Ganze Zahl?
       IF lv_exp CO '-0123456789'.
-        CREATE DATA ev_number TYPE i.
+        CREATE DATA ev_number TYPE zbtocs_json_integer.
         ev_integer = abap_true.
       ELSE.
         FIND REGEX '^\d*\.\d+|\d+\.\d*$' IN lv_exp.
         IF sy-subrc EQ 0.
-          CREATE DATA ev_number TYPE f.
+          CREATE DATA ev_number TYPE zbtocs_json_decimal.
           ev_integer = abap_false.
         ENDIF.
       ENDIF.

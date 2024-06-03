@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_TTYP" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <DD40V>
+    <TYPENAME>ZBTOCS_T_F4_CACHE</TYPENAME>
+    <DDLANGUAGE>E</DDLANGUAGE>
+    <ROWTYPE>ZBTOCS_S_F4_CACHE</ROWTYPE>
+    <ROWKIND>S</ROWKIND>
+    <DATATYPE>STRU</DATATYPE>
+    <ACCESSMODE>H</ACCESSMODE>
+    <KEYDEF>K</KEYDEF>
+    <KEYKIND>U</KEYKIND>
+    <KEYFDCOUNT>0003</KEYFDCOUNT>
+    <DDTEXT>table of cached f4 translations texts</DDTEXT>
+   </DD40V>
+   <DD42V>
+    <DD42V>
+     <TYPENAME>ZBTOCS_T_F4_CACHE</TYPENAME>
+     <KEYFDPOS>0001</KEYFDPOS>
+     <ROWTYPEPOS>0001</ROWTYPEPOS>
+     <KEYFIELD>F4_TYPE</KEYFIELD>
+    </DD42V>
+    <DD42V>
+     <TYPENAME>ZBTOCS_T_F4_CACHE</TYPENAME>
+     <KEYFDPOS>0002</KEYFDPOS>
+     <ROWTYPEPOS>0002</ROWTYPEPOS>
+     <KEYFIELD>F4_OBJECT</KEYFIELD>
+    </DD42V>
+    <DD42V>
+     <TYPENAME>ZBTOCS_T_F4_CACHE</TYPENAME>
+     <KEYFDPOS>0003</KEYFDPOS>
+     <ROWTYPEPOS>0003</ROWTYPEPOS>
+     <KEYFIELD>F4_SUBOBJ</KEYFIELD>
+    </DD42V>
+   </DD42V>
+  </asx:values>
+ </asx:abap>
+</abapGit>
