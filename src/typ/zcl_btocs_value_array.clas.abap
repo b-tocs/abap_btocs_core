@@ -39,7 +39,7 @@ CLASS ZCL_BTOCS_VALUE_ARRAY IMPLEMENTATION.
 
 
   METHOD zif_btocs_value_array~get.
-    IF iv_index < 1 OR iv_index <= zif_btocs_value_array~count( ).
+    IF iv_index < 1 OR iv_index > zif_btocs_value_array~count( ).
       get_logger( )->error( |invalid array index { iv_index }| ).
       RETURN.
     ELSE.

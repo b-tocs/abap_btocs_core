@@ -1,16 +1,16 @@
-class ZCL_BTOCS_VALUE_NUMBER definition
-  public
-  inheriting from ZCL_BTOCS_VALUE
-  create public .
+CLASS zcl_btocs_value_number DEFINITION
+  PUBLIC
+  INHERITING FROM zcl_btocs_value
+  CREATE PUBLIC .
 
-public section.
+  PUBLIC SECTION.
 
-  interfaces ZIF_BTOCS_VALUE_NUMBER .
-protected section.
+    INTERFACES zif_btocs_value_number .
+  PROTECTED SECTION.
 
-  methods RENDER_STRING
-    redefinition .
-private section.
+    METHODS render_string
+        REDEFINITION .
+  PRIVATE SECTION.
 ENDCLASS.
 
 
@@ -18,18 +18,20 @@ ENDCLASS.
 CLASS ZCL_BTOCS_VALUE_NUMBER IMPLEMENTATION.
 
 
-  method RENDER_STRING.
+  METHOD render_string.
 
 * ----- render
     IF mr_data IS NOT INITIAL.
-      rv_string = CONV string( mr_data->* ).
+      ASSIGN mr_data->* TO FIELD-SYMBOL(<lv_data>).
+      rv_string = CONV string( <lv_data> ).
     ENDIF.
-  endmethod.
+  ENDMETHOD.
 
 
   METHOD zif_btocs_value_number~set_number.
     CLEAR mo_object.
     CREATE DATA mr_data LIKE iv_number.
-    mr_data->* = iv_number.
+    ASSIGN mr_data->* TO FIELD-SYMBOL(<lv_data>).
+    <lv_data> = iv_number.
   ENDMETHOD.
 ENDCLASS.
